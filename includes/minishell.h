@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/13 16:31:02 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/14 09:46:36 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,20 @@
 # include <unistd.h>
 # include <errno.h>
 # include <stdbool.h>
-#include <readline/readline.h>
+# include <readline/readline.h>
 
+# define ERR_FILE		"Infile or outfile error"
+# define ERR_FORK		"Fork error"
+# define ERR_INPUT		"Invalid number of arguments"
+# define ERR_PIPE		"Pipe error"
+# define ERR_CMD		"command not found"
+# define ERR_MALLOC		"Malloc error"
+# define ERR_DUP		"Dup2 error"
+# define ERR_PROCCES	"Procces error"
+# define ERR_EXEC		"Execve error"
+# define ERR_PATH		"Path error"
 
+void	error_msg(char *msg, int err);
+void	perror_msg(char *msg, int err);
 
 #endif

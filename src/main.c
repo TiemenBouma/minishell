@@ -6,11 +6,12 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/13 16:30:50 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/14 09:48:28 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../includes/minishell.h"
+
 
 
 char	**find_path(char **envp)
@@ -34,14 +35,17 @@ char	**find_path(char **envp)
 	if (root_paths == NULL)
 		error_msg(ERR_MALLOC, 1);
 	return (root_paths);
+}
 
 int free_stuff(char *str)
 {
 	free(str);
+	return (0);
 }
-int main(void)
+
+int	main(void)
 {
-	int	i;
+	//int	i;
 	char	*str;
 	
 	str = readline("SuperShell: ");

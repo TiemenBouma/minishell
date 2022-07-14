@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/14 09:41:42 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 09:42:43 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/14 09:57:02 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,10 @@ void	perror_msg(char *msg, int err)
 {
 	perror(msg);
 	exit(err);
+}
+
+int free_stuff(char *str)
+{
+	free(str);
+	return (0);
 }

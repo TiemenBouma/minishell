@@ -6,12 +6,12 @@
 #    By: tiemen <tiemen@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
-#    Updated: 2022/07/14 09:52:34 by tiemen        ########   odam.nl          #
+#    Updated: 2022/07/14 10:11:16 by tiemen        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-OBJFILES := obj/src/main.o obj/src/utils.o
+OBJFILES := obj/src/main.o obj/src/utils.o obj/src/path_command.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra -Werror 

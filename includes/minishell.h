@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 09:46:36 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/14 10:15:50 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,29 @@
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
 
+typedef struct s_p
+{
+	pid_t	pid_child;
+	pid_t	wait;
+	int		tube[2];
+	int		infile;
+	int		outfile;
+	char	*cmd_path;
+	char	**cmd;
+	int		argc;
+	char	**argv;
+	int		child_n;
+	char	**root_paths;
+}t_p;
+
+//UTILS
 void	error_msg(char *msg, int err);
 void	perror_msg(char *msg, int err);
+int free_stuff(char *str);
+
+//PATH COMMAND
+char	**find_path(char **envp);
+char	*find_cmd_path(char **root_paths, char *cmd);
+
 
 #endif

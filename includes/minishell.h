@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 10:15:50 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/14 14:08:33 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
 # define ERR_FILE		"Infile or outfile error"
 # define ERR_FORK		"Fork error"

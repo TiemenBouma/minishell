@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:02:16 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/15 15:16:47 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/15 16:46:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,17 @@ char	**ft_split(char const *s, char c)
 	make_str_arr(s, c, str_arr, str_count);
 	str_arr[str_count] = NULL;
 	return (str_arr);
+}
+
+int main(void)
+{
+	char **str;
+	int i = 0;
+
+	str = ft_split("test | \" sfdsf\" fefr | testing", '|');
+	while (str[i])
+	{
+		printf("%s\n", str[i]);
+		i++;
+	}
 }

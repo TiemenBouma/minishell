@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/15 09:55:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/15 16:37:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	root_path = find_path(envp);
 	str = readline("SuperShell: ");
+	add_history(str);
 	while (root_path[i])
 	{
 		printf("%s\n", root_path[i]);

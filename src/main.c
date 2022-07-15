@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 20:06:11 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/15 09:55:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	***parse_line(char *line)
-{
-	int		pipe_count;
-	int i;
-	char	**split_pipe;
-	char	***cmd_arr;
-	
-	pipe_count = 0;
-	i = 0;
-	split_pipe = ft_split(line, '|');
-	while (split_pipe[pipe_count] != NULL)
-		pipe_count++;
-	cmd_arr = malloc(sizeof(char **) * pipe_count + 1);
-	while (i < pipe_count)
-	{
-		cmd_arr[i] = ft_split(split_pipe[i], ' ');
-		i++;
-	}
-	cmd_arr[i] = NULL;
-	return (cmd_arr);
-	
-}
+
 
 // int	make_history(char *str)
 // {

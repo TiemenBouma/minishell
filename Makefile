@@ -1,17 +1,17 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: tiemen <tiemen@student.codam.nl>             +#+                      #
-#                                                    +#+                       #
-#    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
-#    Updated: 2022/07/14 10:11:16 by tiemen        ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
+#    Updated: 2022/07/15 09:55:19 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-OBJFILES := obj/src/main.o obj/src/utils.o obj/src/path_command.o
+OBJFILES := obj/src/main.o obj/src/utils.o obj/src/path_command.o obj/src/parsing.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra -Werror 

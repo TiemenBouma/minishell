@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 09:55:34 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/15 13:35:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/15 15:37:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_quotes_on_pipes(char *line)
 {
 	//if "" are around a | character it should not split.
 	
-	return (0);
+	return (0); 
 }
 
 int	pipe_split(char *line)

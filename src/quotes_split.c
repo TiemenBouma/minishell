@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   quotes_split.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 15:02:16 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/17 13:57:37 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   quotes_split.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/15 15:02:16 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/07/17 15:43:06 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,29 @@ static void	free_string(char **str_arr, int i)
 	free(str_arr);
 }
 
-static int	calc_len_next_str(char const *s, char c, int mem_i)
+int ds (char *s, char d)
 {
-	int	i;
+	int i = 0;
 
-	i = 0;
-	while (s[mem_i] != c && s[mem_i] != '\0')
-	{
+	while (s[i] && s[i] != d)
 		i++;
-		mem_i++;
-	}
-	printf("calc len = %d \n", i);
 	return (i);
 }
+
+
+// static int	calc_len_next_str(char const *s, char c, int mem_i)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (s[mem_i] != c && s[mem_i] != '\0')
+// 	{
+// 		i++;
+// 		mem_i++;
+// 	}
+// 	printf("calc len = %d \n", i);
+// 	return (i);
+// }
 
 static int	is_quote(char c)
 {
@@ -45,7 +55,8 @@ static int	is_quote(char c)
 
 static void	make_sub_str(const char *s, char **str_arr, int i, int *current_str, char c)
 {
-	str_arr[*current_str] = ft_substr(s, i, (calc_len_next_str(s, c, i)));
+	//str_arr[*current_str] = ft_substr(s, i, (calc_len_next_str(s, c, i)));
+	str_arr[*current_str] = ft_substr(s, i, (ds((char *)s + i, c)));
 	if (str_arr[*current_str] == NULL)
 	{
 		free_string(str_arr, *current_str);
@@ -106,7 +117,7 @@ static int	str_counter(char const *s, char c)
 			while (s[i] && s[i] == c)
 				i++;
 		}
-		if (s[i] && is_quote(s[i]))
+		if (s[i] && is_quote(s[i])) // if checking for "" or '' then then it needs to check for the same char that the end and not for both quots. If there '$dfgjsgh "ywe" fgdf'
 		{
 			i++;
 			first_string = true;

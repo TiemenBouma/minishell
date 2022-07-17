@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:02:16 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/15 16:46:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/17 13:57:37 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_string(char **str_arr, int i)
+static void	free_string(char **str_arr, int i)
 {
 	while (i >= 0)
 	{
@@ -22,7 +22,7 @@ void	free_string(char **str_arr, int i)
 	free(str_arr);
 }
 
-int	calc_len_next_str(char const *s, char c, int mem_i)
+static int	calc_len_next_str(char const *s, char c, int mem_i)
 {
 	int	i;
 
@@ -32,64 +32,99 @@ int	calc_len_next_str(char const *s, char c, int mem_i)
 		i++;
 		mem_i++;
 	}
+	printf("calc len = %d \n", i);
 	return (i);
 }
 
-void	make_str_arr(char const *s, char c, char **str_arr, int str_count)
+static int	is_quote(char c)
 {
-	int	current_str;
-	int	i;
-
-	current_str = 0;
-	i = 0;
-	while (current_str < str_count && s[i])
-	{
-		while (s[i] == c && s[i])
-			i++;
-		str_arr[current_str] = ft_substr(s, i, (calc_len_next_str(s, c, i)));
-		if (str_arr[current_str] == NULL)
-			free_string(str_arr, current_str);
-		while (s[i] != c && s[i])
-			i++;
-		current_str++;
-	}
-}
-
-int	is_quote(char c)
-{
-	if (c == '\'' || c == '\"')
+	if (c == 34 || c == 39)
 		return (1);
 	return (0);
 }
 
-int	str_counter(char const *s, char c)
+static void	make_sub_str(const char *s, char **str_arr, int i, int *current_str, char c)
 {
-	int	str_count;
-	int	i;
+	str_arr[*current_str] = ft_substr(s, i, (calc_len_next_str(s, c, i)));
+	if (str_arr[*current_str] == NULL)
+	{
+		free_string(str_arr, *current_str);
+		//SET ERROR
+	}
+	(*current_str)++;
+}
 
+
+static int	str_maker(char const *s, char c, char	**str_arr)
+{
+	int		i;
+	int	current_str;
+
+	current_str = 0;
 	i = 0;
-	str_count = 1;
 	while (s[i])
 	{
+		while (s[i] && s[i] == c)
+			i++;
 		if (s[i] && is_quote(s[i]))
 		{
+			printf("str_maker test\n");
+			printf("I = %d, s[i] = %c\n", i, s[i]);
+			make_sub_str(s, str_arr, i + 1, &current_str, s[i]);
+			i++;//save string withougt "" ''
 			while (s[i] && is_quote(s[i]) == 0)
 				i++;
 			if (is_quote(s[i]))
 				i++;
 		}
-		if ( s[i] && s[i] == c)
+		if (s[i] && s[i] != c && is_quote(s[i]) == 0)
+		{
+			make_sub_str(s, str_arr, i, &current_str, c);
+			while (s[i] && s[i] != c && is_quote(s[i]) == 0)
+				i++;
+		}
+	}
+	return (0);
+}
+
+static int	str_counter(char const *s, char c)
+{
+	int		str_count;
+	int		i;
+	bool	first_string;
+
+	first_string = false;
+	i = 0;
+	str_count = 1;
+	while (s[i])
+	{
+		
+		if (s[i] && s[i] == c)
+		{
+			if (first_string == true)
+				str_count++;
+			while (s[i] && s[i] == c)
+				i++;
+		}
+		if (s[i] && is_quote(s[i]))
 		{
 			i++;
-			str_count++;
+			first_string = true;
+			while (s[i] && is_quote(s[i]) == 0)
+				i++;
+			if (is_quote(s[i]))
+				i++;
 		}
-		if (s[i] && s[i] != c && is_quote(s[i] == 0))
+		while (s[i] && s[i] != c && is_quote(s[i]) == 0)
+		{
+			first_string = true;
 			i++;
+		}
 	}
 	return (str_count);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_tokens(char const *s, char c)
 {
 	char	**str_arr;
 	int		str_count;
@@ -105,20 +140,20 @@ char	**ft_split(char const *s, char c)
 		str_arr[0] = NULL;
 		return (str_arr);
 	}
-	make_str_arr(s, c, str_arr, str_count);
+	str_maker(s, c, str_arr);
 	str_arr[str_count] = NULL;
 	return (str_arr);
 }
 
-int main(void)
-{
-	char **str;
-	int i = 0;
+// int main(void)
+// {
+// 	char **str;
+// 	int i = 0;
 
-	str = ft_split("test | \" sfdsf\" fefr | testing", '|');
-	while (str[i])
-	{
-		printf("%s\n", str[i]);
-		i++;
-	}
-}
+// 	str = ft_split("test | \" sfdsf\" fefr | testing", '|');
+// 	while (str[i])
+// 	{
+// 		printf("%s\n", str[i]);
+// 		i++;
+// 	}
+// }

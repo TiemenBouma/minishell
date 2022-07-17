@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:27:48 by tbouma            #+#    #+#             */
-/*   Updated: 2021/12/15 11:28:12 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/17 13:00:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	free_string(char **str_arr, int i)
+static void	free_string(char **str_arr, int i)
 {
 	while (i >= 0)
 	{
@@ -22,7 +22,7 @@ void	free_string(char **str_arr, int i)
 	free(str_arr);
 }
 
-int	calc_len_next_str(char const *s, char c, int mem_i)
+static int	calc_len_next_str(char const *s, char c, int mem_i)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ int	calc_len_next_str(char const *s, char c, int mem_i)
 	return (i);
 }
 
-void	make_str_arr(char const *s, char c, char **str_arr, int str_count)
+static void	make_str_arr(char const *s, char c, char **str_arr, int str_count)
 {
 	int	current_str;
 	int	i;
@@ -55,7 +55,7 @@ void	make_str_arr(char const *s, char c, char **str_arr, int str_count)
 	}
 }
 
-int	str_counter(char const *s, char c)
+static int	str_counter(char const *s, char c)
 {
 	int	str_count;
 	int	i;

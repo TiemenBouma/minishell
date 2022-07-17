@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/15 16:37:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/17 13:49:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,48 @@
 	
 // }
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)//(int argc, char **argv, char **envp)
 {
 	// HIST_ENTRY **the_history_list;
 	char	*str;
-	char	**root_path;
+	// char	**root_path;
 	//char	*cmd_path;
 	int		i, j;
-	char	***cmd_arr;
+	//char	***cmd_arr;
+	char	**tokens;
 	
 	i = 0;
-	(void) argc;
-	(void) argv;
-	root_path = find_path(envp);
+	j = 0;
+	// (void) argc;
+	// (void) argv;
+	// root_path = find_path(envp);
 	str = readline("SuperShell: ");
-	add_history(str);
-	while (root_path[i])
-	{
-		printf("%s\n", root_path[i]);
-		i++;
-	}
+	//add_history(str);
+	// while (root_path[i])
+	// {
+	// 	printf("%s\n", root_path[i]);
+	// 	i++;
+	// }
 	i = 0;
 	printf("readline:%s\n", str);
-	cmd_arr = parse_line(str);
-	while (cmd_arr[i])
+	tokens = ft_split_tokens(str, ' ');
+	
+	while (tokens[i])
 	{
-		j = 0;
-		while (cmd_arr[i][j])
-		{
-			printf("%s\n", cmd_arr[i][j]);
-			j++;
-		}
+		printf("|%s|\n", tokens[i]);
 		i++;
 	}
+	//cmd_arr = parse_line(str);
+	// while (cmd_arr[i])
+	// {
+	// 	j = 0;
+	// 	while (cmd_arr[i][j])
+	// 	{
+	// 		printf("%s\n", cmd_arr[i][j]);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	free_stuff(str);
 
 	

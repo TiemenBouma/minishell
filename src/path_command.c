@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   path_comand.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/14 09:56:02 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 10:02:40 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   path_command.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/17 12:32:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**find_path(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		ptr = ft_strnstr(envp[i], "PATH=", strlen(envp[i]));
+		ptr = ft_strnstr(envp[i], "PATH=", ft_strlen(envp[i]));
 		if (ptr != NULL)
 			break ;
 		i++;

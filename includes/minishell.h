@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/15 09:56:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/17 11:30:04 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ char	*find_cmd_path(char **root_paths, char *cmd);
 //PARSING
 char	***parse_line(char *line);
 
+//SPLIT BASH
+char	**ft_split_tokens(char const *s, char c);
 
 #endif

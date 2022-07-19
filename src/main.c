@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/17 16:23:52 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/19 15:49:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 	
 // }
 
+make_cmd_and_redir(char **tokens)
+{
+	
+}
+
 int	main(void)//(int argc, char **argv, char **envp)
 {
 	// HIST_ENTRY **the_history_list;
@@ -29,6 +34,7 @@ int	main(void)//(int argc, char **argv, char **envp)
 	int		i, j;
 	//char	***cmd_arr;
 	char	**tokens;
+	char	***cmds;
 	
 	i = 0;
 	j = 0;
@@ -51,6 +57,8 @@ int	main(void)//(int argc, char **argv, char **envp)
 		printf("|%s|\n", tokens[i]);
 		i++;
 	}
+	
+	cmds = make_cmd_and_redir(tokens);
 	//cmd_arr = parse_line(str);
 	// while (cmd_arr[i])
 	// {

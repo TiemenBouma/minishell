@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/14 09:41:42 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/14 09:57:02 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/07/20 13:56:50 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,22 @@ int free_stuff(char *str)
 {
 	free(str);
 	return (0);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size)
+{
+	size_t	len_src;
+	size_t	i;
+
+	i = 0;
+	len_src = ft_strlen(src);
+	if (dest_size == 0)
+		return (len_src);
+	while (dest_size > 1 + i && src[i])
+	{
+		((char *)dest)[i] = ((char *)src)[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (len_src);
 }

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/17 16:52:25 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/20 13:57:05 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ struct s_matrix	matrix;
 void	error_msg(char *msg, int err);
 void	perror_msg(char *msg, int err);
 int free_stuff(char *str);
+size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
 char	**find_path(char **envp);

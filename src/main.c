@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/19 21:42:49 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/07/20 14:04:49 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,20 @@ int	get_cmd_len(char **tokens, int *current_token)
 	return (len);
 }
 
-int	make_cmd(char **cmd_line, char **tokens, int current_token, int len)
+int	make_cmd(char **cmd_line, char **tokens, int current_token, int cmd_len)
 {
-	int i;
+	int	i;
+	int	str_len;
 
 	i = 0;
-	while (i < len)
+	while (i < cmd_len)
 	{
-		cmd_line[i] = malloc(sizeof(char) * (ft_strlen(tokens[current_token + i]) + 1));
-		i ++;
+		str_len = ft_strlen(tokens[current_token + i]);
+		cmd_line[i] = malloc(sizeof(char) * (str_len + 1));
+		ft_strlcpy(cmd_line[i], tokens[current_token], str_len);
+		i++;
 	}
+	
 	//COPY str
 }
 

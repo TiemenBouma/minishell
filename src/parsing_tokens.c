@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   quotes_split.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/15 15:02:16 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/07/17 15:43:06 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parsing_tokens.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/15 09:55:34 by tbouma            #+#    #+#             */
+/*   Updated: 2022/07/21 12:51:14 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ static int	str_maker(char const *s, char c, char	**str_arr)
 			i++;
 		if (s[i] && is_quote(s[i]))
 		{
-			printf("str_maker test\n");
-			printf("I = %d, s[i] = %c\n", i, s[i]);
 			make_sub_str(s, str_arr, i + 1, &current_str, s[i]);
 			i++;//save string withougt "" ''
 			while (s[i] && is_quote(s[i]) == 0)
@@ -156,15 +154,3 @@ char	**ft_split_tokens(char const *s, char c)
 	return (str_arr);
 }
 
-// int main(void)
-// {
-// 	char **str;
-// 	int i = 0;
-
-// 	str = ft_split("test | \" sfdsf\" fefr | testing", '|');
-// 	while (str[i])
-// 	{
-// 		printf("%s\n", str[i]);
-// 		i++;
-// 	}
-// }

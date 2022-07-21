@@ -6,27 +6,19 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 12:46:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/21 13:44:00 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-
-// int	make_history(char *str)
-// {
-	
-// }
-
-
-
-int	main(void)//(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	// HIST_ENTRY **the_history_list;
 	//struct s_data	d;
 	char	*str;
-	// char	**root_path;
+	char	**root_path;
 	//char	*cmd_path;
 	int		i, j;
 	//char	***cmd_arr;
@@ -36,9 +28,9 @@ int	main(void)//(int argc, char **argv, char **envp)
 	c1 = 0;
 	i = 0;
 	j = 0;
-	// (void) argc;
-	// (void) argv;
-	// root_path = find_path(envp);
+	(void) argc;
+	(void) argv;
+	root_path = find_path(envp);
 	str = readline("SuperShell: ");
 	//add_history(str);
 	// while (root_path[i])
@@ -46,8 +38,7 @@ int	main(void)//(int argc, char **argv, char **envp)
 	// 	printf("%s\n", root_path[i]);
 	// 	i++;
 	// }
-	i = 0;
-	printf("readline:%s\n", str);
+	//printf("readline:%s\n", str);
 	tokens = ft_split_tokens(str, ' ');
 
 	cmds = make_cmd_and_redir(tokens);

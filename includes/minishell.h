@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/20 13:57:05 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/21 11:08:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+
+# define ERR_FILE		"Infile or outfile error"
+# define ERR_FORK		"Fork error"
+# define ERR_INPUT		"Invalid number of arguments"
+# define ERR_PIPE		"Pipe error"
+# define ERR_CMD		"command not found"
+# define ERR_MALLOC		"Malloc error"
+# define ERR_DUP		"Dup2 error"
+# define ERR_PROCCES	"Procces error"
+# define ERR_EXEC		"Execve error"
+# define ERR_PATH		"Path error"
 
 struct	s_redir {
 	int	in;

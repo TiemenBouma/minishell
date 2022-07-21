@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:04:49 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/21 11:34:14 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	
 // }
 
-int	get_cmd_line_count(char **tokens, int *cmd_count)
+int	get_cmd_line_count(char **tokens, int cmd_count)
 {
 	int i;
 
@@ -27,21 +27,22 @@ int	get_cmd_line_count(char **tokens, int *cmd_count)
 	while (tokens[i] != NULL)
 	{
 		if (tokens[i][0] == '|')
-			*cmd_count++;
+			cmd_count++;
 		i++;
 	}
-	return (0);
+	return (cmd_count);
 }
 
-int	get_cmd_len(char **tokens, int *current_token)
+int	get_cmd_len(char **tokens, int current_token)
 {
 	int len;
 
 	len = 0;
-	while (tokens[*current_token] != '|')
+	while (tokens[current_token] && tokens[current_token][0] != '|')
 	{
+		//printf("current_token: %s\n", tokens[current_token]); //DEBUG
 		len++;
-		*current_token++;
+		current_token++;
 	}
 	return (len);
 }
@@ -55,47 +56,56 @@ int	make_cmd(char **cmd_line, char **tokens, int current_token, int cmd_len)
 	while (i < cmd_len)
 	{
 		str_len = ft_strlen(tokens[current_token + i]);
+		printf("strlen = %d\n", str_len);
+		printf("token: %s\n", tokens[current_token + i]);
 		cmd_line[i] = malloc(sizeof(char) * (str_len + 1));
-		ft_strlcpy(cmd_line[i], tokens[current_token], str_len);
+		ft_strlcpy(cmd_line[i], tokens[current_token + i], str_len + 1);
+		printf("cmdtoken: %s\n", cmd_line[i]);
 		i++;
 	}
-	
-	//COPY str
+	return (0);
 }
 
-get_cmds(char **tokens, char ***cmds, int cmd_lines)
+int	get_cmds(char **tokens, char ***cmds, int cmd_lines)
 {
 	int	current_token;
-	int len;
+	int cmd_len;
 	int	i;
 
 	i = 0;
 	current_token = 0;
 	while (i < cmd_lines)
 	{
-		len = get_cmd_len(tokens, &current_token);
-		cmds[i] = malloc(sizeof(char *) * (len + 1); //need to malloc one more *
-		make_cmd(cmds[i], tokens, current_token, len);
+		cmd_len = get_cmd_len(tokens, current_token);
+		//printf("cdm_len: %d\n", cmd_len); //DEBUG
+		cmds[i] = malloc(sizeof(char *) * (cmd_len + 1));
+		make_cmd(cmds[i], tokens, current_token, cmd_len);
+		current_token += cmd_len;
+		current_token++;
+		i++;
 	}
+	return (0);
 }
 
-make_cmd_and_redir(char **tokens)
+char	***make_cmd_and_redir(char **tokens)
 {
 	int cmd_lines;
 	char	***cmds;
 
 	cmd_lines = 1;
-	get_cmd_line_count(tokens, &cmd_lines);	
+	cmd_lines = get_cmd_line_count(tokens, cmd_lines);	
+	//printf("Comandines: %d\n", cmd_lines); // DEBUG
 	cmds = malloc(sizeof(char **) * (cmd_lines + 1));
 	cmds[cmd_lines] = NULL;
-	get_cmds(tokens, cmds, cmd_lines);
 	
+	get_cmds(tokens, cmds, cmd_lines);
+	return (cmds);
 }
 
 int	main(void)//(int argc, char **argv, char **envp)
 {
 	// HIST_ENTRY **the_history_list;
-	struct s_data	d;
+	//struct s_data	d;
 	char	*str;
 	// char	**root_path;
 	//char	*cmd_path;
@@ -103,7 +113,8 @@ int	main(void)//(int argc, char **argv, char **envp)
 	//char	***cmd_arr;
 	char	**tokens;
 	char	***cmds;
-	
+	int		c1, c2;
+	c1 = 0;
 	i = 0;
 	j = 0;
 	// (void) argc;
@@ -120,13 +131,25 @@ int	main(void)//(int argc, char **argv, char **envp)
 	printf("readline:%s\n", str);
 	tokens = ft_split_tokens(str, ' ');
 	
-	while (tokens[i])
-	{
-		printf("|%s|\n", tokens[i]);
-		i++;
-	}
+	// while (tokens[i])
+	// {
+	// 	printf("|%s|\n", tokens[i]);
+	// 	i++;
+	// }
 	
+
 	cmds = make_cmd_and_redir(tokens);
+	while (cmds[c1])
+	{
+		c2 = 0;
+		while (cmds[c1][c2])
+		{
+			printf("|%s| ", cmds[c1][c2]);
+			c2++;
+		}
+		printf("\n");
+		c1++;
+	}
 	//cmd_arr = parse_line(str);
 	// while (cmd_arr[i])
 	// {

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 12:48:45 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:18:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
 char	**find_path(char **envp);
-char	*find_cmd_path(char **root_paths, char *cmd);
+char	*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
 //PARSING_tokens
 char	**ft_split_tokens(char const *s, char c);

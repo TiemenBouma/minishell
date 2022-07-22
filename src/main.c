@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 13:44:00 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 11:45:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,29 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	// HIST_ENTRY **the_history_list;
-	//struct s_data	d;
-	char	*str;
-	char	**root_path;
-	//char	*cmd_path;
-	int		i, j;
-	//char	***cmd_arr;
-	char	**tokens;
-	char	***cmds;
-	int		c1, c2;
-	c1 = 0;
-	i = 0;
-	j = 0;
+	struct s_cmd_lines	cmd_lines;
+
 	(void) argc;
 	(void) argv;
-	root_path = find_path(envp);
-	str = readline("SuperShell: ");
-	//add_history(str);
-	// while (root_path[i])
-	// {
-	// 	printf("%s\n", root_path[i]);
-	// 	i++;
-	// }
-	//printf("readline:%s\n", str);
-	tokens = ft_split_tokens(str, ' ');
-
-	cmds = make_cmd_and_redir(tokens);
-	while (cmds[c1])
-	{
-		c2 = 0;
-		while (cmds[c1][c2])
-		{
-			printf("|%s| ", cmds[c1][c2]);
-			c2++;
-		}
-		printf("\n");
-		c1++;
-	}
-	free_stuff(str);
+	cmd_lines.root_paths = find_path(envp);
+	cmd_lines.input_str = readline("SuperShell: ");
+	cmd_lines.all_tokens = ft_split_tokens(cmd_lines.input_str, ' ');
+	cmd_lines.cmd_lines = make_cmd_lines(cmd_lines.all_tokens);
+	make_cmd_structs(&cmd_lines);
+	
+	return (0);
 }
+	// int		c1, c2;
+	// c1 = 0;
+	// while (cmd_lines.cmd_lines[c1])
+	// {
+	// 	c2 = 0;
+	// 	while (cmd_lines.cmd_lines[c1][c2])
+	// 	{
+	// 		printf("|%s| ", cmd_lines.cmd_lines[c1][c2]);
+	// 		c2++;
+	// 	}
+	// 	printf("\n");
+	// 	c1++;
+	// }
 

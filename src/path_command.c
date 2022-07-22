@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 17:49:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 11:34:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,37 +66,37 @@ char	*find_cmd_path(char **path_and_cmd_line, char **root_paths, char *cmd)
 	return (0);
 }
 
-int	find_cmd_in_line(char **cmd_line)
-{
-	int	i;
+// int	find_cmd_in_line(char **cmd_line)
+// {
+// 	int	i;
 
-	i = 0;
-	while (cmd_line[i])
-	{
-		if (cmd[i][0] == '<' || cmd[i][0] == '>')
-		{
-			if (cmd[i] && cmd[i + 1])
-				i += 2;
-		}
-	}
-}
+// 	i = 0;
+// 	while (cmd_line[i])
+// 	{
+// 		if (cmd[i][0] == '<' || cmd[i][0] == '>')
+// 		{
+// 			if (cmd[i] && cmd[i + 1])
+// 				i += 2;
+// 		}
+// 	}
+// }
 
-char	***add_path_to_cmd(char ***cmd_lines, char **root_paths)
-{
-	int	i;
-	int	cmd_count;
-	char	***path_and_cmd_lines;
+// char	***add_path_to_cmd(char ***cmd_lines, char **root_paths)
+// {
+// 	int	i;
+// 	int	cmd_count;
+// 	char	***path_and_cmd_lines;
 
-	i = 0;
-	cmd_count = 4;//needs function to know or get from struct form parse tokens
-	path_and_cmd_lines = malloc(sizeof(char **) * (cmd_count + 1));
-	while (i < cmd_count)
-	{
-		find_cmd_in_line(cmd_lines[i]);
-		path_and_cmd_lines[i] = find_cmd_path(path_and_cmd_lines[i], root_paths, cmd_lines[i][0]);
-		i++;
-	}
+// 	i = 0;
+// 	cmd_count = 4;//needs function to know or get from struct form parse tokens
+// 	path_and_cmd_lines = malloc(sizeof(char **) * (cmd_count + 1));
+// 	while (i < cmd_count)
+// 	{
+// 		find_cmd_in_line(cmd_lines[i]);
+// 		path_and_cmd_lines[i] = find_cmd_path(path_and_cmd_lines[i], root_paths, cmd_lines[i][0]);
+// 		i++;
+// 	}
 	
 	
-}
+// }
 

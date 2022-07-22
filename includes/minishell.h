@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 15:18:41 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 11:50:04 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,45 @@
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
 
-struct	s_redir {
-	int	in;
-	int	out;
-};
+// struct	s_redir {
+// 	int	in;
+// 	int	out;
+// };
 
-struct	s_pipe_nr_node {
+// struct	s_matrix {
+// 	struct s_redir redir;
+// 	struct s_pipe_nr_node	*result;
+// 	char	**input; //array of the tokens from expantion func
+// };
+
+// struct	s_data {
+// 	char			**splitted_tokens;
+// 	struct s_matrix	matrix;
+// };
+
+struct	s_pipe_cmd {
 	int		in;
 	int		out;
-	char	*exec_line;
+	char	**exec_line;
 };
 
-struct	s_matrix {
-	struct s_redir redir;
-	struct s_pipe_nr_node	*result;
-	char	**input; //array of the tokens from expantion func
-
+struct	s_cmd_info {
+	char				**tokens;
+	int					token_count;
+	bool				has_redir_in;
+	bool				has_redir_out;
+	char				*redir_in;
+	char				*redir_out;
+	struct s_pipe_cmd	*pipe_cmd;
 };
 
-struct	s_data {
-char			**splitted_tokens;
-struct s_matrix	matrix;
-
+struct	s_cmd_lines {
+	char				*input_str;
+	char				**root_paths;
+	char				**all_tokens;
+	char				***cmd_lines;
+	int					cmd_count;
+	struct s_cmd_info	*cmd_info;
 };
 
 //UTILS
@@ -71,7 +88,9 @@ char	*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 char	**ft_split_tokens(char const *s, char c);
 
 //PARSING CMD LINES
-char	***make_cmd_and_redir(char **tokens);
+char	***make_cmd_lines(char **tokens);
+
+//MAKE CMD STRUCTS
 
 //SPLIT BASH
 char	**ft_split_tokens(char const *s, char c);

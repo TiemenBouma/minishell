@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/21 12:48:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 11:31:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	get_cmds(char **tokens, char ***cmds, int cmd_lines)
 	return (0);
 }
 
-char	***make_cmd_and_redir(char **tokens)
+char	***make_cmd_lines(char **tokens)
 {
 	int cmd_lines;
 	char	***cmds;

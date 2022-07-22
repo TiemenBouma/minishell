@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 15:09:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 16:32:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
 
+# define P_OUT 0
+# define P_IN 1
+# define STD_OUT 1
+# define STD_IN 0
+# define CUR (i + 1) % 2
+# define PREV i % 2
+
+
+struct	s_redir {
+	int	in;
+	int	out;
+};
 // struct	s_redir {
 // 	int	in;
 // 	int	out;
@@ -73,6 +85,10 @@ struct	s_cmd_lines {
 	int					cmd_count;
 	struct s_cmd_info	*cmd_info;
 };
+
+//DAN
+int	err_chk(int i, int t, char *s);
+
 
 //UTILS
 void			error_msg(char *msg, int err);

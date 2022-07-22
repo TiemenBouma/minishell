@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 14:26:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 15:09:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,25 @@ struct	s_cmd_lines {
 };
 
 //UTILS
-void	error_msg(char *msg, int err);
-void	perror_msg(char *msg, int err);
-int free_stuff(char *str);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
+void			error_msg(char *msg, int err);
+void			perror_msg(char *msg, int err);
+int 			free_stuff(char *str);
+//size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
-char	**find_path(char **envp);
-char	*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
+char			**find_path(char **envp);
+char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
 //PARSING_tokens
-char	**ft_split_tokens(char const *s, char c);
+char			**ft_split_tokens(char const *s, char c);
 
 //PARSING CMD LINES
-char	***make_cmd_lines(char **tokens);
+char			***make_cmd_lines(char **tokens);
 
 //MAKE CMD STRUCTS
+int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
 
 //SPLIT BASH
-char	**ft_split_tokens(char const *s, char c);
+char			**ft_split_tokens(char const *s, char c);
 
 #endif

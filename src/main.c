@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 11:45:40 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 16:29:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,26 @@ int	main(int argc, char **argv, char **envp)
 	cmd_lines.input_str = readline("SuperShell: ");
 	cmd_lines.all_tokens = ft_split_tokens(cmd_lines.input_str, ' ');
 	cmd_lines.cmd_lines = make_cmd_lines(cmd_lines.all_tokens);
+	
 	make_cmd_structs(&cmd_lines);
 	
+	int		c1, c2;
+	c1 = 0;
+	while (c1 < cmd_lines.cmd_count)
+	{
+		c2 = 0;
+		while (cmd_lines.cmd_info[c1].pipe_cmd.exec_line[c2])
+		{
+			printf("|%s| ", cmd_lines.cmd_info[c1].pipe_cmd.exec_line[c2]);
+			c2++;
+		}
+		printf("\n");
+		c1++;
+	}
 	return (0);
 }
+
+
 	// int		c1, c2;
 	// c1 = 0;
 	// while (cmd_lines.cmd_lines[c1])
@@ -40,4 +56,3 @@ int	main(int argc, char **argv, char **envp)
 	// 	printf("\n");
 	// 	c1++;
 	// }
-

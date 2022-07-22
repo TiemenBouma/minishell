@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/07/21 13:20:05 by tbouma           ###   ########.fr        #
+#    Updated: 2022/07/22 15:11:59 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ OBJFILES := obj/src/main.o \
 			obj/src/path_command.o \
 			obj/src/parsing_tokens.o \
 			obj/src/parsing_cmd_lines.o \
-			obj/src/history.o
+			obj/src/history.o \
+			obj/src/make_cmd_struct.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra -Werror 

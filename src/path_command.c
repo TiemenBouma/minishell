@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/17 12:32:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 11:34:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,68 @@ char	**find_path(char **envp)
 	return (root_paths);
 }
 
-char	*find_cmd_path(char **root_paths, char *cmd)
+char	*find_cmd_path(char **path_and_cmd_line, char **root_paths, char *cmd)
 {
 	char	*temp;
 	int		i;
 
 	i = 0;
 	if (access(cmd, F_OK) == 0)
-		return (cmd);
+	{
+		path_and_cmd_line[0] = ft_strdup(cmd);
+		return (path_and_cmd_line[i]);
+	}
 	while (root_paths[i])
 	{
 		temp = ft_strjoin(root_paths[i], "/");
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
-		free(root_paths[i]);
-		root_paths[i] = temp;
+		//free(root_paths[i]);
+		path_and_cmd_line[0] = temp;
 		temp = ft_strjoin(root_paths[i], cmd);
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
-		free(root_paths[i]);
-		root_paths[i] = temp;
-		if (access(root_paths[i], F_OK) == 0)
-			return (root_paths[i]);
+		free(path_and_cmd_line[0]);
+		path_and_cmd_line[0] = temp;
+		if (access(path_and_cmd_line[0], F_OK) == 0)
+			return (path_and_cmd_line[0]);
 		i++;
 	}
 	error_msg(ERR_CMD, 127);
 	return (0);
 }
+
+// int	find_cmd_in_line(char **cmd_line)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (cmd_line[i])
+// 	{
+// 		if (cmd[i][0] == '<' || cmd[i][0] == '>')
+// 		{
+// 			if (cmd[i] && cmd[i + 1])
+// 				i += 2;
+// 		}
+// 	}
+// }
+
+// char	***add_path_to_cmd(char ***cmd_lines, char **root_paths)
+// {
+// 	int	i;
+// 	int	cmd_count;
+// 	char	***path_and_cmd_lines;
+
+// 	i = 0;
+// 	cmd_count = 4;//needs function to know or get from struct form parse tokens
+// 	path_and_cmd_lines = malloc(sizeof(char **) * (cmd_count + 1));
+// 	while (i < cmd_count)
+// 	{
+// 		find_cmd_in_line(cmd_lines[i]);
+// 		path_and_cmd_lines[i] = find_cmd_path(path_and_cmd_lines[i], root_paths, cmd_lines[i][0]);
+// 		i++;
+// 	}
+	
+	
+// }
 

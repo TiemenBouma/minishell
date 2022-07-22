@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/21 12:48:45 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/07/22 14:49:15 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
 
+# define PIPE_OUT 0
+# define PIPE_IN 1
+# define STD_OUT 1
+# define STD_IN 0
+# define CUR (i + 1) % 2
+# define PREV i % 2
+
+
 struct	s_redir {
 	int	in;
 	int	out;
@@ -57,10 +65,14 @@ struct s_matrix	matrix;
 
 };
 
+//DAN
+int	err_chk(int i, int t, char *s);
+
+
 //UTILS
 void	error_msg(char *msg, int err);
 void	perror_msg(char *msg, int err);
-int free_stuff(char *str);
+int		free_stuff(char *str);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND

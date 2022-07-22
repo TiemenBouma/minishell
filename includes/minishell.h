@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/22 14:55:44 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/22 15:28:48 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
 
-# define PIPE_OUT 0
-# define PIPE_IN 1
+# define P_OUT 0
+# define P_IN 1
 # define STD_OUT 1
 # define STD_IN 0
 # define CUR (i + 1) % 2

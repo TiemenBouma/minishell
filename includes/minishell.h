@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 11:50:04 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 14:26:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ struct	s_pipe_cmd {
 struct	s_cmd_info {
 	char				**tokens;
 	int					token_count;
-	bool				has_redir_in;
-	bool				has_redir_out;
-	char				*redir_in;
-	char				*redir_out;
-	struct s_pipe_cmd	*pipe_cmd;
+	int					has_redir_in;
+	int					has_redir_out;
+	char				*redir_in; //**redir_in
+	char				*redir_out;//**redir_out;
+	struct s_pipe_cmd	pipe_cmd;
 };
 
 struct	s_cmd_lines {

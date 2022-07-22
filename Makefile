@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/07/22 15:11:59 by tbouma           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tbouma <tbouma@student.42.fr>                +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
+#    Updated: 2022/07/22 16:56:20 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ OBJFILES := obj/src/main.o \
 			obj/src/parsing_tokens.o \
 			obj/src/parsing_cmd_lines.o \
 			obj/src/history.o \
-			obj/src/make_cmd_struct.o
+			obj/src/make_cmd_struct.o \
+			obj/src/executils.o \
+			obj/src/execution.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra -Werror 

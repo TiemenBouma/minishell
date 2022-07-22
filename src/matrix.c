@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:09:00 by dkocob            #+#    #+#             */
-/*   Updated: 2022/07/21 13:52:39 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   matrix.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:09:00 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/07/22 17:04:20 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,12 @@
 // }
 
 
-void sort_tokens_for_execve(struct s_data d)
-{
-	int ammountofpipes = 10; //result after expantion of variables
-	struct s_matrix matrix;
+// void sort_tokens_for_execve(struct s_data d)
+// {
+// 	int ammountofpipes = 10; //result after expantion of variables
+// 	struct s_matrix matrix;
 	
-	matrix.result = malloc(sizeof(result) * ammountofpipes);
-	return (result);
-}
+// 	matrix.result = malloc(sizeof(result) * ammountofpipes);
+// 	return (result);
+// }
 // goes to execution.c

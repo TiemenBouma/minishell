@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 16:32:41 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/07/22 17:04:01 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ struct	s_cmd_lines {
 
 //DAN
 int	err_chk(int i, int t, char *s);
-
+int	exec(struct	s_cmd_lines	*d);
+char	*ft_sjf(char *s1, char *s2, int f);
 
 //UTILS
 void			error_msg(char *msg, int err);

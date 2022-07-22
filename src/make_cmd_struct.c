@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/22 16:21:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/22 16:55:05 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	calc_exec_line_len(struct s_cmd_info *cmd_struct)
 	return (exec_len);
 }
 
-
 static int	make_exec_line(struct s_cmd_info *cmd_struct)
 {
 	int i;
@@ -76,10 +75,23 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 	return (0);
 }
 
+static int	open_fd(struct s_cmd_info *cmd_struct)
+{
+	if (cmd_struct->has_redir_in == 1)
+		cmd_struct->pipe_cmd.in = open(cmd_struct->redir_in, O_RDONLY);
+	else
+		cmd_struct->pipe_cmd.in = 0;
+	if (cmd_struct->has_redir_out == 1)
+		cmd_struct->pipe_cmd.out = open(cmd_struct->redir_in, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else
+		cmd_struct->pipe_cmd.out = 0;
+	return (0);
+}
+
 static int	make_pipe_cmd(struct s_cmd_info *cmd_struct)
 {
 	make_exec_line(cmd_struct);
-	//open FD IN and FD_OUT
+	open_fd(cmd_struct);
 	return (0);
 }
 

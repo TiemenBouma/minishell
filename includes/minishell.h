@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/22 17:04:01 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/22 17:07:09 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
 
 # define ERR_FILE		"Infile or outfile error"

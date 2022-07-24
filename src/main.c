@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/24 13:02:37 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 14:57:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	main(int argc, char **argv, char **envp)
 	cmd_lines.cmd_lines = make_cmd_lines(cmd_lines.all_tokens);
 	
 	make_cmd_structs(&cmd_lines);
-	print_structs(&cmd_lines);
+
+	exec(&cmd_lines);
+	
+	//print_structs(&cmd_lines);
 	
 	// int		c1, c2;
 	// c1 = 0;

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 14:01:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 14:56:46 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ static int	open_fd(struct s_cmd_info *cmd_struct)
 	if (cmd_struct->has_infile == 1)
 		cmd_struct->pipe_cmd.fd_in = open(cmd_struct->infile, O_RDONLY);
 	else
-		cmd_struct->pipe_cmd.fd_in = 0;
+		cmd_struct->pipe_cmd.fd_in = -1;
 	if (cmd_struct->has_outfile == 1)
-		cmd_struct->pipe_cmd.fd_out = open(cmd_struct->infile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
+		cmd_struct->pipe_cmd.fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else
-		cmd_struct->pipe_cmd.fd_out = 0;
+		cmd_struct->pipe_cmd.fd_out = -1;
 	return (0);
 }
 

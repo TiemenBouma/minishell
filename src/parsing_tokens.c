@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 09:55:34 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/21 12:51:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 16:18:07 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,17 @@ char	**ft_split_tokens(char const *s, char c)
 	if (!s)
 		return (NULL);
 	str_count = str_counter(s, c);
-	str_arr = (char **) malloc((str_count + 1) * sizeof(char *));
+	str_arr = malloc(sizeof(char *) * (str_count + 1));
 	if (str_arr == NULL)
 		return (NULL);
+	str_arr[str_count] = NULL;
 	if (!(*s))
 	{
 		str_arr[0] = NULL;
 		return (str_arr);
 	}
 	str_maker(s, c, str_arr);
-	str_arr[str_count] = NULL;
+	//str_arr[str_count] = NULL;
 	return (str_arr);
 }
 

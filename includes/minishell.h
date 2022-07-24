@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/24 14:01:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 16:34:02 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ char			**ft_split_tokens(char const *s, char c);
 
 //testing
 int	print_structs(struct s_cmd_lines *s);
+int	print_dubble_str(char **str, char *name);
 
 #endif

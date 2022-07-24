@@ -6,20 +6,23 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 12:40:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 16:23:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	get_cmd_line_count(char **tokens, int cmd_count)
+static int	get_cmd_line_count(char **all_tokens, int cmd_count)
 {
 	int i;
 
 	i = 0;
-	while (tokens[i] != NULL)
+	//print_dubble_str(tokens, "this is the token array");
+	if (all_tokens == NULL)
+		exit (printf("tokens not exits!\n"));
+	while (all_tokens[i] != NULL)
 	{
-		if (tokens[i][0] == '|')
+		if (all_tokens[i][0] == '|')
 			cmd_count++;
 		i++;
 	}

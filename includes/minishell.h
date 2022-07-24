@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/22 17:07:09 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/24 14:01:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ struct	s_redir {
 // };
 
 struct	s_pipe_cmd {
-	int		in;
-	int		out;
+	int		fd_in;
+	int		fd_out;
 	char	**exec_line;
 };
 
 struct	s_cmd_info {
 	char				**tokens;
 	int					token_count;
-	int					has_redir_in;
-	int					has_redir_out;
-	char				*redir_in; //**redir_in
-	char				*redir_out;//**redir_out;
+	int					has_infile;
+	int					has_outfile;
+	char				*infile; //**infile
+	char				*outfile;//**outfile;
 	struct s_pipe_cmd	pipe_cmd;
 };
 
@@ -113,5 +113,8 @@ int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
 
 //SPLIT BASH
 char			**ft_split_tokens(char const *s, char c);
+
+//testing
+int	print_structs(struct s_cmd_lines *s);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/07/22 16:47:38 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
+/*   Updated: 2022/07/24 14:03:23 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exec(struct	s_cmd_lines	*d)
 			else if (i != 1)
 			{
 				err_chk(dup2(p[PREV][P_OUT], STD_IN), 1, "");
-				err_chk(dup2(d->cmd_info[i].pipe_cmd.out , STD_OUT), 1, "");
+				err_chk(dup2(d->cmd_info[i].pipe_cmd.fd_out , STD_OUT), 1, "");
 			}
 			// close (p[CUR][P_IN]);
 			execve(d->cmd_info[i - 1].pipe_cmd.exec_line[0], d->cmd_info[i - 1].pipe_cmd.exec_line, NULL);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/22 11:31:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/24 12:40:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static int	get_cmds(char **tokens, char ***cmds, int cmd_lines)
 	{
 		cmd_len = get_cmd_len(tokens, current_token);
 		cmds[i] = malloc(sizeof(char *) * (cmd_len + 1));
+		//malloc proctection
+		cmds[i][cmd_len] = NULL;
 		make_cmd(cmds[i], tokens, current_token, cmd_len);
 		current_token += cmd_len;
 		current_token++;

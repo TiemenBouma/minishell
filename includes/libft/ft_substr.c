@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:29:04 by tbouma            #+#    #+#             */
-/*   Updated: 2021/12/15 11:29:51 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 16:28:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
-	size_t	i;
+	size_t	len_str;
 
 	if (s == NULL)
 		return (NULL);
-	i = ft_strlen(s);
-	if (i - start < len && !(i < start))
-		len = i - start;
-	if (start > i)
+	len_str = ft_strlen(s);
+	if (len_str - start < len && (len_str < start))
+		len = len_str - start;
+	if (start > len_str)
 	{
 		ptr = ft_calloc(1, sizeof(char));
 		return (ptr);
@@ -30,13 +30,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ptr = (char *) malloc((len + 1) * sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	i = 0;
-	while (s[start] && len > i)
+	len_str = 0;
+	while (s[start] && len > len_str)
 	{
-		ptr[i] = s[start + i];
-		i++;
+		ptr[len_str] = s[start + len_str];
+		len_str++;
 	}
-	ptr[i] = '\0';
+	ptr[len_str] = '\0';
 	return (ptr);
 }
 

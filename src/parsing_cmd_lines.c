@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 16:23:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 16:30:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static int	make_cmd(char **cmd_line, char **tokens, int current_token, int cmd_l
 	{
 		str_len = ft_strlen(tokens[current_token + i]);
 		cmd_line[i] = malloc(sizeof(char) * (str_len + 1));
+		//protect  malloc
+		cmd_line[i][str_len] = '\0';
 		ft_strlcpy(cmd_line[i], tokens[current_token + i], str_len + 1);
 		i++;
 	}

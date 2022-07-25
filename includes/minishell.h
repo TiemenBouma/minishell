@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/25 13:52:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 15:09:02 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int 			free_stuff(char *str);
 
 //PATH COMMAND
 char			**find_path(char **envp);
+int	add_path(char **exec_line, char **root_paths);
 char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
 //PARSING_tokens

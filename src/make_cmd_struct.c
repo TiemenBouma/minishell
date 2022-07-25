@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/25 11:48:25 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 15:08:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 	//malloc protection
 	cmd_struct->pipe_cmd.exec_line[exec_len] = NULL;
 	find_exec_tokens(cmd_struct);
+	
 	return (0);
 }
 
@@ -163,7 +164,7 @@ int	make_cmd_structs(struct s_cmd_lines *cmd_lines)
 		redir_check(&cmd_lines->cmd_info[line]);
 		//malloc protect
 		make_pipe_cmd(&cmd_lines->cmd_info[line]);
-
+		add_path(cmd_lines->cmd_info[line].pipe_cmd.exec_line, cmd_lines->root_paths);
 		line++;
 	}
 	return (0);

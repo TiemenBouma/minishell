@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/22 11:34:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 15:10:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,37 @@ char	**find_path(char **envp)
 	return (root_paths);
 }
 
-char	*find_cmd_path(char **path_and_cmd_line, char **root_paths, char *cmd)
+int	add_path(char **exec_line, char **root_paths)
 {
 	char	*temp;
+	char	*temp2;
+	char	*cmd_temp;
 	int		i;
 
 	i = 0;
-	if (access(cmd, F_OK) == 0)
-	{
-		path_and_cmd_line[0] = ft_strdup(cmd);
-		return (path_and_cmd_line[i]);
-	}
+	if (access(exec_line[0], F_OK) == 0)
+		return (0);
+	cmd_temp = ft_strdup(exec_line[0]);
 	while (root_paths[i])
 	{
 		temp = ft_strjoin(root_paths[i], "/");
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
-		//free(root_paths[i]);
-		path_and_cmd_line[0] = temp;
-		temp = ft_strjoin(root_paths[i], cmd);
+		temp2 = ft_strjoin(temp, cmd_temp);
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
-		free(path_and_cmd_line[0]);
-		path_and_cmd_line[0] = temp;
-		if (access(path_and_cmd_line[0], F_OK) == 0)
-			return (path_and_cmd_line[0]);
+		free(exec_line[0]);
+		exec_line[0] = temp2;
+		free(temp);
+		//free(temp2);
+		if (access(exec_line[0], F_OK) == 0)
+		{
+			free(cmd_temp);
+			return (0);
+		}
 		i++;
 	}
+	free(cmd_temp);
 	error_msg(ERR_CMD, 127);
 	return (0);
 }
@@ -85,15 +89,15 @@ char	*find_cmd_path(char **path_and_cmd_line, char **root_paths, char *cmd)
 // {
 // 	int	i;
 // 	int	cmd_count;
-// 	char	***path_and_cmd_lines;
+// 	char	***exec_lines;
 
 // 	i = 0;
 // 	cmd_count = 4;//needs function to know or get from struct form parse tokens
-// 	path_and_cmd_lines = malloc(sizeof(char **) * (cmd_count + 1));
+// 	exec_lines = malloc(sizeof(char **) * (cmd_count + 1));
 // 	while (i < cmd_count)
 // 	{
 // 		find_cmd_in_line(cmd_lines[i]);
-// 		path_and_cmd_lines[i] = find_cmd_path(path_and_cmd_lines[i], root_paths, cmd_lines[i][0]);
+// 		exec_lines[i] = find_cmd_path(exec_lines[i], root_paths, cmd_lines[i][0]);
 // 		i++;
 // 	}
 	

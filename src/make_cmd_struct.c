@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 15:54:04 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 11:48:25 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,12 @@ int	make_cmd_structs(struct s_cmd_lines *cmd_lines)
 		cmd_lines->cmd_info[line].token_count = cmd_line_count;
 		cmd_lines->cmd_info[line].tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
 		if (cmd_lines->cmd_info[line].tokens == NULL)
-			return (-1);//(ERR_MALLOC);
+			exit (1);//(ERR_MALLOC);
+		cmd_lines->cmd_info[line].tokens[cmd_line_count] = NULL;
 		copy_token(cmd_lines->cmd_lines[line], cmd_lines->cmd_info[line].tokens, cmd_lines->cmd_info[line].token_count);
 		redir_check(&cmd_lines->cmd_info[line]);
 		//malloc protect
 		make_pipe_cmd(&cmd_lines->cmd_info[line]);
-		// printf("debug\n");
 
 		line++;
 	}

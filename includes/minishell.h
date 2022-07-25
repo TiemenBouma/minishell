@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/24 16:34:02 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 13:52:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ struct	s_cmd_lines {
 	char				***cmd_lines;
 	int					cmd_count;
 	struct s_cmd_info	*cmd_info;
+	//pipex
+	int					curr_exec_cmd_n;
+	pid_t				pid_child;
+	int					tube[2];
 };
 
 //DAN

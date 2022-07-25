@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 16:29:12 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/25 11:40:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	print_dubble_str(char **str, char *name)
 		c1++;
 	}
 	printf("\n");
-	printf("token count = %d\n", c1);
 	return (0);
 }
 

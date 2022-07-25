@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/25 16:25:05 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/07/25 20:31:54 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd_lines.all_tokens = ft_split_tokens(cmd_lines.input_str, ' ');
 	cmd_lines.cmd_lines = make_cmd_lines(cmd_lines.all_tokens);
 	
-	make_cmd_structs(&cmd_lines);
+	// make_cmd_structs(&cmd_lines);
 
 	print_structs(&cmd_lines);
 	exec(&cmd_lines);

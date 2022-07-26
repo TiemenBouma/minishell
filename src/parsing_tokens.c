@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 09:55:34 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/24 16:18:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:29:20 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,18 @@ static int	is_quote(char c)
 	return (0);
 }
 
-static void	make_sub_str(const char *s, char **str_arr, int i, int *current_str, char c)
+static int	make_sub_str(const char *s, char **str_arr, int i, int current_str, char c)
 {
 	//str_arr[*current_str] = ft_substr(s, i, (calc_len_next_str(s, c, i)));
-	str_arr[*current_str] = ft_substr(s, i, (ds((char *)s + i, c)));
-	if (str_arr[*current_str] == NULL)
+	str_arr[current_str] = ft_substr(s, i, (ds((char *)s + i, c)));
+	if (str_arr[current_str] == NULL)
+	if (str_arr[current_str] == NULL)
 	{
-		free_string(str_arr, *current_str);
+		free_string(str_arr, current_str);
 		//SET ERROR
 	}
-	(*current_str)++;
+	(current_str)++;
+	return (current_str);
 }
 
 
@@ -79,7 +81,7 @@ static int	str_maker(char const *s, char c, char	**str_arr)
 			i++;
 		if (s[i] && is_quote(s[i]))
 		{
-			make_sub_str(s, str_arr, i + 1, &current_str, s[i]);
+			current_str =  make_sub_str(s, str_arr, i + 1, current_str, s[i]);
 			i++;//save string withougt "" ''
 			while (s[i] && is_quote(s[i]) == 0)
 				i++;
@@ -88,7 +90,7 @@ static int	str_maker(char const *s, char c, char	**str_arr)
 		}
 		if (s[i] && s[i] != c && is_quote(s[i]) == 0)
 		{
-			make_sub_str(s, str_arr, i, &current_str, c);
+			current_str = make_sub_str(s, str_arr, i, current_str, c);
 			while (s[i] && s[i] != c && is_quote(s[i]) == 0)
 				i++;
 		}

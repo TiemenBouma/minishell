@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/25 19:23:06 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/26 16:33:00 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	add_path(char **exec_line, char **root_paths);
 char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
 //PARSING_tokens
-char			**ft_split_tokens(char const *s, char c);
+char			**ft_split_tokens(char const *s);
 
 //PARSING CMD LINES
 char			***make_cmd_lines(char **tokens);
@@ -118,8 +118,6 @@ char			***make_cmd_lines(char **tokens);
 //MAKE CMD STRUCTS
 int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
 
-//SPLIT BASH
-char			**ft_split_tokens(char const *s, char c);
 
 //testing
 int	print_structs(struct s_cmd_lines *s);

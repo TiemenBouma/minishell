@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/26 13:39:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 17:50:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		cmd_lines.input_str = readline("SuperShell: ");
-		cmd_lines.all_tokens = ft_split_tokens(cmd_lines.input_str, ' ');
+		cmd_lines.all_tokens = ft_split_tokens(cmd_lines.input_str);
 		cmd_lines.cmd_lines = make_cmd_lines(cmd_lines.all_tokens);
-		
+		print_dubble_str(cmd_lines.all_tokens, "all_tokens");
 		make_cmd_structs(&cmd_lines);
 
 		print_structs(&cmd_lines);

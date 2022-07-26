@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:29:04 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/25 16:40:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:41:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
-	size_t	len_str;
+	size_t	src_size;
 
 	if (s == NULL)
 		return (NULL);
-	len_str = ft_strlen(s);
-	if (len_str - start < len && (len_str < start))
-		len = len_str - start;
-	if (start > len_str)
+	src_size = ft_strlen(s);
+	if (src_size - start < len && src_size >= start)
+		len = src_size - start;
+	if (start > src_size)
 	{
 		ptr = ft_calloc(1, sizeof(char));
 		if (ptr == NULL)
 			return (NULL);
 		return (ptr);
 	}
-	ptr = (char *) malloc((len + 1) * sizeof(char));
+	ptr = (char *) malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)
 		return (NULL);
-	len_str = 0;
-	while (s[start] && len > len_str)
+	src_size = 0;
+	while (s[start] && len > src_size)
 	{
-		ptr[len_str] = s[start + len_str];
-		len_str++;
+		ptr[src_size] = s[start + src_size];
+		src_size++;
 	}
-	ptr[len_str] = '\0';
+	ptr[src_size] = '\0';
 	return (ptr);
 }
 

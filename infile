@@ -1,7 +1,13 @@
-Makefile
-includes
-infile
-minishell
-obj
-outfile
-src
+total 136
+drwxr-xr-x  12 tbouma  piscine    408 Jul 26 12:32 .
+drwxr-xr-x  15 tbouma  piscine    510 Jul 15 09:43 ..
+drwxr-xr-x  15 tbouma  piscine    510 Jul 26 12:32 .git
+-rw-r--r--   1 tbouma  piscine     67 Jul 21 14:02 .gitignore
+drwxr-xr-x   7 tbouma  piscine    238 Jul 25 16:16 .vscode
+-rw-r--r--   1 tbouma  piscine   1737 Jul 26 10:32 Makefile
+drwxr-xr-x   4 tbouma  piscine    136 Jul 26 12:32 includes
+-rw-r--r--   1 tbouma  piscine      0 Jul 26 12:33 infile
+-rwxr-xr-x   1 tbouma  piscine  54952 Jul 26 12:32 minishell
+drwxr-xr-x   3 tbouma  piscine    102 Jul 17 12:30 obj
+-rw-r--r--   1 tbouma  piscine     51 Jul 26 12:32 outfile
+drwxr-xr-x  14 tbouma  piscine    476 Jul 26 12:32 src

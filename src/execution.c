@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/07/26 11:06:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 13:40:57 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int	exec(struct	s_cmd_lines	*d)
 	}
 	close (p[CUR][P_OUT]);
 	waitpid(id, &i, 0);
-	exit (WEXITSTATUS(i));
+	//Do we need to exit here? and do we need to store WEXITSTATUS(i) ??
+	return (WEXITSTATUS(i));
 }

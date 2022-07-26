@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:29:04 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/26 15:41:56 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:59:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (s == NULL)
 		return (NULL);
 	src_size = ft_strlen(s);
-	if (src_size - start < len && src_size >= start)
-		len = src_size - start;
 	if (start > src_size)
 	{
 		ptr = ft_calloc(1, sizeof(char));
@@ -29,11 +27,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 			return (NULL);
 		return (ptr);
 	}
-	ptr = (char *) malloc(sizeof(char) * (len + 1));
+	if (src_size - start < len)
+		len = src_size - start;
+	ptr = malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)
 		return (NULL);
 	src_size = 0;
-	while (s[start] && len > src_size)
+	while (s[start + src_size] && len > src_size)
 	{
 		ptr[src_size] = s[start + src_size];
 		src_size++;
@@ -42,14 +42,22 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
+// #include <stdio.h>
+
 // int main(void)
 // {
-// 	char *ptr = "Tiemen";
+// 	char *ptr = "TiemenDAN";
 // 	char *cpy;
 // 	char *cpy2;
 
-// 	cpy = ft_substr(ptr, 2, 3);
-// 	printf("sub = %s\n", cpy);
-// 	cpy2 = ft_substr(ptr, 2, 3);
-// 	printf("sub = %s\n", cpy2);
+// 	cpy = ft_substr(ptr, 0, 10);
+// 	printf("sub = |%s|\n", cpy);
+// 	cpy2 = ft_substr(ptr, 10, 3);
+// 	printf("sub = |%s|\n", cpy2);
+// 	cpy = ft_substr(ptr, 1, 1);
+// 	printf("sub = |%s|\n", cpy);
+// 	cpy2 = ft_substr(ptr, 0, 0);
+// 	printf("sub = |%s|\n", cpy2);
+// 	cpy2 = ft_substr(ptr, 8, 8);
+// 	printf("sub = |%s|\n", cpy2);
 // }

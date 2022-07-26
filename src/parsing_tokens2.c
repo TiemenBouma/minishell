@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/26 13:25:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/26 13:59:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,24 @@
 int	find_end_token(char const *s, int *index)
 {
 	int len;
+	char	c;
 
 	len = 0;
-	if (s[*index] == '\'')
+	if (s[*index] == '\'' || s[*index] == '\"')
 	{
+		c = s[*index];
 		*index++;
-		while (s[*index] && s[*index] != '\'')
+		while (s[*index] && s[*index] != 'c')
 		{
 			len++;
 			*index++;
 		}
 		return (len);
 	}
-	if (s[*index] == '\"')
+	if (s[*index] == '<' || s[*index] == '>')
 	{
-		index++;
-		while (s[*index] && s[*index] != '\"')
-		{
-			len++;	
-			*index++;
-		}
-		return (len);
-	}
-	if (s[*index] == '<')
-	{
-		while (s[*index] && s[*index] == '<')
-		{
-			len++;
-			*index++;
-		}
-		return (len);
-	}
-	if (s[*index] == '>')
-	{
-		while (s[*index] && s[*index] == '>')
+		c = s[*index];
+		while (s[*index] && s[*index] == c)
 		{
 			len++;
 			*index++;
@@ -68,6 +52,11 @@ int	find_next_token_sign(char const *s, int *index)
 	return (0);
 }
 
+static int	str_maker(char const *s, char **str_arr)
+{
+	
+}
+
 static int	str_counter(char const *s)
 {
 	int	index;
@@ -75,14 +64,18 @@ static int	str_counter(char const *s)
 	
 	index = 0;
 	count = 0;
-	while (1)
+	while (s[index])
 	{
 		if (find_next_token_sign(s, &index))
 			count++;
 		else
 			return (count);
 		find_end_token(s, &index);
+		if (s[index] == '\0')
+			return (count);
+		index++;
 	}
+	return (count);
 }
 
 char	**ft_split_tokens(char const *s, char c)
@@ -97,12 +90,11 @@ char	**ft_split_tokens(char const *s, char c)
 	if (str_arr == NULL)
 		return (NULL);
 	str_arr[str_count] = NULL;
-	if (!(*s))
-	{
-		str_arr[0] = NULL;
-		return (str_arr);
-	}
+	// if (!(*s))
+	// {
+	// 	str_arr[0] = NULL;
+	// 	return (str_arr);
+	// }
 	str_maker(s, c, str_arr);
-	//str_arr[str_count] = NULL;
 	return (str_arr);
 }

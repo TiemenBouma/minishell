@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/27 15:45:45 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 17:42:25 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	main(void)//(int argc, char **argv, char **envp)
 	while (1)
 	{
 		var.input_str = readline("SuperShell: ");
+		//expand after readline all env var. Only not if single quots. Tiemen Will make this tomorrow!!!!!
 		var.all_tokens = ft_split_tokens(var.input_str);
 		var.cmd_lines = make_cmd_lines(var.all_tokens);
-		
+
 		make_cmd_structs(&var);
 		//print_structs(&var);
 		exec(&var);

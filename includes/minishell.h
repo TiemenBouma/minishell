@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/26 16:33:00 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 13:12:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ char			***make_cmd_lines(char **tokens);
 
 //MAKE CMD STRUCTS
 int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
+
+//FREE
+void	free_struct(struct s_cmd_lines *var);
 
 
 //testing

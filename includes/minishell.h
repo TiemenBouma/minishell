@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/27 13:34:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:28:20 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ struct	s_redir {
 // 	char			**splitted_tokens;
 // 	struct s_matrix	matrix;
 // };
+
+typedef struct s_node
+{
+	char			*str;
+	int				i;
+	struct s_node	*n;
+	struct s_node	*p;
+}	t_node;
 
 struct	s_pipe_cmd {
 	int		fd_in;
@@ -122,9 +130,19 @@ int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
 //FREE
 void	free_struct(struct s_cmd_lines *var);
 
+//LInkedLIST
+t_node	*ft_new_node(char *str);
+void	ft_list_node_add_back(t_node **node_lst, t_node *new_node);
+int	ft_list_size(t_node *lst);
+t_node	*ft_list_find_last_node(t_node **list);
+
+
+//env_var_list
+t_node	*add_env_to_list(char **environ);
 
 //testing
 int	print_structs(struct s_cmd_lines *s);
 int	print_dubble_str(char **str, char *name);
+int	print_list(t_node *node);
 
 #endif

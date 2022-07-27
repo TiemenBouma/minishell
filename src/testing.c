@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/26 17:50:26 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:27:04 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,16 @@ int	print_structs(struct s_cmd_lines *s)
 	// print_tripple_str(s->cmd_lines, "THe CMD_lines:");
 	print_cmd_info(s);
 	return (0);
+}
+
+int	print_list(t_node *node)
+{
+	if (!node)
+		return -1;
+	while (node)
+	{
+		printf("%s\n", node->str);
+		node = node->n;
+	}
+	return 0;
 }

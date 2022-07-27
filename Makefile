@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/07/27 13:11:18 by tbouma           ###   ########.fr        #
+#    Updated: 2022/07/27 15:20:34 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ OBJFILES := obj/src/main.o \
 			obj/src/executils.o \
 			obj/src/execution.o \
 			obj/src/free.o \
+			obj/src/env_var_list.o \
+			obj/src/linked_list.o \
 			obj/src/testing.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/

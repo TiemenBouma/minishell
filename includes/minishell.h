@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/27 13:12:52 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 13:34:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ struct	s_cmd_lines {
 	char				***cmd_lines;
 	int					cmd_count;
 	struct s_cmd_info	*cmd_info;
+	char				**env_var;
 	//pipex
 	int					curr_exec_cmd_n;
 	pid_t				pid_child;

@@ -6,21 +6,21 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/27 13:13:49 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 13:32:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)//(int argc, char **argv, char **envp)
 {
 	struct s_cmd_lines	var;
 
 	extern char **environ;
-	(void) argc;
-	(void) argv;
-	var.root_paths = find_path(envp);
+	// (void) argc;
+	// (void) argv;
+	var.root_paths = find_path(environ);
 	while (1)
 	{
 		var.input_str = readline("SuperShell: ");
@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		exec(&var);
 		free_struct(&var);
 	}
-	
 	return (0);
 }
 

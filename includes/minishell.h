@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/27 15:28:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/27 15:44:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ t_node	*add_env_to_list(char **environ);
 //testing
 int	print_structs(struct s_cmd_lines *s);
 int	print_dubble_str(char **str, char *name);
-int	print_list(t_node *node);
+int	print_linked_list(t_node *node);
 
 #endif

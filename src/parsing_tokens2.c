@@ -6,16 +6,11 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/27 17:31:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/28 13:38:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	is_special_char(char c)
-{
-	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ');
-}
 
 int	find_end_token(char const *s, int *index)
 {

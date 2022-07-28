@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 11:29:32 by tbouma            #+#    #+#             */
-/*   Updated: 2022/06/01 12:04:11 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/28 12:37:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ size_t	ft_strlcat(char *dest, const char *src, size_t dest_size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+
+int		ft_strcmp(const char *s1, const char *s2);
 
 int		ft_strlen(const char *s);
 

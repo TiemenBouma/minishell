@@ -6,7 +6,7 @@
 /*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:09:35 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/07/27 21:58:09 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/28 18:48:33 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@ void	ft_echo(char *s)
 	write (1, s, i);
 }
 
+t_node *find_node_in_list(t_node *list, char *var_line)
+{
+	t_node *current;
+
+	current = list;
+	while (1)
+	{
+		if (ft_strncmp(current->str, var_line, ft_strlen(var_line) + 1))
+			return (current);
+		
+		if (current->n == NULL)
+			break ;
+		current = current->n;
+	}
+	return (NULL);
+}
+
 // void	ft_pwd(struct	s_cmd_lines	*d)
 // {
 // 	//print current pwd
@@ -39,29 +56,73 @@ void	ft_echo(char *s)
 // 	//modify pwd
 // }
 
-// void	ft_unset(struct	s_cmd_lines	*d, char *s)
-// {
-// 	// go to right position in d->env_list
-// 	// delete existing node
-// }
+void	ft_unset(t_node *first_node, char *var_line)
+{
+	t_node	*match_node;
+	t_node	*prev;
+	t_node	*next;
 
-// void	ft_env(struct	s_cmd_lines	*d)
-// {
+	match_node = find_node_in_list(first_node, var_line);
+	if (match_node == NULL)
+		return ;
+	if (match_node->p == NULL && first_node->n)
+	{
+		first_node = first_node->n;
+		first_node->p = NULL;
 
-// 	// while (d->env_list)
-// 	//print current node
-// 	//go to next node
+	}
+	if (match_node->p)
+		prev = match_node->p;
+	if (match_node->n)
+		next = match_node->n;
 
+	if (prev && next)
+	{
+		next->p = prev;
+		prev->n = next;
+	}
+	free(match_node->str);
+	free(match_node);
+}
 
-// }
+void	ft_env(struct	t_node *list)
+{
 
-// void	ft_export(struct	s_cmd_lines	*d, char *s)
-// {
+	t_node *current;
 
-// 	// go to right position in d->env_list
-// 	//put new node 
-// 	// or modify existing
-// }
+	current = list;
+	while (1)
+	{
+		write(1, &current->str, ft_strlen(current->str));
+		if (current->n == NULL)
+			break ;
+		current = current->n;
+	}
+}
+
+int	replace_node_content(t_node *first_node, char *var_line)
+{
+	free(first_node->str);
+	first_node->str = var_line; //check after implementation
+	return (0);
+}
+
+void	ft_export(t_node *list, struct	s_cmd_lines	*d, char *var_line)
+{
+	t_node	*new_node;
+	t_node	*match_node;
+
+	match_node = find_node_in_list(list, var_line);
+	if (!match_node)
+	{
+		new_node = ft_new_node(var_line);
+		ft_list_node_add_back(list, new_node);	
+	}
+	else
+	{
+		replace_node_content(match_node, var_line);
+	}
+}
 
 int	is_builtin(char	*s)
 {

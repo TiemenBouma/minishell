@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/27 15:15:39 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   linked_list.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/27 14:08:10 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/07/28 18:33:46 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ t_node	*ft_list_find_last_node(t_node **list)
 	while (current->n != NULL)
 		current = current->n;
 	return (current);
+}
+
+t_node *ft_remove_node()
+{
+	
 }

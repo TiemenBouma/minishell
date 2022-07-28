@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/27 21:32:15 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/28 19:00:17 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ struct	s_cmd_lines {
 	int					curr_exec_cmd_n;
 	pid_t				pid_child;
 	int					tube[2];
+	t_node				*env_list;
 };
 
 //DAN
@@ -114,6 +115,9 @@ int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n);
 void			error_msg(char *msg, int err);
 void			perror_msg(char *msg, int err);
 int 			free_stuff(char *str);
+int				ft_strcmp_var(const char *s1, const char *s2);
+int	is_special_char(char c);
+
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
@@ -142,6 +146,8 @@ t_node	*ft_list_find_last_node(t_node **list);
 
 //env_var_list
 t_node	*add_env_to_list(char **environ);
+char	*find_var(t_node **list, char *var_name);
+int	expand_var(char **input_str, t_node **list);
 
 //testing
 int	print_structs(struct s_cmd_lines *s);

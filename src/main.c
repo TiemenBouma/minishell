@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/27 18:39:14 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/07/28 19:00:49 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,24 @@
 int	main(void)//(int argc, char **argv, char **envp)
 {
 	struct s_cmd_lines	var;
-	
+	t_node	*env_list;
+//	char		*str_test;
+	//char		str_test2[6] = {'P', 'A', 'T', 'H', '\0'};
 
 	extern char **environ;
 	// (void) argc;
 	// (void) argv;
 	var.root_paths = find_path(environ);
-	var.env_list = add_env_to_list(environ);
+	env_list = add_env_to_list(environ);
+	//str_test = find_var(&env_list, str_test2);
+	//printf("var = %s\n", str_test);
 	//print_linked_list(env_list);
 	while (1)
 	{
 		var.input_str = readline("SuperShell: ");
+		// printf("\ndebug\n\n");
+		expand_var(&var.input_str, &env_list);
+		//expand_var(var.input_str);
 		//expand after readline all env var. Only not if single quots. Tiemen Will make this tomorrow!!!!!
 		var.all_tokens = ft_split_tokens(var.input_str);
 		var.cmd_lines = make_cmd_lines(var.all_tokens);

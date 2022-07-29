@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   builtins.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: dkocob <dkocob@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/27 14:09:35 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/07/28 18:48:33 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
+/*   Updated: 2022/07/29 16:51:00 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,21 @@ void	ft_echo(char *s)
 	write (1, s, i);
 }
 
-t_node *find_node_in_list(t_node *list, char *var_line)
-{
-	t_node *current;
+// t_node *find_node_in_list(t_node *list, char *var_line)
+// {
+// 	t_node *current;
 
-	current = list;
-	while (1)
-	{
-		if (ft_strncmp(current->str, var_line, ft_strlen(var_line) + 1))
-			return (current);
-		
-		if (current->n == NULL)
-			break ;
-		current = current->n;
-	}
-	return (NULL);
-}
+// 	current = list;
+// 	while (1)
+// 	{
+// 		if (ft_strncmp(current->str, var_line, ft_strlen(var_line) + 1))
+// 			return (current);
+// 		if (current->n == NULL)
+// 			break ;
+// 		current = current->n;
+// 	}
+// 	return (NULL);
+// }
 
 // void	ft_pwd(struct	s_cmd_lines	*d)
 // {
@@ -56,41 +55,41 @@ t_node *find_node_in_list(t_node *list, char *var_line)
 // 	//modify pwd
 // }
 
-void	ft_unset(t_node *first_node, char *var_line)
-{
-	t_node	*match_node;
-	t_node	*prev;
-	t_node	*next;
+// void	ft_unset(t_node *first_node, char *var_line)
+// {
+// 	t_node	*match_node;
+// 	t_node	*prev;
+// 	t_node	*next;
 
-	match_node = find_node_in_list(first_node, var_line);
-	if (match_node == NULL)
-		return ;
-	if (match_node->p == NULL && first_node->n)
-	{
-		first_node = first_node->n;
-		first_node->p = NULL;
+// 	match_node = find_node_in_list(first_node, var_line);
+// 	if (match_node == NULL)
+// 		return ;
+// 	if (match_node->p == NULL && first_node->n)
+// 	{
+// 		first_node = first_node->n;
+// 		first_node->p = NULL;
 
-	}
-	if (match_node->p)
-		prev = match_node->p;
-	if (match_node->n)
-		next = match_node->n;
+// 	}
+// 	if (match_node->p)
+// 		prev = match_node->p;
+// 	if (match_node->n)
+// 		next = match_node->n;
 
-	if (prev && next)
-	{
-		next->p = prev;
-		prev->n = next;
-	}
-	free(match_node->str);
-	free(match_node);
-}
+// 	if (prev && next)
+// 	{
+// 		next->p = prev;
+// 		prev->n = next;
+// 	}
+// 	free(match_node->str);
+// 	free(match_node);
+// }
 
-void	ft_env(struct	t_node *list)
+void	ft_env(t_node **list)
 {
 
 	t_node *current;
 
-	current = list;
+	current = *list;
 	while (1)
 	{
 		write(1, &current->str, ft_strlen(current->str));
@@ -107,7 +106,7 @@ int	replace_node_content(t_node *first_node, char *var_line)
 	return (0);
 }
 
-void	ft_export(t_node *list, struct	s_cmd_lines	*d, char *var_line)
+void	ft_export(t_node **list, /*struct	s_cmd_lines	*d,*/ char *var_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;

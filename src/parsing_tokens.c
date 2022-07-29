@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_tokens2.c                                  :+:      :+:    :+:   */
+/*   parsing_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/29 14:40:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/29 16:50:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ static int	str_maker(char const *input_str, char **str_arr, int amount_of_tokens
 		find_next_token_sign(input_str, &index);
 		temp_index = index;
 		str_len = find_end_token(input_str, &index);
-		printf("token len = %d\n", str_len);
 		str_arr[token_n] = malloc(sizeof(char) * str_len + 1);
 		str_arr[token_n] = NULL;
 		if (input_str[temp_index] == '\'' || input_str[temp_index] == '\"')

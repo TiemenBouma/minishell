@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/29 15:35:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/29 16:25:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ struct	s_cmd_lines {
 	int					curr_exec_cmd_n;
 	pid_t				pid_child;
 	int					tube[2];
-	t_node				*env_list;
+	// t_node				*env_list;
 };
 
 //DAN
@@ -143,6 +143,8 @@ t_node	*ft_new_node(char *str);
 void	ft_list_node_add_back(t_node **node_lst, t_node *new_node);
 int	ft_list_size(t_node *lst);
 t_node	*ft_list_find_last_node(t_node **list);
+void	ft_remove_node(t_node **list, char *var_line);
+t_node *find_node_in_list(t_node **list, char *var_line);
 
 
 //env_var_list

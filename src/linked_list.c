@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   linked_list.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/27 14:08:10 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/07/28 18:33:46 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   linked_list.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
+/*   Updated: 2022/07/29 16:52:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,50 @@ t_node	*ft_list_find_last_node(t_node **list)
 	return (current);
 }
 
-t_node *ft_remove_node()
+t_node *find_node_in_list(t_node **list, char *var_line)
 {
-	
+	t_node *current;
+
+	current = *list;
+	while (current)
+	{
+		if (!ft_strncmp(current->str, var_line, ft_strlen(var_line)))
+			return (current);
+		if (current->n == NULL)
+			break ;
+		current = current->n;
+	}
+	return (NULL);
+}
+
+void	ft_remove_node(t_node **list, char *var_line)
+{
+	t_node	*match_node;
+	t_node	*prev;
+	t_node	*next;
+	t_node	*first_node;
+
+	prev = NULL;
+	next = NULL;
+	first_node = *list;
+	match_node = find_node_in_list(list, var_line);
+	if (match_node == NULL)
+		return ;
+	if (match_node->p == NULL && first_node->n)
+	{
+		first_node = first_node->n;
+		first_node->p = NULL;
+
+	}
+	if (match_node->p)
+		prev = match_node->p;
+	if (match_node->n)
+		next = match_node->n;
+	if (prev && next)
+	{
+		next->p = prev;
+		prev->n = next;
+	}
+	free(match_node->str);
+	free(match_node);
 }

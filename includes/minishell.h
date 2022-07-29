@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/07/28 19:00:17 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/07/29 15:35:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void			perror_msg(char *msg, int err);
 int 			free_stuff(char *str);
 int				ft_strcmp_var(const char *s1, const char *s2);
 int	is_special_char(char c);
+char	*ft_substr_edit(char const *s, unsigned int start, size_t len);
 
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 

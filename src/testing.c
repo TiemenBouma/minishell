@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/27 15:45:11 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/29 10:53:57 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	print_dubble_str(char **str, char *name)
 	printf("%s \t\t", name);
 	while (str[c1])
 	{
-		printf("%s ", str[c1]);
+		printf("|%s| ", str[c1]);
 		c1++;
 	}
 	printf("\n");

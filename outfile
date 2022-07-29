@@ -1,13 +1,1 @@
-total 144
-drwxr-xr-x  12 tbouma  piscine    408 Jul 27 13:24 .
-drwxr-xr-x  15 tbouma  piscine    510 Jul 15 09:43 ..
-drwxr-xr-x  15 tbouma  piscine    510 Jul 27 13:24 .git
--rw-r--r--   1 tbouma  piscine     67 Jul 21 14:02 .gitignore
-drwxr-xr-x   7 tbouma  piscine    238 Jul 25 16:16 .vscode
--rw-r--r--   1 tbouma  piscine   1758 Jul 27 13:11 Makefile
-drwxr-xr-x   4 tbouma  piscine    136 Jul 27 11:32 includes
--rw-r--r--   1 tbouma  piscine    702 Jul 26 15:18 infile
--rwxr-xr-x   1 tbouma  piscine  59608 Jul 27 13:24 minishell
-drwxr-xr-x   3 tbouma  piscine    102 Jul 17 12:30 obj
--rw-r--r--   1 tbouma  piscine      0 Jul 27 13:26 outfile
-drwxr-xr-x  16 tbouma  piscine    544 Jul 27 13:10 src
+

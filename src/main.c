@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/28 18:28:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/07/29 13:19:37 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int	main(void)//(int argc, char **argv, char **envp)
 		var.input_str = readline("SuperShell: ");
 		// printf("\ndebug\n\n");
 		expand_var(&var.input_str, &env_list);
-		//expand_var(var.input_str);
-		//expand after readline all env var. Only not if single quots. Tiemen Will make this tomorrow!!!!!
 		var.all_tokens = ft_split_tokens(var.input_str);
+		print_dubble_str(var.all_tokens, "All tokens:");
 		var.cmd_lines = make_cmd_lines(var.all_tokens);
 
 		make_cmd_structs(&var);
-		//print_structs(&var);
+		print_structs(&var);
 		exec(&var);
 		free_struct(&var);
 	}

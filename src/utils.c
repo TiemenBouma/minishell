@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/29 14:21:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/01 11:59:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,15 @@ int	is_special_char(char c)
 	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ');
 }
 
+// Not needed anymore
 int	is_special_char_min_quotes(char c)
 {
-	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ');
+	return (c == '<' || c == '>' || c == '|' || c == ' ');
 }
 
+// ft_substr_edit checkes if there are quotest that do not need to be stored in the tokens. 
+// If a quote is found it will stored it in the var 'mem' and skips that char and look for the next one,
+// if it is found that char will also be skipped.
 char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;

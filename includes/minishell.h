@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/07/29 16:25:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/01 15:06:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,6 @@ int	expand_var(char **input_str, t_node **list);
 //testing
 int	print_structs(struct s_cmd_lines *s);
 int	print_dubble_str(char **str, char *name);
-int	print_linked_list(t_node *node);
+int	print_linked_list(t_node **list);
 
 #endif

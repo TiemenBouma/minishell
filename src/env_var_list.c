@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/29 11:25:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/01 10:42:13 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	replace_input_str(char **input_str, char *content, int *index, char *var_nam
 	ft_memcpy(*input_str, temp1, ft_strlen(temp1));
 	ft_strlcat(*input_str, content, len_new_str);
 	ft_strlcat(*input_str, temp2, len_new_str);
-	printf("new input string = %s\n", *input_str);
+	//printf("new input string = %s\n", *input_str);
 	return (0);
 }
 

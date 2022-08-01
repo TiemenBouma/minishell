@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/07/27 21:55:57 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
+/*   Updated: 2022/08/01 12:24:07 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int	exec(struct	s_cmd_lines	*d)
 		close (p[PREV][P_OUT]);
 		close (p[CUR][P_IN]);
 	}
+	printf("test parent for exit on COmmand not found\n");
 	close (p[CUR][P_OUT]);
-	waitpid(id, &i, 0);
+	//waitpid(id, &i, 0);
 	//Do we need to exit here? and do we need to store WEXITSTATUS(i) ??
 	return (WEXITSTATUS(i));
 }

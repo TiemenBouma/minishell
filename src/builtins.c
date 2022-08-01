@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/07/29 16:51:00 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/01 10:55:04 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_echo(char *s)
 	while (s[i])
 		i++;
 	write (1, s, i);
+	write(1, "\n", 1); //TIEMEN WROTE THIS NEW LINE, NOT SURE IF IT IS THE RIGHT PLACE
 }
 
 // t_node *find_node_in_list(t_node *list, char *var_line)
@@ -147,11 +148,11 @@ int	is_builtin(char	*s)
 
 int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n)
 {
-	char *cmd = s[0];
+	//char *cmd = s[0];
 
 	// s[0] = "Yo";
-	printf ("%s\n", cmd);
-
+	//printf ("test%s\n", cmd);
+	(void) s;
 	if (n == 1)
 		ft_echo(d->cmd_info->pipe_cmd.exec_line[1]);
 	// else if (n == 2) //change abs path? exec all fucns with abs path?

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/02 11:34:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/02 11:40:10 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ t_node *find_node_in_list(t_node **list, char *var_line)
 void	ft_remove_node(t_node **list, char *var_line)
 {
 	t_node	*match_node;
-	t_node	*first_node;
 
-	first_node = *list;
 	match_node = find_node_in_list(list, var_line);
 	if (match_node == NULL)
 		return ;
@@ -109,7 +107,7 @@ void	ft_remove_node(t_node **list, char *var_line)
 	}
 	else if (match_node->p == NULL && match_node->n)//matchnode is first.
 	{
-		*list = first_node->n;
+		*list = (*list)->n;
 		(*list)->p = NULL;
 	}
 	else if (match_node->p && match_node->n)

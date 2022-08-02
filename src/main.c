@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/01 15:06:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/02 11:35:28 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int	main(void)
 		var.cmd_lines = make_cmd_lines(var.all_tokens);
 
 		make_cmd_structs(&var);
-		//ft_remove_node(&env_list, "USER");
+		ft_remove_node(&var.env_list, "_");
+		print_linked_list(&var.env_list);
 		print_structs(&var);
-		sleep(5);
 		exec(&var);
 		free_struct(&var);
 	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/29 16:52:44 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/02 11:34:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,17 @@ t_node	*ft_list_find_last_node(t_node **list)
 t_node *find_node_in_list(t_node **list, char *var_line)
 {
 	t_node *current;
+	int len;
 
 	current = *list;
 	while (current)
 	{
-		if (!ft_strncmp(current->str, var_line, ft_strlen(var_line)))
+		len = 0;
+		while (current->str[len] && current->str[len] != '=')
+			len++;
+		if (ft_strlen(var_line) > len)
+			len = ft_strlen(var_line);
+		if (!ft_strncmp(current->str, var_line, len))
 			return (current);
 		if (current->n == NULL)
 			break ;
@@ -89,31 +95,30 @@ t_node *find_node_in_list(t_node **list, char *var_line)
 void	ft_remove_node(t_node **list, char *var_line)
 {
 	t_node	*match_node;
-	t_node	*prev;
-	t_node	*next;
 	t_node	*first_node;
 
-	prev = NULL;
-	next = NULL;
 	first_node = *list;
 	match_node = find_node_in_list(list, var_line);
 	if (match_node == NULL)
 		return ;
-	if (match_node->p == NULL && first_node->n)
+	else if (match_node->p == NULL && match_node->n == NULL)
 	{
-		first_node = first_node->n;
-		first_node->p = NULL;
-
+			free(match_node->str);
+			free(match_node);
+			*list = NULL;
 	}
-	if (match_node->p)
-		prev = match_node->p;
-	if (match_node->n)
-		next = match_node->n;
-	if (prev && next)
+	else if (match_node->p == NULL && match_node->n)//matchnode is first.
 	{
-		next->p = prev;
-		prev->n = next;
+		*list = first_node->n;
+		(*list)->p = NULL;
 	}
+	else if (match_node->p && match_node->n)
+	{
+		match_node->p->n = match_node->n;
+		match_node->n = match_node->p;
+	}
+	else if (match_node->p && match_node->n == NULL)
+		match_node->p->n = NULL;
 	free(match_node->str);
 	free(match_node);
 }

@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/07/29 15:35:32 by tbouma           ###   ########.fr        #
+#    Updated: 2022/08/03 14:38:50 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJFILES := obj/src/main.o \
 			obj/src/testing.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS := -Wall -Wextra  -fsanitize=address -g3 #-Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc
 
@@ -53,5 +53,8 @@ fclean:	clean
 	make fclean -C ./includes/libft
 
 re: fclean all
+
+run: $(NAME)
+	./$(NAME)
 
 .PHONY: clean all fclean re

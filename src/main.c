@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/02 11:41:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:38:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	main(void)
 	struct s_cmd_lines	var;
 	//t_node	*env_list;
 	extern char **environ;
+	int i;
 
 	var.root_paths = find_path(environ);
 	var.env_list = add_env_to_list(environ);
 
-	print_linked_list(&var.env_list);
 	while (1)
 	{
 		var.input_str = readline("SuperShell: ");
@@ -34,10 +34,11 @@ int	main(void)
 
 		make_cmd_structs(&var);
 		ft_remove_node(&var.env_list, "USER");
-		print_linked_list(&var.env_list);
 		print_structs(&var);
 		exec(&var);
 		free_struct(&var);
 	}
 	return (0);
 }
+
+	//print_linked_list(&var.env_list);

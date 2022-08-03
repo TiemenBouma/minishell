@@ -6,16 +6,16 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/01 11:59:40 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:32:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	error_msg(char *msg, int err)
+int	error_msg(char *msg, int err)// WE maybe need not to exit
 {
 	ft_putendl_fd(msg, 2);
-	exit(err);
+	return (err);
 }
 
 void	perror_msg(char *msg, int err)

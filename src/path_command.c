@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/01 10:56:57 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:18:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	add_path(char **exec_line, char **root_paths)
 		}
 		i++;
 	}
+	// if the command is EXIT and maybe other commands need to be handeld here.
 	free(cmd_temp);
 	error_msg(ERR_CMD, 127);
 	return (0);

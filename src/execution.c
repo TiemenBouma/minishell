@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/01 12:24:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:35:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,10 @@
 int	exec(struct	s_cmd_lines	*d)
 {
 	int i = 0;
-	//int in1 = 0;
-	//int out1 = 1;
+
 	int id = 0;
 	int p[2][2];
-	// char ***testp;
 
-	// //d->cmd_count = 2;
-	// testp = malloc(sizeof(char***) * 5);
-	// testp[0] = ft_split ("/bin/ls", ' ');
-	// // testp[1] = ft_split ("usr/bin/wc -l", ' ');
-	// testp[1] = ft_split ("/bin/cat -e", ' ');
-	// testp[2] = ft_split ("/bin/ls", ' ');
-	// testp[3] = ft_split ("/bin/cat", ' ');
-	// testp[4] = NULL;
 
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 
@@ -60,9 +50,7 @@ int	exec(struct	s_cmd_lines	*d)
 		close (p[PREV][P_OUT]);
 		close (p[CUR][P_IN]);
 	}
-	printf("test parent for exit on COmmand not found\n");
 	close (p[CUR][P_OUT]);
-	//waitpid(id, &i, 0);
-	//Do we need to exit here? and do we need to store WEXITSTATUS(i) ??
+	waitpid(id, &i, 0);
 	return (WEXITSTATUS(i));
 }

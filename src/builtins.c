@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/02 12:02:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:12:17 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,21 @@ void	ft_echo(char *s)
 // 	free(match_node);
 // }
 
-void ft_cd(t_node **list)
-{
-	int i = 0;
-	int	*cwd;
+// void ft_cd(t_node **list)
+// {
+// 	int i = 0;
+// 	int	*cwd;
 	
-	cwd = malloc(sizeof(char) * (MAXPATHLEN));
-	cwd[PATH_MAX] = '\0';
-	getcwd(cwd, MAXPATHLEN);// check if it worked
-	//OLDPWD= becomes cwd.
+// 	cwd = malloc(sizeof(char) * (MAXPATHLEN));
+// 	cwd[PATH_MAX] = '\0';
+// 	getcwd(cwd, MAXPATHLEN);// check if it worked
+// 	//OLDPWD= becomes cwd.
 	
-	chdir(/*new path*/ );//check if it worked
-	//PWD= becomes new path.
+// 	chdir(/*new path*/ );//check if it worked
+// 	//PWD= becomes new path.
 
-	getcwd(cwd, MAXPATHLEN);//checked if switch worked
-}
+// 	getcwd(cwd, MAXPATHLEN);//checked if switch worked
+// }
 
 void	ft_env(t_node **list)
 {

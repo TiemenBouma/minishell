@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/02 11:55:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/03 14:33:01 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/param.h>
+# include <signal.h>
 
 
 # define ERR_FILE		"Infile or outfile error"
@@ -102,6 +103,8 @@ struct	s_cmd_lines {
 	int					curr_exec_cmd_n;
 	pid_t				pid_child;
 	int					tube[2];
+	struct sigaction	sa;
+	
 	// t_node				*env_list;
 };
 
@@ -113,7 +116,7 @@ int	is_builtin(char	*s);
 int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n);
 
 //UTILS
-void			error_msg(char *msg, int err);
+int				error_msg(char *msg, int err);
 void			perror_msg(char *msg, int err);
 int 			free_stuff(char *str);
 int				ft_strcmp_var(const char *s1, const char *s2);

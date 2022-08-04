@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/03 14:12:17 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/04 15:41:14 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_echo(char *s)
+void	ft_echo(char **s)
 {
 	int	i = 0;
 	// int	size_of_arg;
@@ -23,9 +23,14 @@ void	ft_echo(char *s)
 	// size_of_arg = 0;
 	// size_of_arg += 7;
 	while (s[i])
+	{
+		printf("%s ", s[i]);
 		i++;
-	write (1, s, i);
-	write(1, "\n", 1); //TIEMEN WROTE THIS NEW LINE, NOT SURE IF IT IS THE RIGHT PLACE
+	}
+	printf("\n");
+	// 	i++;
+	// write (1, s, i);
+	// write(1, "\n", 1); //TIEMEN WROTE THIS NEW LINE, NOT SURE IF IT IS THE RIGHT PLACE
 }
 
 // t_node *find_node_in_list(t_node *list, char *var_line)
@@ -170,7 +175,7 @@ int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n)
 	//printf ("test%s\n", cmd);
 	(void) s;
 	if (n == 1)
-		ft_echo(d->cmd_info->pipe_cmd.exec_line[1]);
+		ft_echo(d->cmd_info->pipe_cmd.exec_line + 1);
 	// else if (n == 2) //change abs path? exec all fucns with abs path?
 	// 	ft_cd(d);
 	// else if (n == 2) //exec all fucns with abs path?

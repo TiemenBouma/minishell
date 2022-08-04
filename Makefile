@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/03 14:38:50 by tbouma           ###   ########.fr        #
+#    Updated: 2022/08/04 16:03:54 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(LIBFT):
 
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
-	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L /Users/tbouma/.brew/opt/readline/lib -I /Users/tbouma/.brew/opt/readline/include
 
 obj/%.o: %.c
 	@mkdir -p $(dir $@)

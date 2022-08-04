@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/02 10:25:57 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/04 16:31:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,14 @@ char	*find_next_var_in_str(char *input_str, int *index)
 		}
 		if (input_str[*index] == '$')
 		{
+			printf("index == %d\n", *index);
+			// if (input_str[*index + 1] && (input_str[*index + 1] == ' ' || ))
+			// {
+			// 	return NULL;// *index = *index + 1;
+			// 	// continue;
+			// }
 			(*index)++;
-			if (input_str[*index] == '\0')
+			if (input_str[*index] == '\0' || input_str[*index] == ' ')
 				return (temp);
 			start = *index;
 			while (input_str[start + len] && !is_special_char(input_str[start + len]))
@@ -136,12 +142,20 @@ int	expand_var(char **input_str, t_node **list)
 	{
 		var_name = find_next_var_in_str(*input_str, &index);
 		if (var_name == NULL)
-			return (0);
+		{
+			if (!(*input_str)[index])
+				break ;
+			index++;
+			continue ;
+		}	//return (0);
 		content = find_var_in_list(list, var_name);
 		if (content == NULL)
-			continue ;
-		replace_input_str(input_str, content, &index, var_name);
-		index++;
+			replace_input_str(input_str, "", &index, var_name);//continue ;
+		else
+		{	
+			replace_input_str(input_str, content, &index, var_name);
+			index++;
+		}
 	}
 	return (0);
 	

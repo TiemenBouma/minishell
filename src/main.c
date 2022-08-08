@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/08 15:13:35 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 15:34:35 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(void)
 	while (1)
 	{
 		main_struct.input_str = readline("SuperShell: ");
+		signal(SIGINT, sigint_handler);
 		if (main_struct.input_str == NULL)
 			break;
 		expand_variables(&main_struct.input_str, &main_struct.env_llist);

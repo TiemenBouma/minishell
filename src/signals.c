@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/08 15:14:57 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 15:35:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	sigint_handler(int sig)
 void	signals_handeler(void)
 {
 	signal(SIGINT, sigint_handler);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

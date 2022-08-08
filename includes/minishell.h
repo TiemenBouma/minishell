@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/03 14:33:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 11:17:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,10 @@ t_node *find_node_in_list(t_node **list, char *var_line);
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
 int	expand_var(char **input_str, t_node **list);
+
+//SIGNALS
+void	sigint_handler(int sig);
+void	signals(void);
 
 //testing
 int	print_structs(struct s_cmd_lines *s);

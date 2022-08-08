@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/04 16:03:54 by tbouma           ###   ########.fr        #
+#    Updated: 2022/08/08 11:47:18 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJFILES := obj/src/main.o \
 			obj/src/env_var_list.o \
 			obj/src/linked_list.o \
 			obj/src/builtins.o \
+			obj/src/signals.o \
 			obj/src/testing.o
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
@@ -38,11 +39,11 @@ $(LIBFT):
 
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
-	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L /Users/tbouma/.brew/opt/readline/lib -I /Users/tbouma/.brew/opt/readline/include
+	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L /Users/tbouma/.brew/opt/readline/lib 
 
 obj/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $< -I /Users/tbouma/.brew/opt/readline/include
 
 clean:
 	rm -f $(OBJFILES)

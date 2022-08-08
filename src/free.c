@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/27 13:10:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:58:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,31 @@ void	free_triple_str(char ***str)
 	free(str);
 }
 
-void	free_cmd_info(struct s_cmd_info *cmd_info)
+void	free_cmd_info(struct s_cmd_info *curr_cmd_info)
 {
-	free_double_str(cmd_info->tokens);
-	cmd_info->token_count = 0;
-	cmd_info->has_infile = 0;
-	cmd_info->has_outfile = 0;
-	free(cmd_info->infile);
-	free(cmd_info->outfile);
-	free_double_str(cmd_info->pipe_cmd.exec_line);
+	free_double_str(curr_cmd_info->curr_line_tokens);
+	curr_cmd_info->token_count = 0;
+	curr_cmd_info->has_infile = 0;
+	curr_cmd_info->has_outfile = 0;
+	free(curr_cmd_info->infile);
+	free(curr_cmd_info->outfile);
+	free_double_str(curr_cmd_info->exec.exec_line);
 }
 
-void	free_struct(struct s_cmd_lines *var)
+void	free_struct(struct s_main *main_struct)
 {
 	int i;
 
 	i = 0;
-	free(var->input_str);
-	//free_double_str(var->root_paths);
-	free_double_str(var->all_tokens);
-	free_triple_str(var->cmd_lines);
-	var->cmd_count = 0;
-	while (i < var->cmd_count)
+	free(main_struct->input_str);
+	//free_double_str(main_struct->root_paths);
+	free_double_str(main_struct->all_tokens);
+	free_triple_str(main_struct->cmd_lines);
+	main_struct->cmd_count = 0;
+	while (i < main_struct->cmd_count)
 	{
-		free_cmd_info(&var->cmd_info[i]);
+		free_cmd_info(&main_struct->curr_cmd_info[i]);
 		i++;
 	}
-	var->curr_exec_cmd_n = 0;
+	//main_struct->curr_exec_cmd_n = 0;
 }

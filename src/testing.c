@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/02 11:29:41 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:58:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,34 @@ int	print_dubble_str(char **str, char *name)
 	return (0);
 }
 
-int	print_cmd_info(struct s_cmd_lines *s)
+int	print_cmd_info(struct s_main *main_struct)
 {
 	int i = 0;
-	while (i < s->cmd_count)
+	while (i < main_struct->cmd_count)
 	{
 		printf("---------------------------------------\n");
 		printf("CMDline_n %d\n", i);
-		printf("has_in: %d has_out: %d\n", s->cmd_info[i].has_infile, s->cmd_info[i].has_outfile);
-		printf("fd_in = %d fd_out = %d\n", s->cmd_info[i].pipe_cmd.fd_in, s->cmd_info[i].pipe_cmd.fd_out);
-		if ( s->cmd_info[i].has_infile == 1)
-			printf("infile:\t\t\t%s\n", s->cmd_info[i].infile);
-		if ( s->cmd_info[i].has_outfile == 1)
-			printf("outfile:\t\t%s\n", s->cmd_info[i].outfile);
-		print_dubble_str(s->cmd_info[i].tokens, "CMDline_input:");
-		print_dubble_str(s->cmd_info[i].pipe_cmd.exec_line, "Exec_line:");
+		printf("has_in: %d has_out: %d\n", main_struct->curr_cmd_info[i].has_infile, main_struct->curr_cmd_info[i].has_outfile);
+		printf("fd_in = %d fd_out = %d\n", main_struct->curr_cmd_info[i].exec.fd_in, main_struct->curr_cmd_info[i].exec.fd_out);
+		if ( main_struct->curr_cmd_info[i].has_infile == 1)
+			printf("infile:\t\t\t%s\n", main_struct->curr_cmd_info[i].infile);
+		if ( main_struct->curr_cmd_info[i].has_outfile == 1)
+			printf("outfile:\t\t%s\n", main_struct->curr_cmd_info[i].outfile);
+		print_dubble_str(main_struct->curr_cmd_info[i].curr_line_tokens, "CMDline_input:");
+		print_dubble_str(main_struct->curr_cmd_info[i].exec.exec_line, "Exec_line:");
 		printf("\n");
 		i++;
 	}
 	return (0);
 }
 
-int	print_structs(struct s_cmd_lines *s)
+int	print_structs(struct s_main *main_struct)
 {
-	// printf("\n\nInput _string:\n%s\n\n", s->input_str);
-	// print_dubble_str(s->root_paths, "Root paths are: " );
-	print_dubble_str(s->all_tokens, "all tokens are: ");
-	// print_tripple_str(s->cmd_lines, "THe CMD_lines:");
-	print_cmd_info(s);
+	// printf("\n\nInput _string:\n%s\n\n", main_struct->input_str);
+	// print_dubble_str(main_struct->root_paths, "Root paths are: " );
+	print_dubble_str(main_struct->all_tokens, "all tokens are: ");
+	// print_tripple_str(main_struct->cmd_lines, "THe CMD_lines:");
+	print_cmd_info(main_struct);
 	return (0);
 }
 

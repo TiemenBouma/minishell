@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/08 13:51:51 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 15:13:35 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,30 @@
 
 int	main(void)
 {
-	struct s_cmd_lines	var;
+	struct s_main	main_struct;
 	extern char **environ;
 
-	var.root_paths = find_path(environ);
-	var.env_list = add_env_to_list(environ);
-	signal(SIGINT, sigint_handler);
-	print_linked_list(&var.env_list);
-	ft_remove_node(&var.env_list, "MAKELEVEL");
-	print_linked_list(&var.env_list);
+	main_struct.root_paths = find_path(environ);
+	main_struct.env_llist = add_env_to_list(environ);
+	//signal(SIGINT, sigint_handler);
+	signals_handeler();
 	
 	while (1)
 	{
-		print_linked_list(&var.env_list);
-		var.input_str = readline("SuperShell: ");
-		//signals();
-		expand_var(&var.input_str, &var.env_list);
-		var.all_tokens = ft_split_tokens(var.input_str);
-		if (var.all_tokens[0] == NULL)
+		main_struct.input_str = readline("SuperShell: ");
+		if (main_struct.input_str == NULL)
+			break;
+		expand_variables(&main_struct.input_str, &main_struct.env_llist);
+		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
+		if (main_struct.all_tokens[0] == NULL)
 			continue ;
-		var.cmd_lines = make_cmd_lines(var.all_tokens);
-		make_cmd_structs(&var);
-		print_structs(&var);
-		exec(&var);
-		free_struct(&var);
+		main_struct.cmd_lines = make_cmd_lines(main_struct.all_tokens);
+		make_cmd_structs(&main_struct);
+		print_structs(&main_struct);
+		exec(&main_struct);
+		free_struct(&main_struct);
 	}
 	return (0);
 }
 
-	//print_linked_list(&var.env_list);
+	//print_linked_list(&main_struct.env_llist);

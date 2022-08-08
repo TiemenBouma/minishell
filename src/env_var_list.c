@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/04 16:31:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:42:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 t_node	*add_env_to_list(char **environ)
 {
 	int i;
-	t_node *env_list;
+	t_node *env_llist;
 	t_node	*temp_node;
 
 	i = 1;
-	env_list = ft_new_node(environ[0]);
+	env_llist = ft_new_node(environ[0]);
 	while (environ[i])
 	{
 		temp_node = ft_new_node(environ[i]);
-		ft_list_node_add_back(&env_list, temp_node);
+		ft_list_node_add_back(&env_llist, temp_node);
 		i++;
 	}
-	return (env_list);
+	return (env_llist);
 }
 
 char	*find_var_in_list(t_node **list, char *var_name)
@@ -131,7 +131,7 @@ int	replace_input_str(char **input_str, char *content, int *index, char *var_nam
 	return (0);
 }
 
-int	expand_var(char **input_str, t_node **list)
+int	expand_variables(char **input_str, t_node **list)
 {
 	int 	index;
 	char	*var_name;

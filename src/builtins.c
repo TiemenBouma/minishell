@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/04 15:41:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:48:07 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	ft_echo(char **s)
 // 	return (NULL);
 // }
 
-// void	ft_pwd(struct	s_cmd_lines	*d)
+// void	ft_pwd(struct	s_main	*main_struct)
 // {
 // 	//print current pwd
 // }
 
-// void	ft_cd(struct	s_cmd_lines	*d)
+// void	ft_cd(struct	s_main	*main_struct)
 // {
 // 	//check pwd
 // 	//check if dest location is exist (access?)
@@ -128,7 +128,7 @@ int	replace_node_content(t_node *first_node, char *var_line)
 	return (0);
 }
 
-void	ft_export(t_node **list, /*struct	s_cmd_lines	*d,*/ char *var_line)
+void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;
@@ -167,7 +167,7 @@ int	is_builtin(char	*s)
 	return (0);
 }
 
-int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n)
+int	exec_builtin(struct	s_main	*main_struct, char **s, int n)
 {
 	//char *cmd = s[0];
 
@@ -175,16 +175,16 @@ int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n)
 	//printf ("test%s\n", cmd);
 	(void) s;
 	if (n == 1)
-		ft_echo(d->cmd_info->pipe_cmd.exec_line + 1);
+		ft_echo(main_struct->curr_cmd_info->exec.exec_line + 1);
 	// else if (n == 2) //change abs path? exec all fucns with abs path?
-	// 	ft_cd(d);
+	// 	ft_cd(main_struct);
 	// else if (n == 2) //exec all fucns with abs path?
-	// 	ft_pwd(d);
+	// 	ft_pwd(main_struct);
 	// else if (n == 3)
-	// 	ft_export(d, cmd);
+	// 	ft_export(main_struct, cmd);
 	// else if (n == 4)
-	// 	ft_unset(d, cmd);
+	// 	ft_unset(main_struct, cmd);
 	// else if (n == 5)
-	// 	ft_env(d);
+	// 	ft_env(main_struct);
 	exit (0);
 }

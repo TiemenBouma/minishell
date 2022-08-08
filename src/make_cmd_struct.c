@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/01 12:03:02 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:58:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static int	find_exec_tokens(struct s_cmd_info *cmd_struct)
 	exec_token = 0;
 	while (token_n < cmd_struct->token_count)
 	{
-		if (cmd_struct->tokens[token_n][0] != '<' && cmd_struct->tokens[token_n][0] != '>')
+		if (cmd_struct->curr_line_tokens[token_n][0] != '<' && cmd_struct->curr_line_tokens[token_n][0] != '>')
 		{
-			cmd_struct->pipe_cmd.exec_line[exec_token] = ft_strdup(cmd_struct->tokens[token_n]);
+			cmd_struct->exec.exec_line[exec_token] = ft_strdup(cmd_struct->curr_line_tokens[token_n]);
 			exec_token++;
 		}
-		else if (cmd_struct->tokens[token_n][0] == '<' || cmd_struct->tokens[token_n][0] == '>')
+		else if (cmd_struct->curr_line_tokens[token_n][0] == '<' || cmd_struct->curr_line_tokens[token_n][0] == '>')
 		{
-			if (cmd_struct->tokens[token_n + 1] == NULL)
+			if (cmd_struct->curr_line_tokens[token_n + 1] == NULL)
 				return(-1);//(ERR_INPUT);
 			else
 				token_n++;
@@ -47,11 +47,11 @@ static int	calc_exec_line_len(struct s_cmd_info *cmd_struct)
 	exec_len = 0;
 	while (i < cmd_struct->token_count)
 	{
-		if (cmd_struct->tokens[i][0] != '<' && cmd_struct->tokens[i][0] != '>')
+		if (cmd_struct->curr_line_tokens[i][0] != '<' && cmd_struct->curr_line_tokens[i][0] != '>')
 			exec_len++;
-		else if (cmd_struct->tokens[i][0] == '<' || cmd_struct->tokens[i][0] == '>')
+		else if (cmd_struct->curr_line_tokens[i][0] == '<' || cmd_struct->curr_line_tokens[i][0] == '>')
 		{
-			if (cmd_struct->tokens[i + 1] == NULL)
+			if (cmd_struct->curr_line_tokens[i + 1] == NULL)
 				return(-1);//(ERR_INPUT);
 			else
 				i++;
@@ -69,9 +69,9 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 	i = 0;
 	exec_len = 0;
 	exec_len = calc_exec_line_len(cmd_struct);
-	cmd_struct->pipe_cmd.exec_line = malloc(sizeof(char *) * (exec_len + 1));
+	cmd_struct->exec.exec_line = malloc(sizeof(char *) * (exec_len + 1));
 	//malloc protection
-	cmd_struct->pipe_cmd.exec_line[exec_len] = NULL;
+	cmd_struct->exec.exec_line[exec_len] = NULL;
 	find_exec_tokens(cmd_struct);
 	
 	return (0);
@@ -80,13 +80,13 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 static int	open_fd(struct s_cmd_info *cmd_struct)
 {
 	if (cmd_struct->has_infile == 1)
-		cmd_struct->pipe_cmd.fd_in = open(cmd_struct->infile, O_RDONLY);
+		cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
 	else
-		cmd_struct->pipe_cmd.fd_in = 0;
+		cmd_struct->exec.fd_in = 0;
 	if (cmd_struct->has_outfile == 1)
-		cmd_struct->pipe_cmd.fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
+		cmd_struct->exec.fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else
-		cmd_struct->pipe_cmd.fd_out = 1;
+		cmd_struct->exec.fd_out = 1;
 	return (0);
 }
 
@@ -104,27 +104,27 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 	i = 0;
 	while (i < cmd_struct->token_count)
 	{
-		if (cmd_struct->tokens[i][0] == '<')
+		if (cmd_struct->curr_line_tokens[i][0] == '<')
 		{
 			if (cmd_struct->has_infile == 1)
 				free(cmd_struct->infile);
 			cmd_struct->has_infile = 1;
-			cmd_struct->infile = ft_strdup(cmd_struct->tokens[i + 1]);
+			cmd_struct->infile = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
 		}
 		
-		if (cmd_struct->tokens[i][0] == '>')
+		if (cmd_struct->curr_line_tokens[i][0] == '>')
 		{
 			if (cmd_struct->has_outfile == 1)
 				free(cmd_struct->outfile);
 			cmd_struct->has_outfile = 1;
-			cmd_struct->outfile = ft_strdup(cmd_struct->tokens[i + 1]);
+			cmd_struct->outfile = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
 		}
 		i++;
 	}
 	return (0);
 }
 
-static int	copy_token(char **src_str, char **dest_str, int count)//cmd_lines->cmd_lines[line], cmd_lines->cmd_info[line].tokens);
+static int	copy_token(char **src_str, char **dest_str, int count)//main_struct->cmd_lines[line], main_struct->curr_cmd_info[line].tokens);
 {
 	int i;
 
@@ -138,34 +138,35 @@ static int	copy_token(char **src_str, char **dest_str, int count)//cmd_lines->cm
 	return (0);
 }
 
-int	make_cmd_structs(struct s_cmd_lines *cmd_lines)
+int	make_cmd_structs(struct s_main *main_struct)
 {
 	int line;
 	int	cmd_line_count;
 	
 	line = 0;
 	cmd_line_count = 0;
-	while (cmd_lines->cmd_lines[cmd_lines->cmd_count])
-		cmd_lines->cmd_count++;
-	cmd_lines->cmd_info = malloc(sizeof(struct s_cmd_info) * cmd_lines->cmd_count);
-	while (line < cmd_lines->cmd_count)
+	while (main_struct->cmd_lines[main_struct->cmd_count])
+		main_struct->cmd_count++;
+	main_struct->curr_cmd_info = malloc(sizeof(struct s_cmd_info) * main_struct->cmd_count);
+	while (line < main_struct->cmd_count)
 	{
-		cmd_lines->cmd_info[line].has_infile = 0;
-		cmd_lines->cmd_info[line].has_outfile = 0;
+		main_struct->curr_cmd_info[line].exec.cmd_count = main_struct->cmd_count;
+		main_struct->curr_cmd_info[line].has_infile = 0;
+		main_struct->curr_cmd_info[line].has_outfile = 0;
 		cmd_line_count = 0;
-		while (cmd_lines->cmd_lines[line][cmd_line_count])
+		while (main_struct->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;
-		cmd_lines->cmd_info[line].token_count = cmd_line_count;
-		cmd_lines->cmd_info[line].tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
-		if (cmd_lines->cmd_info[line].tokens == NULL)
+		main_struct->curr_cmd_info[line].token_count = cmd_line_count;
+		main_struct->curr_cmd_info[line].curr_line_tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
+		if (main_struct->curr_cmd_info[line].curr_line_tokens == NULL)
 			exit (1);//(ERR_MALLOC);
-		cmd_lines->cmd_info[line].tokens[cmd_line_count] = NULL;
-		copy_token(cmd_lines->cmd_lines[line], cmd_lines->cmd_info[line].tokens, cmd_lines->cmd_info[line].token_count);
-		redir_check(&cmd_lines->cmd_info[line]);
+		main_struct->curr_cmd_info[line].curr_line_tokens[cmd_line_count] = NULL;
+		copy_token(main_struct->cmd_lines[line], main_struct->curr_cmd_info[line].curr_line_tokens, main_struct->curr_cmd_info[line].token_count);
+		redir_check(&main_struct->curr_cmd_info[line]);
 		//malloc protect
-		make_pipe_cmd(&cmd_lines->cmd_info[line]);
-		//if (cmd_lines->cmd_info[line].token_count != 0)
-		add_path(cmd_lines->cmd_info[line].pipe_cmd.exec_line, cmd_lines->root_paths);
+		make_pipe_cmd(&main_struct->curr_cmd_info[line]);
+		//if (main_struct->curr_cmd_info[line].token_count != 0)
+		add_path(main_struct->curr_cmd_info[line].exec.exec_line, main_struct->root_paths);
 		line++;
 	}
 	return (0);

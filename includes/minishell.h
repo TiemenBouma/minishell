@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/08 11:17:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/08 15:13:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ struct	s_redir {
 // struct	s_matrix {
 // 	struct s_redir redir;
 // 	struct s_pipe_nr_node	*result;
-// 	char	**input; //array of the tokens from expantion func
+// 	char	**input; //array of the curr_line_tokens from expantion func
 // };
 
 // struct	s_data {
@@ -74,46 +74,47 @@ typedef struct s_node
 	struct s_node	*p;
 }	t_node;
 
-struct	s_pipe_cmd {
+struct	s_to_exec {
 	int		fd_in;
 	int		fd_out;
 	char	**exec_line;
+	int		cmd_count;
 };
 
 struct	s_cmd_info {
-	char				**tokens;
+	char				**curr_line_tokens;
 	int					token_count;
 	int					has_infile;
 	int					has_outfile;
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
-	struct s_pipe_cmd	pipe_cmd;
+	struct s_to_exec	exec;
 };
 
-struct	s_cmd_lines {
+struct	s_main {
 	char				*input_str;
-	char				**root_paths;
-	char				**all_tokens;
-	char				***cmd_lines;
+	char				**root_paths;// read it from our linked list eatch loop
+	char				**all_tokens;//
+	char				***cmd_lines;// maybe remove it out of the struct
 	int					cmd_count;
-	struct s_cmd_info	*cmd_info;
-	char				**env_var;
-	struct s_node		*env_list;
-	//pipex
-	int					curr_exec_cmd_n;
-	pid_t				pid_child;
-	int					tube[2];
-	struct sigaction	sa;
+	struct s_cmd_info	*curr_cmd_info;
+	struct s_node		*env_llist;
 	
-	// t_node				*env_list;
+	//pipex
+	//pid_t				pid_child;
+	//int					tube[2];
+	//struct sigaction	sa;
+	//int					curr_exec_cmd_n;
+	//char				**env_var;
+	// t_node				*env_llist;
 };
 
 //DAN
 int	err_chk(int i, int t, char *s);
-int	exec(struct	s_cmd_lines	*d);
+int	exec(struct	s_main *main_struct);
 char	*ft_sjf(char *s1, char *s2, int f);
 int	is_builtin(char	*s);
-int	exec_builtin(struct	s_cmd_lines	*d, char **s, int n);
+int	exec_builtin(struct	s_main *main_struct, char **s, int n);
 
 //UTILS
 int				error_msg(char *msg, int err);
@@ -134,13 +135,13 @@ char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 char			**ft_split_tokens(char const *s);
 
 //PARSING CMD LINES
-char			***make_cmd_lines(char **tokens);
+char			***make_cmd_lines(char **curr_line_tokens);
 
 //MAKE CMD STRUCTS
-int				make_cmd_structs(struct s_cmd_lines *cmd_lines);
+int				make_cmd_structs(struct s_main *cmd_lines);
 
 //FREE
-void	free_struct(struct s_cmd_lines *var);
+void	free_struct(struct s_main *var);
 
 //LInkedLIST
 t_node	*ft_new_node(char *str);
@@ -154,14 +155,14 @@ t_node *find_node_in_list(t_node **list, char *var_line);
 //env_var_list
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
-int	expand_var(char **input_str, t_node **list);
+int	expand_variables(char **input_str, t_node **list);
 
 //SIGNALS
 void	sigint_handler(int sig);
-void	signals(void);
+void	signals_handeler(void);
 
 //testing
-int	print_structs(struct s_cmd_lines *s);
+int	print_structs(struct s_main *s);
 int	print_dubble_str(char **str, char *name);
 int	print_linked_list(t_node **list);
 

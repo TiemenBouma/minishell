@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/08 14:48:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 09:52:51 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@ int	exec(struct	s_main *main_struct)
 
 	int id = 0;
 	int p[2][2];
+	sig_t	old_signal[2];
 
 
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
-
 
 	
 	while (i < main_struct->cmd_count)
 	{
 		i++;
 		err_chk(pipe(p[CUR]), 1, "");
+		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
+		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 		id = fork();
 		err_chk(id, 1, "");
 		if (id == 0)
@@ -52,5 +54,7 @@ int	exec(struct	s_main *main_struct)
 	}
 	close (p[CUR][P_OUT]);
 	waitpid(id, &i, 0);
+	signal(SIGINT, old_signal[0]);
+	signal(SIGQUIT, old_signal[1]);
 	return (WEXITSTATUS(i));
 }

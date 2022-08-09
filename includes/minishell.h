@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/08 15:13:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 09:13:11 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,9 @@ int	expand_variables(char **input_str, t_node **list);
 //SIGNALS
 void	sigint_handler(int sig);
 void	signals_handeler(void);
+void	sigint_handler_in_process(int sig);
+void	sigquit_handler_in_process(int sig);
+void	sigint_handler_nonl(int sig);
 
 //testing
 int	print_structs(struct s_main *s);

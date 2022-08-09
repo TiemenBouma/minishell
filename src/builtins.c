@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/08 14:48:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 14:48:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	ft_echo(char **s)
 	// size_of_arg += 7;
 	while (s[i])
 	{
-		printf("%s ", s[i]);
+		ft_putstr_fd(s[i], 2);
+		write(1, " ", 2);
+	//	printf("%s ", s[i]);
 		i++;
 	}
 	printf("\n");
@@ -163,7 +165,10 @@ int	is_builtin(char	*s)
 	else if (ft_strncmp(s, "env", 3 + 1) == 0)
 		return (6);
 	else if (ft_strncmp(s, "exit", 4 + 1) == 0)
+	{
+		printf("DEBUG\n");
 		exit (0);
+	}
 	return (0);
 }
 

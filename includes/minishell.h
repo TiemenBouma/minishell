@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/09 09:13:11 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 13:20:45 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len);
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
-char			**find_path(char **envp);
+char	**find_path(t_node **list);
 int	add_path(char **exec_line, char **root_paths);
 char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
@@ -148,8 +148,9 @@ t_node	*ft_new_node(char *str);
 void	ft_list_node_add_back(t_node **node_lst, t_node *new_node);
 int	ft_list_size(t_node *lst);
 t_node	*ft_list_find_last_node(t_node **list);
-void	ft_remove_node(t_node **list, char *var_line);
+void	ft_remove_node(t_node **list, t_node *node_to_remove);
 t_node *find_node_in_list(t_node **list, char *var_line);
+void	ft_find_and_remove_node(t_node **list, char *var_line);
 
 
 //env_var_list

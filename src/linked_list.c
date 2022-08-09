@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/02 11:43:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 13:14:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_node	*ft_list_find_last_node(t_node **list)
 	return (current);
 }
 
-t_node *find_node_in_list(t_node **list, char *var_line)
+t_node *find_node_in_list(t_node **list, char *var_name)
 {
 	t_node *current;
 	int len;
@@ -81,9 +81,9 @@ t_node *find_node_in_list(t_node **list, char *var_line)
 		len = 0;
 		while (current->str[len] && current->str[len] != '=')
 			len++;
-		if (ft_strlen(var_line) > len)
-			len = ft_strlen(var_line);
-		if (!ft_strncmp(current->str, var_line, len))
+		if (ft_strlen(var_name) > len)
+			len = ft_strlen(var_name);
+		if (!ft_strncmp(current->str, var_name, len))
 			return (current);
 		if (current->n == NULL)
 			break ;
@@ -92,32 +92,39 @@ t_node *find_node_in_list(t_node **list, char *var_line)
 	return (NULL);
 }
 
-void	ft_remove_node(t_node **list, char *var_line)
+void	ft_find_and_remove_node(t_node **list, char *var_name)
 {
 	t_node	*match_node;
 
-	match_node = find_node_in_list(list, var_line);
+	match_node = find_node_in_list(list, var_name);
 	if (match_node == NULL)
 		return ;
-	else if (match_node->p == NULL && match_node->n == NULL)
+	ft_remove_node(list, match_node);
+}
+
+void	ft_remove_node(t_node **list, t_node *node_to_remove)
+{
+	if (node_to_remove == NULL)
+		return ;
+	else if (node_to_remove->p == NULL && node_to_remove->n == NULL)
 	{
-			free(match_node->str);
-			free(match_node);
+			free(node_to_remove->str);
+			free(node_to_remove);
 			*list = NULL;
 			return ;
 	}
-	else if (match_node->p == NULL && match_node->n)//matchnode is first.
+	else if (node_to_remove->p == NULL && node_to_remove->n)//matchnode is first.
 	{
 		*list = (*list)->n;
 		(*list)->p = NULL;
 	}
-	else if (match_node->p && match_node->n)
+	else if (node_to_remove->p && node_to_remove->n)
 	{
-		match_node->p->n = match_node->n;
-		match_node->n = match_node->p;
+		node_to_remove->p->n = node_to_remove->n;
+		node_to_remove->n = node_to_remove->p;
 	}
-	else if (match_node->p && match_node->n == NULL)
-		match_node->p->n = NULL;
-	free(match_node->str);
-	free(match_node);
+	else if (node_to_remove->p && node_to_remove->n == NULL)
+		node_to_remove->p->n = NULL;
+	free(node_to_remove->str);
+	free(node_to_remove);
 }

@@ -6,29 +6,25 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/03 14:18:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 14:23:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**find_path(char **envp)
+char	**find_path(t_node **list)
 {
 	char	*ptr;
 	char	**root_paths;
-	int		i;
+	t_node	*match_node;
 
-	i = 0;
-	while (envp[i])
+	match_node = find_node_in_list(list, "PATH=");
+	if (match_node == NULL)
 	{
-		ptr = ft_strnstr(envp[i], "PATH=", ft_strlen(envp[i]));
-		if (ptr != NULL)
-			break ;
-		i++;
-	}
-	if (ptr == NULL)
 		error_msg(ERR_PATH, 1);
-	ptr += 5;
+		return (NULL);	
+	}
+	ptr = match_node->str + 5;
 	root_paths = ft_split(ptr, ':');
 	if (root_paths == NULL)
 		error_msg(ERR_MALLOC, 1);
@@ -43,6 +39,8 @@ int	add_path(char **exec_line, char **root_paths)
 	int		i;
 
 	i = 0;
+	if (root_paths == NULL)
+		return (0);
 	if (access(exec_line[0], F_OK) == 0)
 		return (0);
 	cmd_temp = ft_strdup(exec_line[0]);

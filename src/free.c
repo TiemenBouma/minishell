@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/08 14:58:15 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 14:21:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	free_struct(struct s_main *main_struct)
 	//free_double_str(main_struct->root_paths);
 	free_double_str(main_struct->all_tokens);
 	free_triple_str(main_struct->cmd_lines);
+	if (main_struct->root_paths != NULL)
+		free_double_str(main_struct->root_paths);
 	main_struct->cmd_count = 0;
 	while (i < main_struct->cmd_count)
 	{

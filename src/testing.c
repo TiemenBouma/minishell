@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/08 14:58:15 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 13:37:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	print_dubble_str(char **str, char *name)
 {
 	int		c1;
 	c1 = 0;
+	if (str == NULL)
+		return (0);
 	printf("%s \t\t", name);
 	while (str[c1])
 	{

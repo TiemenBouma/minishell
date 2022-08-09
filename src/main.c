@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/09 09:45:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/09 11:36:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ int	main(void)
 		if (main_struct.all_tokens[0] == NULL)
 			continue ;
 		main_struct.cmd_lines = make_cmd_lines(main_struct.all_tokens);
-		make_cmd_structs(&main_struct);
+		if (make_cmd_structs(&main_struct) == -1)
+		{
+			free_struct(&main_struct);
+			continue;
+		}
 		//print_structs(&main_struct);
 		exec(&main_struct);
 		free_struct(&main_struct);

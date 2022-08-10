@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/09 14:21:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 10:19:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	free_triple_str(char ***str)
 	free(str);
 }
 
-void	free_cmd_info(struct s_cmd_info *curr_cmd_info)
+void	free_cmd_info(struct s_cmd_info *cmd_struct_arr)
 {
-	free_double_str(curr_cmd_info->curr_line_tokens);
-	curr_cmd_info->token_count = 0;
-	curr_cmd_info->has_infile = 0;
-	curr_cmd_info->has_outfile = 0;
-	free(curr_cmd_info->infile);
-	free(curr_cmd_info->outfile);
-	free_double_str(curr_cmd_info->exec.exec_line);
+	free_double_str(cmd_struct_arr->curr_line_tokens);
+	// cmd_struct_arr->token_count = 0;
+	// cmd_struct_arr->has_infile = 0;
+	// cmd_struct_arr->has_outfile = 0;
+	free(cmd_struct_arr->infile);
+	free(cmd_struct_arr->outfile);
+	free_double_str(cmd_struct_arr->exec.exec_line);
 }
 
 void	free_struct(struct s_main *main_struct)
@@ -57,14 +57,16 @@ void	free_struct(struct s_main *main_struct)
 	free(main_struct->input_str);
 	//free_double_str(main_struct->root_paths);
 	free_double_str(main_struct->all_tokens);
+	main_struct->all_tokens = NULL;
 	free_triple_str(main_struct->cmd_lines);
 	if (main_struct->root_paths != NULL)
 		free_double_str(main_struct->root_paths);
 	main_struct->cmd_count = 0;
 	while (i < main_struct->cmd_count)
 	{
-		free_cmd_info(&main_struct->curr_cmd_info[i]);
+		free_cmd_info(&main_struct->cmd_struct_arr[i]);
 		i++;
 	}
+	free(main_struct->cmd_struct_arr);
 	//main_struct->curr_exec_cmd_n = 0;
 }

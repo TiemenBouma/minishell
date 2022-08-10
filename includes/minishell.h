@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/10 07:55:35 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 09:59:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ struct	s_main {
 	char				**all_tokens;//
 	char				***cmd_lines;// maybe remove it out of the struct
 	int					cmd_count;
-	struct s_cmd_info	*curr_cmd_info;
+	struct s_cmd_info	*cmd_struct_arr;
 	struct s_node		*env_llist;
 	
 	int					old_exit_status;

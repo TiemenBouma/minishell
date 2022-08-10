@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/09 14:48:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 09:59:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,10 +165,7 @@ int	is_builtin(char	*s)
 	else if (ft_strncmp(s, "env", 3 + 1) == 0)
 		return (6);
 	else if (ft_strncmp(s, "exit", 4 + 1) == 0)
-	{
-		printf("DEBUG\n");
-		exit (0);
-	}
+		return (7);
 	return (0);
 }
 
@@ -180,7 +177,7 @@ int	exec_builtin(struct	s_main	*main_struct, char **s, int n)
 	//printf ("test%s\n", cmd);
 	(void) s;
 	if (n == 1)
-		ft_echo(main_struct->curr_cmd_info->exec.exec_line + 1);
+		ft_echo(main_struct->cmd_struct_arr->exec.exec_line + 1);
 	// else if (n == 2) //change abs path? exec all fucns with abs path?
 	// 	ft_cd(main_struct);
 	// else if (n == 2) //exec all fucns with abs path?

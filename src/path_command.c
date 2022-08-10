@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/09 14:23:15 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 09:22:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	add_path(char **exec_line, char **root_paths)
 	if (access(exec_line[0], F_OK) == 0)
 		return (0);
 	cmd_temp = ft_strdup(exec_line[0]);
+	if (is_builtin(exec_line[0])) //New feature, checking on buildin
+		return (0);
 	while (root_paths[i])
 	{
 		temp = ft_strjoin(root_paths[i], "/");
@@ -63,7 +65,8 @@ int	add_path(char **exec_line, char **root_paths)
 		}
 		i++;
 	}
-	// if the command is EXIT and maybe other commands need to be handeld here.
+		
+	// if the command is EXIT and maybe other commands need to be handeld here. (See begin func for handeling buildins)
 	free(cmd_temp);
 	error_msg(ERR_CMD, 127);
 	return (0);

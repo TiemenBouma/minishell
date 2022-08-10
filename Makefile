@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/08 11:47:18 by tbouma           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tbouma <tbouma@student.42.fr>                +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
+#    Updated: 2022/08/10 14:53:55 by dkocob        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,11 +39,11 @@ $(LIBFT):
 
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
-	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L /Users/tbouma/.brew/opt/readline/lib 
+	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L ~/.brew/opt/readline/lib 
 
 obj/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $< -I /Users/tbouma/.brew/opt/readline/include
+	$(CC) -c $(CFLAGS) -o $@ $< -I ~/.brew/opt/readline/include
 
 clean:
 	rm -f $(OBJFILES)

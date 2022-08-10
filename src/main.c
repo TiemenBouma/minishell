@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/10 10:20:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 11:44:51 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(void)
 	extern char **environ;
 	
 	main_struct.old_exit_status = 0;
+	main_struct.pid_child = 1;
 	main_struct.env_llist = add_env_to_list(environ);
 	signals_handeler();
 	
@@ -40,7 +41,7 @@ int	main(void)
 			continue;
 		}
 		
-		print_structs(&main_struct);
+		//print_structs(&main_struct);
 		main_struct.old_exit_status = exec(&main_struct);
 		free_struct(&main_struct);
 		//print_structs(&main_struct);

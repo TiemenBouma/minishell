@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/10 09:22:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 11:23:57 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ int	add_path(char **exec_line, char **root_paths)
 	}
 		
 	// if the command is EXIT and maybe other commands need to be handeld here. (See begin func for handeling buildins)
-	free(cmd_temp);
-	error_msg(ERR_CMD, 127);
+	
+	free(exec_line[0]);
+	exec_line[0] = cmd_temp;
+	//error_msg(ERR_CMD, 127);
 	return (0);
 }
 

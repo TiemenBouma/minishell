@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/10 11:50:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 14:37:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	exec(struct	s_main *main_struct)
 
 	
 	if (ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
-		exit(2);// Probably need function to check what exit status to use.
+		exit(0);// Probably need function to check what exit status to use. maybe need other exit code
 	while (i < main_struct->cmd_count)
 	{
 		i++;

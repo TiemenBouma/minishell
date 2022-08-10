@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/10 09:59:44 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 14:29:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,17 @@ void	ft_echo(char **s)
 // 	return (NULL);
 // }
 
-// void	ft_pwd(struct	s_main	*main_struct)
-// {
-// 	//print current pwd
-// }
+void	ft_pwd(void)
+{
+	char	*cwd;
+	
+	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
+	cwd[PATH_MAX] = '\0';
+	getcwd(cwd, MAXPATHLEN);// check if it worked
+	ft_putstr_fd(cwd, 2);
+	write(1, "\n", 2);
+	free(cwd);
+}
 
 // void	ft_cd(struct	s_main	*main_struct)
 // {
@@ -92,21 +99,34 @@ void	ft_echo(char **s)
 // 	free(match_node);
 // }
 
-// void ft_cd(t_node **list)
-// {
-// 	int i = 0;
-// 	int	*cwd;
+void ft_cd(t_node **list, char **exec_line)
+{
+	//int i = 0;
+	char	*cwd;
+	t_node	*temp_node;
+	char	*temp_str;
 	
-// 	cwd = malloc(sizeof(char) * (MAXPATHLEN));
-// 	cwd[PATH_MAX] = '\0';
-// 	getcwd(cwd, MAXPATHLEN);// check if it worked
-// 	//OLDPWD= becomes cwd.
+	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
+	cwd[PATH_MAX] = '\0';
+	getcwd(cwd, MAXPATHLEN);// check if it worked
+	temp_str = ft_strjoin("OLDPWD=", cwd);
+	printf("old: %s\n", temp_str);
+	ft_find_and_remove_node(list, "OLDPWD");
+	temp_node = ft_new_node(temp_str);
+	free(temp_str);
+	ft_list_node_add_back(list, temp_node);
 	
-// 	chdir(/*new path*/ );//check if it worked
-// 	//PWD= becomes new path.
+	
+	chdir(exec_line[1]);//check if it worked, ernno is made on error.
+	//PWD= becomes new path.
+	temp_str = ft_strjoin("PWD=", exec_line[1]);
+	printf("new: %s\n", temp_str);
+	ft_find_and_remove_node(list, "PWD");
+	temp_node = ft_new_node(temp_str);
+	ft_list_node_add_back(list, temp_node);
 
-// 	getcwd(cwd, MAXPATHLEN);//checked if switch worked
-// }
+	getcwd(cwd, MAXPATHLEN);//checked if switch worked
+}
 
 void	ft_env(t_node **list)
 {
@@ -169,19 +189,19 @@ int	is_builtin(char	*s)
 	return (0);
 }
 
-int	exec_builtin(struct	s_main	*main_struct, char **s, int n)
+int	exec_builtin(struct	s_main	*main_struct, char **exec_line, int n)
 {
 	//char *cmd = s[0];
 
 	// s[0] = "Yo";
 	//printf ("test%s\n", cmd);
-	(void) s;
+	//(void) exec_line;
 	if (n == 1)
 		ft_echo(main_struct->cmd_struct_arr->exec.exec_line + 1);
-	// else if (n == 2) //change abs path? exec all fucns with abs path?
-	// 	ft_cd(main_struct);
-	// else if (n == 2) //exec all fucns with abs path?
-	// 	ft_pwd(main_struct);
+	else if (n == 2) //change abs path? exec all fucns with abs path?
+		ft_cd(&main_struct->env_llist, exec_line);
+	else if (n == 3) //exec all fucns with abs path?
+		ft_pwd();
 	// else if (n == 3)
 	// 	ft_export(main_struct, cmd);
 	// else if (n == 4)

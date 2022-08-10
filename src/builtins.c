@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/10 14:29:15 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 15:13:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void ft_cd(t_node **list, char **exec_line)
 	cwd[PATH_MAX] = '\0';
 	getcwd(cwd, MAXPATHLEN);// check if it worked
 	temp_str = ft_strjoin("OLDPWD=", cwd);
+	free(cwd);
 	printf("old: %s\n", temp_str);
 	ft_find_and_remove_node(list, "OLDPWD");
 	temp_node = ft_new_node(temp_str);
@@ -124,8 +125,10 @@ void ft_cd(t_node **list, char **exec_line)
 	ft_find_and_remove_node(list, "PWD");
 	temp_node = ft_new_node(temp_str);
 	ft_list_node_add_back(list, temp_node);
-
+	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
+	cwd[PATH_MAX] = '\0';
 	getcwd(cwd, MAXPATHLEN);//checked if switch worked
+	printf("cwd in cd = %s\n", cwd);
 }
 
 void	ft_env(t_node **list)

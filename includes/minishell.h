@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/09 13:20:45 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 07:55:35 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ struct	s_main {
 	struct s_cmd_info	*curr_cmd_info;
 	struct s_node		*env_llist;
 	
+	int					old_exit_status;
 	//pipex
 	//pid_t				pid_child;
 	//int					tube[2];
@@ -156,7 +157,7 @@ void	ft_find_and_remove_node(t_node **list, char *var_line);
 //env_var_list
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
-int	expand_variables(char **input_str, t_node **list);
+int	expand_variables(char **input_str, t_node **list, int old_exit_status);
 
 //SIGNALS
 void	sigint_handler(int sig);

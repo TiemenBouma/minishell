@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/08 14:42:19 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 07:57:45 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,12 @@ int	replace_input_str(char **input_str, char *content, int *index, char *var_nam
 	return (0);
 }
 
-int	expand_variables(char **input_str, t_node **list)
+int	expand_variables(char **input_str, t_node **list, int old_exit_status)
 {
 	int 	index;
 	char	*var_name;
 	char	*content;
+	char	*str_exit_status;
 
 	index = 0;
 	while ((*input_str)[index])
@@ -149,7 +150,13 @@ int	expand_variables(char **input_str, t_node **list)
 			continue ;
 		}	//return (0);
 		content = find_var_in_list(list, var_name);
-		if (content == NULL)
+		if (var_name[0] == '?')
+		{
+			str_exit_status = ft_itoa(old_exit_status);
+			replace_input_str(input_str, str_exit_status, &index, var_name);
+			free(str_exit_status);
+		}
+		else if (content == NULL)
 			replace_input_str(input_str, "", &index, var_name);//continue ;
 		else
 		{	

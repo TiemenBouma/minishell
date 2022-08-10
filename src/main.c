@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/09 14:22:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/10 07:55:11 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(void)
 {
 	struct s_main	main_struct;
 	extern char **environ;
-
+	
+	main_struct.old_exit_status = 0;
 	main_struct.env_llist = add_env_to_list(environ);
 	signals_handeler();
 	
@@ -28,7 +29,7 @@ int	main(void)
 		add_history(main_struct.input_str);
 		if (main_struct.input_str == NULL)
 			break;
-		expand_variables(&main_struct.input_str, &main_struct.env_llist);
+		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
 		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
 		if (main_struct.all_tokens[0] == NULL)
 			continue ;
@@ -39,10 +40,10 @@ int	main(void)
 			continue;
 		}
 		//print_structs(&main_struct);
-		exec(&main_struct);
+		main_struct.old_exit_status = exec(&main_struct);
 		free_struct(&main_struct);
 	}
-	return (0);
+	return (main_struct.old_exit_status);
 }
 
 	//print_linked_list(&main_struct.env_llist);

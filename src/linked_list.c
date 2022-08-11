@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/11 07:55:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 11:54:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_remove_node(t_node **list, t_node *node_to_remove)
 	else if (node_to_remove->p && node_to_remove->n)
 	{
 		node_to_remove->p->n = node_to_remove->n;
-		node_to_remove->n = node_to_remove->p;
+		node_to_remove->n->p = node_to_remove->p;
 	}
 	else if (node_to_remove->p && node_to_remove->n == NULL)
 		node_to_remove->p->n = NULL;

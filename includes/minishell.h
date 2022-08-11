@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 13:29:05 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 14:06:14 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ struct	s_cmd_info {
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
 	struct s_to_exec	exec;
+	char				*heredoc;
 };
 
 struct	s_main {

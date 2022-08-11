@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 12:51:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 14:03:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(void)
 			continue;
 		}
 		
-		//print_structs(&main_struct);
+		print_structs(&main_struct);
 		main_struct.old_exit_status = exec(&main_struct);
 		free_struct(&main_struct);
 		// cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));

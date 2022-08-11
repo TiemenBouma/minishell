@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/11 11:48:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 13:37:13 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,14 @@ void	ft_echo(char **s)
 	// write(1, "\n", 1); //TIEMEN WROTE THIS NEW LINE, NOT SURE IF IT IS THE RIGHT PLACE
 }
 
-// t_node *find_node_in_list(t_node *list, char *var_line)
-// {
-// 	t_node *current;
-
-// 	current = list;
-// 	while (1)
-// 	{
-// 		if (ft_strncmp(current->str, var_line, ft_strlen(var_line) + 1))
-// 			return (current);
-// 		if (current->n == NULL)
-// 			break ;
-// 		current = current->n;
-// 	}
-// 	return (NULL);
-// }
-
-void	ft_pwd(void)
+void	ft_pwd(t_node **list)
 {
-	char	*cwd;
+	t_node	*match_node;
 	
-	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
-	cwd[PATH_MAX] = '\0';
-	getcwd(cwd, MAXPATHLEN);// check if it worked
-	ft_putstr_fd(cwd, 1);
+	match_node = ft_find_node_in_list(list, "PWD=");
+	ft_putstr_fd(match_node->str + 4, 1);
 	write(1, "\n", 1);
-	free(cwd);
 }
-
-// void	ft_cd(struct	s_main	*main_struct)
-// {
-// 	//check pwd
-// 	//check if dest location is exist (access?)
-// 	//modify pwd
-// }
 
 // void	ft_unset(t_node *first_node, char *var_line)
 // {
@@ -101,39 +75,25 @@ void	ft_pwd(void)
 
 void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
 {
-	//int i = 0;
 	char	*cwd;
-	t_node	*temp_node;
-	char	*temp_str;
+	char	*new_str;
 	
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
-		perror_msg("getcwd error", 2);
-	temp_str = ft_strjoin("OLDPWD=", cwd);
+		perror_msg("pwd", NULL);
+	new_str = ft_strjoin("OLDPWD=", cwd);
 	free(cwd);
-	//printf("old: %s\n", temp_str);
-	ft_find_and_remove_node(list, "OLDPWD");
-	//print_linked_list(list);
-	temp_node = ft_new_node(temp_str);
-	free(temp_str);
-	ft_list_node_add_back(list, temp_node);
-	//print_linked_list(list);
-	
+	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	if (chdir(exec_line[1]))
-		perror_msg("chdir error: ", 2);
-	//check if it worked, ernno is made on error.
-	//PWD= becomes new path.
-	temp_str = ft_strjoin("PWD=", exec_line[1]);
-	//printf("new: %s\n", temp_str);
-	ft_find_and_remove_node(list, "PWD");
-	temp_node = ft_new_node(temp_str);
-	ft_list_node_add_back(list, temp_node);
+		perror_msg("cd", exec_line[1]);
+	new_str = ft_strjoin("PWD=", exec_line[1]);
+	ft_find_and_edit_node(list, "PWD", new_str);
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
-		perror_msg("getcwd error", 2);//checked if switch worked
-	//printf("cwd in cd = %s\n", cwd);
+		perror_msg("pwd", NULL);
+	free(cwd);
 }
 
 void	ft_env(t_node **list)
@@ -157,7 +117,7 @@ void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
 	t_node	*new_node;
 	t_node	*match_node;
 
-	match_node = find_node_in_list(list, var_line);
+	match_node = ft_find_node_in_list(list, var_line);
 	if (!match_node)
 	{
 		new_node = ft_new_node(var_line);
@@ -203,7 +163,7 @@ int	exec_builtin(struct	s_main	*main_struct, char **exec_line, int n)
 	else if (n == 2) //change abs path? exec all fucns with abs path?
 		ft_cd(&main_struct->env_llist, exec_line);
 	else if (n == 3) //exec all fucns with abs path?
-		ft_pwd();
+		ft_pwd(&main_struct->env_llist);
 	// else if (n == 3)
 	// 	ft_export(main_struct, cmd);
 	// else if (n == 4)

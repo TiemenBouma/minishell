@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/10 15:24:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 12:51:54 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(void)
 {
 	struct s_main	main_struct;
 	extern char **environ;
-	char	*cwd;
+	//char	*cwd;
 	
 	main_struct.old_exit_status = 0;
 	main_struct.pid_child = 1;

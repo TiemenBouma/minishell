@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 14:06:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 15:29:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@
 # define S_IN 0
 # define CUR (i + 1) % 2
 # define PREV i % 2
+# define GREATER 20
+# define SMALLER 21
+# define HEREDOC 22
+# define APPEND 23
 
 
 struct	s_redir {

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/10 14:16:00 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 09:14:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,11 @@ struct	s_main {
 int	err_chk(int i, int t, char *s);
 int	exec(struct	s_main *main_struct);
 char	*ft_sjf(char *s1, char *s2, int f);
+
+//BUILDIN's
 int	is_builtin(char	*s);
 int	exec_builtin(struct	s_main *main_struct, char **s, int n);
+int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
 
 //UTILS
 int				error_msg(char *msg, int err);
@@ -153,6 +156,7 @@ t_node	*ft_list_find_last_node(t_node **list);
 void	ft_remove_node(t_node **list, t_node *node_to_remove);
 t_node *find_node_in_list(t_node **list, char *var_line);
 void	ft_find_and_remove_node(t_node **list, char *var_line);
+int	replace_node_content(t_node *first_node, char *var_line);
 
 
 //env_var_list

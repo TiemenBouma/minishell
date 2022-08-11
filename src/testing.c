@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/10 10:17:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 11:41:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	print_linked_list(t_node **list)
 	current = *list;
 	if (!current)
 		return -1;
-	printf("\n");
+	dprintf(STDERR_FILENO, "\n");
 	while (current)
 	{
-		printf("%d:\t%s\n", i, current->str);
+		dprintf(STDERR_FILENO, "%d:\t%s\n", i, current->str);
 		current = current->n;
 		i++;
 	}

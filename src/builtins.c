@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/11 09:49:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 11:48:20 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,17 +108,21 @@ void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not rela
 	
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
-	getcwd(cwd, MAXPATHLEN);// check if it worked
+	if (getcwd(cwd, MAXPATHLEN) == NULL)
+		perror_msg("getcwd error", 2);
 	temp_str = ft_strjoin("OLDPWD=", cwd);
 	free(cwd);
 	//printf("old: %s\n", temp_str);
 	ft_find_and_remove_node(list, "OLDPWD");
+	//print_linked_list(list);
 	temp_node = ft_new_node(temp_str);
 	free(temp_str);
 	ft_list_node_add_back(list, temp_node);
+	//print_linked_list(list);
 	
-	
-	chdir(exec_line[1]);//check if it worked, ernno is made on error.
+	if (chdir(exec_line[1]))
+		perror_msg("chdir error: ", 2);
+	//check if it worked, ernno is made on error.
 	//PWD= becomes new path.
 	temp_str = ft_strjoin("PWD=", exec_line[1]);
 	//printf("new: %s\n", temp_str);
@@ -127,7 +131,8 @@ void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not rela
 	ft_list_node_add_back(list, temp_node);
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
-	getcwd(cwd, MAXPATHLEN);//checked if switch worked
+	if (getcwd(cwd, MAXPATHLEN) == NULL)
+		perror_msg("getcwd error", 2);//checked if switch worked
 	//printf("cwd in cd = %s\n", cwd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/11 11:54:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 13:34:59 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_node	*ft_list_find_last_node(t_node **list)
 	return (current);
 }
 
-t_node *find_node_in_list(t_node **list, char *var_name)
+t_node *ft_find_node_in_list(t_node **list, char *var_name)
 {
 	t_node *current;
 	int len;
@@ -96,10 +96,20 @@ void	ft_find_and_remove_node(t_node **list, char *var_name)
 {
 	t_node	*match_node;
 
-	match_node = find_node_in_list(list, var_name);
+	match_node = ft_find_node_in_list(list, var_name);
 	if (match_node == NULL)
 		return ;
 	ft_remove_node(list, match_node);
+}
+
+void	ft_find_and_edit_node(t_node **list, char *var_name, char *content)
+{
+	t_node	*match_node;
+
+	match_node = ft_find_node_in_list(list, var_name);
+	if (match_node == NULL)
+		return ;
+	replace_node_content(match_node, content);
 }
 
 void	ft_remove_node(t_node **list, t_node *node_to_remove)
@@ -129,9 +139,9 @@ void	ft_remove_node(t_node **list, t_node *node_to_remove)
 	free(node_to_remove);
 }
 
-int	replace_node_content(t_node *first_node, char *var_line)
+int	replace_node_content(t_node *first_node, char *content)
 {
 	free(first_node->str);
-	first_node->str = var_line; //check after implementation
+	first_node->str = content; //check after implementation
 	return (0);
 }

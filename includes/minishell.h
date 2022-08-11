@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 09:14:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 13:29:05 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
 
 //UTILS
 int				error_msg(char *msg, int err);
-void			perror_msg(char *msg, int err);
+void	perror_msg(char *cmd, char *att);
 int 			free_stuff(char *str);
 int				ft_strcmp_var(const char *s1, const char *s2);
 int	is_special_char(char c);
@@ -154,9 +154,10 @@ void	ft_list_node_add_back(t_node **node_lst, t_node *new_node);
 int	ft_list_size(t_node *lst);
 t_node	*ft_list_find_last_node(t_node **list);
 void	ft_remove_node(t_node **list, t_node *node_to_remove);
-t_node *find_node_in_list(t_node **list, char *var_line);
+t_node *ft_find_node_in_list(t_node **list, char *var_line);
 void	ft_find_and_remove_node(t_node **list, char *var_line);
 int	replace_node_content(t_node *first_node, char *var_line);
+void	ft_find_and_edit_node(t_node **list, char *var_name, char *content);
 
 
 //env_var_list

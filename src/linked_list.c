@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/09 13:14:55 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/11 07:55:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,11 @@ void	ft_remove_node(t_node **list, t_node *node_to_remove)
 		node_to_remove->p->n = NULL;
 	free(node_to_remove->str);
 	free(node_to_remove);
+}
+
+int	replace_node_content(t_node *first_node, char *var_line)
+{
+	free(first_node->str);
+	first_node->str = var_line; //check after implementation
+	return (0);
 }

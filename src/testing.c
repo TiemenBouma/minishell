@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/11 11:41:52 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 14:06:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	print_cmd_info(struct s_main *main_struct)
 		printf("CMDline_n %d\n", i);
 		printf("has_in: %d has_out: %d\n", main_struct->cmd_struct_arr[i].has_infile, main_struct->cmd_struct_arr[i].has_outfile);
 		printf("fd_in = %d fd_out = %d\n", main_struct->cmd_struct_arr[i].exec.fd_in, main_struct->cmd_struct_arr[i].exec.fd_out);
+		if (main_struct->cmd_struct_arr[i].heredoc)
+			printf("HEREDOC = %s\n", main_struct->cmd_struct_arr[i].heredoc);
 		if ( main_struct->cmd_struct_arr[i].has_infile == 1)
 			printf("infile:\t\t\t%s\n", main_struct->cmd_struct_arr[i].infile);
 		if ( main_struct->cmd_struct_arr[i].has_outfile == 1)

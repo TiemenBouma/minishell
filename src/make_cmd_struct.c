@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/11 15:25:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 14:01:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ static int	find_exec_tokens(struct s_cmd_info *cmd_struct)
 {
 	int exec_token;
 	int	token_n;
-	int value;
+	//int value;
 
 	token_n = 0;
 	exec_token = 0;
 	while (token_n < cmd_struct->token_count)
 	{
-		value = is_arrow_sign(cmd_struct->curr_line_tokens[token_n]);
-		if (value != SMALLER && value != GREATER)//(cmd_struct->curr_line_tokens[token_n][0] != '<' && cmd_struct->curr_line_tokens[token_n][0] != '>')
+		//value = is_arrow_sign(cmd_struct->curr_line_tokens[token_n]);
+		if (!is_arrow_sign(cmd_struct->curr_line_tokens[token_n]))//(value != SMALLER && value != GREATER)//(cmd_struct->curr_line_tokens[token_n][0] != '<' && cmd_struct->curr_line_tokens[token_n][0] != '>')
 		{
 			cmd_struct->exec.exec_line[exec_token] = ft_strdup(cmd_struct->curr_line_tokens[token_n]);
 			exec_token++;
 		}
-		else if (value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[token_n][0] == '<' || cmd_struct->curr_line_tokens[token_n][0] == '>')
+		else if (is_arrow_sign(cmd_struct->curr_line_tokens[token_n]))//(value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[token_n][0] == '<' || cmd_struct->curr_line_tokens[token_n][0] == '>')
 		{
 			if (cmd_struct->curr_line_tokens[token_n + 1] == NULL)
 				return(-1);//(ERR_INPUT);
@@ -57,16 +57,21 @@ static int	calc_exec_line_len(struct s_cmd_info *cmd_struct)
 {
 	int i;
 	int	exec_len;
-	int	value;
+	//int	value;
 
 	i = 0;
 	exec_len = 0;
 	while (i < cmd_struct->token_count)
 	{
-		value = is_arrow_sign(cmd_struct->curr_line_tokens[i]);
-		if (value != GREATER  && value != SMALLER)//(cmd_struct->curr_line_tokens[i][0] != '<' && cmd_struct->curr_line_tokens[i][0] != '>')
+		//value = is_arrow_sign(cmd_struct->curr_line_tokens[i]);
+		printf("DEBUG\n");
+		printf("token count: %d\n", cmd_struct->token_count);
+		if (!is_arrow_sign(cmd_struct->curr_line_tokens[i]))//(value != GREATER  && value != SMALLER)//(cmd_struct->curr_line_tokens[i][0] != '<' && cmd_struct->curr_line_tokens[i][0] != '>')
+		{
+			printf("DEBUG1\n");
 			exec_len++;
-		else if (value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[i][0] == '<' || cmd_struct->curr_line_tokens[i][0] == '>')
+		}
+		else if (is_arrow_sign(cmd_struct->curr_line_tokens[i]))//(value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[i][0] == '<' || cmd_struct->curr_line_tokens[i][0] == '>')
 		{
 			if (cmd_struct->curr_line_tokens[i + 1] == NULL)
 				return(-1);//(ERR_INPUT);
@@ -110,6 +115,21 @@ static int	open_fd_in(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
+static int	open_fd_in_heredoc(struct s_cmd_info *cmd_struct)
+{
+	// cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
+	// //printf("%d\n", cmd_struct->exec.fd_in);
+	// if (cmd_struct->exec.fd_in < 0)
+	// {
+	// 	ft_putstr_fd("Bash: ", 2);
+	// 	ft_putstr_fd(cmd_struct->infile, 2);
+	// 	ft_putstr_fd(": ", 2);
+	// 	perror("");
+	// 	return(-1);
+	// }
+	 return (1);
+}
+
 static int	open_fd_out(struct s_cmd_info *cmd_struct)
 {
 	if (cmd_struct->has_outfile >= 1)
@@ -125,6 +145,8 @@ static int	open_fd_out(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
+// static int	open_fd_out_append(struct s_cmd_info *cmd_struct)
+
 static int	redir_check(struct s_cmd_info *cmd_struct)
 {
 	int	i;
@@ -132,7 +154,7 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 	i = 0;
 	while (i < cmd_struct->token_count)
 	{
-		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == SMALLER) //if (cmd_struct->curr_line_tokens[i][0] == '<')
+		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == SMALLER)
 		{
 			if (cmd_struct->has_infile >= 1)
 				free(cmd_struct->infile);
@@ -151,6 +173,14 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 			if(open_fd_out(cmd_struct) == -1)
 				return (-1);
 		}
+		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
+		{
+			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+			if (open_fd_in_heredoc(cmd_struct) == -1)
+				return (-1);
+		}
+
+		//if  is APPEND
 		i++;
 	}
 	return (1);
@@ -201,6 +231,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 		//malloc protect
 		make_exec_line(&main_struct->cmd_struct_arr[line]);
 		//if (main_struct->cmd_struct_arr[line].token_count != 0)
+
 		add_path(main_struct->cmd_struct_arr[line].exec.exec_line, main_struct->root_paths);
 		line++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/15 10:52:05 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 13:56:28 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	exec(struct	s_main *main_struct)
 
 
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
-
+	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0])
+		return (1); //make redir and continue
 	if (ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
 		exit(0);// Probably need function to check what exit status to use. maybe need other exit code
 	while (i < main_struct->cmd_count)

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 13:34:31 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 13:50:37 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_path(char **exec_line, char **root_paths)
 	int		i;
 
 	i = 0;
-	if (root_paths == NULL)
+	if (root_paths == NULL || exec_line[0] == NULL)
 		return (0);
 	if (access(exec_line[0], F_OK) == 0)
 		return (0);

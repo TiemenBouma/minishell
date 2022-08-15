@@ -1,7 +1,37 @@
-Makefile
-includes
-infile
-minishell
-obj
-outfile
-src
+TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n000b7q0002sxr/T/
+SHELL=/bin/zsh
+HOME=/Users/tbouma
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.EEzp5IcbL9/Listeners
+Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.43afrEV3Vh/Render
+LOGNAME=tbouma
+PATH=/Users/tbouma/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/tbouma/.brew/bin
+XPC_SERVICE_NAME=0
+COMMAND_MODE=unix2003
+MallocNanoZone=0
+USER=tbouma
+SECURITYSESSIONID=18c16
+XPC_FLAGS=0x0
+__CF_USER_TEXT_ENCODING=0x167B8:0x0:0x0
+ORIGINAL_XDG_CURRENT_DESKTOP=undefined
+SHLVL=1
+PWD=/Users/tbouma/Workspace/projects/minishell
+OLDPWD=/Users/tbouma/Workspace/projects/minishell
+ZSH=/Users/tbouma/.oh-my-zsh
+PAGER=less
+LESS=-R
+LSCOLORS=Gxfxcxdxbxegedabagacad
+HOMEBREW_CACHE=/tmp/tbouma/Homebrew/Caches
+HOMEBREW_TEMP=/tmp/tbouma/Homebrew/Temp
+TERM_PROGRAM=vscode
+TERM_PROGRAM_VERSION=1.70.0
+LANG=en_US.UTF-8
+COLORTERM=truecolor
+GIT_ASKPASS=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass.sh
+VSCODE_GIT_ASKPASS_NODE=/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=--ms-enable-electron-run-as-node
+VSCODE_GIT_ASKPASS_MAIN=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js
+VSCODE_GIT_IPC_HANDLE=/var/folders/zz/zyxvpxvq6csfxvn_n000b7q0002sxr/T/vscode-git-8800392e1f.sock
+VSCODE_INJECTION=1
+ZDOTDIR=/var/folders/zz/zyxvpxvq6csfxvn_n000b7q0002sxr/T/vscode-zsh
+TERM=xterm-256color
+_=/Users/tbouma/Workspace/projects/minishell/./minishell

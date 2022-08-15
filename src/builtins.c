@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/15 08:53:27 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 11:50:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_echo(char **s)
 
 	while (s[i])
 	{
-		ft_putstr_fd(s[i], 2);
+		ft_putstr_fd(s[i], 1);
 		write(1, " ", 2);
 		i++;
 	}
@@ -118,6 +118,18 @@ char	*make_var_name(char *var_line)
 	return(var_name);
 }
 
+void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
+{
+	t_node	*match_node;
+	char	*var_name;
+
+	var_name = make_var_name(var_line);
+	match_node = ft_find_node_in_list(list, var_name);
+	free(var_name);
+	if (match_node)
+		ft_remove_node(list, match_node);
+}
+
 void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
 {
 	t_node	*new_node;
@@ -148,7 +160,7 @@ int	is_builtin(char	*s)
 	else if (ft_strncmp(s, "/usr/bin/cd", 11 + 1) == 0) //change abs path? exec all fucns with abs path?
 		return (CD_BUILD);
 	else if (ft_strncmp(s, "/bin/pwd", 8 + 1) == 0) //exec all fucns with abs path?
-		return (CD_BUILD);
+		return (PWD_BUILD);
 	else if (ft_strncmp(s, "export", 6 + 1) == 0)
 		return (EXPORT_BUILD);
 	else if (ft_strncmp(s, "unset", 5 + 1) == 0)
@@ -175,8 +187,8 @@ int	exec_builtin(struct	s_main	*main_struct, char **exec_line, int build_n)
 		ft_pwd(&main_struct->env_llist);
 	else if (build_n == EXPORT_BUILD)
 		ft_export(&main_struct->env_llist, exec_line[1]);
-	// else if (build_n == 4)
-	// 	ft_unset(main_struct, cmd);
+	else if (build_n == UNSET_BUILD)
+		ft_unset(&main_struct->env_llist, exec_line[1]);
 	else if (build_n == ENV_BUILD)
 		ft_env(&main_struct->env_llist);
 	//exit (0);

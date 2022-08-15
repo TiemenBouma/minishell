@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/11 13:34:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 08:37:20 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,12 @@ void	ft_remove_node(t_node **list, t_node *node_to_remove)
 	free(node_to_remove);
 }
 
-int	replace_node_content(t_node *first_node, char *content)
+int	replace_node_content(t_node *first_node, char *content) //is content malloced? otherwise we need to malloc it here.
 {
+	char 	*ptr;
+	
 	free(first_node->str);
-	first_node->str = content; //check after implementation
+	ptr = ft_strdup(content);
+	first_node->str = ptr; //check after implementation
 	return (0);
 }

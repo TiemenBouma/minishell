@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 15:29:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 08:05:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,19 @@
 # define S_IN 0
 # define CUR (i + 1) % 2
 # define PREV i % 2
+
 # define GREATER 20
 # define SMALLER 21
 # define HEREDOC 22
 # define APPEND 23
+
+# define ECHO_BUILD 40
+# define CD_BUILD 41
+# define PWD_BUILD 42
+# define EXPORT_BUILD 43
+# define UNSET_BUILD 44
+# define ENV_BUILD 45
+# define EXIT_BUILD 46
 
 
 struct	s_redir {

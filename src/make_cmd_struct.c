@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/15 14:01:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 15:14:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int	open_fd_in(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
-static int	open_fd_in_heredoc(struct s_cmd_info *cmd_struct)
+static int	open_fd_in_heredoc(void)//(struct s_cmd_info *cmd_struct)
 {
 	// cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
 	// //printf("%d\n", cmd_struct->exec.fd_in);
@@ -175,9 +175,10 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		}
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
 		{
+			cmd_struct->has_herdoc = 1;
 			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
-			if (open_fd_in_heredoc(cmd_struct) == -1)
-				return (-1);
+			// if (open_fd_in_heredoc(cmd_struct) == -1)
+			// 	return (-1);
 		}
 
 		//if  is APPEND
@@ -217,6 +218,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].has_outfile = 0;
 		main_struct->cmd_struct_arr[line].exec.fd_out = 1;
 		main_struct->cmd_struct_arr[line].exec.fd_in = 0;
+		main_struct->cmd_struct_arr[line].has_herdoc = 0;
 		cmd_line_count = 0;
 		while (main_struct->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;
@@ -228,6 +230,8 @@ int	make_cmd_structs(struct s_main *main_struct)
 		copy_token(main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].curr_line_tokens, main_struct->cmd_struct_arr[line].token_count);
 		if (redir_check(&main_struct->cmd_struct_arr[line])  == -1)
 			return (-1);
+		if (main_struct->cmd_struct_arr[line].has_herdoc == 1)
+			main_struct->has_herdoc = 1;
 		//malloc protect
 		make_exec_line(&main_struct->cmd_struct_arr[line]);
 		//if (main_struct->cmd_struct_arr[line].token_count != 0)

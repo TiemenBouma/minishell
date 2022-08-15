@@ -6,36 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/15 14:14:30 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 15:00:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include "../includes/get_next_line.h"
 
-int	pipe_redir_back(struct s_main *main_struct, int (*p)[2][2], int i)
-{
-	if (i == 1 ) //1st
-	{
-		//printf("TEST1\n");
-		err_chk(dup2(S_IN, main_struct->cmd_struct_arr[i - 1].exec.fd_in), 1, "");
-	}
-	if (i != 1) // every Other
-	{
-		//printf("TEST2\n");
-		err_chk(dup2(S_IN, (*p)[PREV][P_OUT]), 1, "");
-	}
-	if (i != main_struct->cmd_count) //every mid
-	{
-		//printf("TEST3\n");
-		err_chk(dup2(S_OUT, (*p)[CUR][P_IN]), 1, "");
-	}
-	if (i == main_struct->cmd_count) //end
-	{
-		//printf("TEST4\n");
-		err_chk(dup2(S_OUT, main_struct->cmd_struct_arr[i - 1].exec.fd_out), 1, "");
-	}
-	return (0);
-}
 
 int	pipe_redir(struct s_main *main_struct, int (*p)[2][2], int i)
 {
@@ -102,7 +79,11 @@ int	exec(struct	s_main *main_struct)
 	int p[2][2];
 	sig_t	old_signal[2];
 
-	heredoc(main_struct, &p);
+	if (main_struct->has_herdoc == 1)
+	{
+		printf("DEBUG HERDOC\n");
+		heredoc(main_struct, &p);
+	}
 	if (main_struct->cmd_struct_arr->heredoc)
 		err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0])
@@ -138,9 +119,7 @@ int	exec(struct	s_main *main_struct)
 				dup2(saved_std_in, STD_OUT);
 				close(saved_std_in);
 				close(saved_std_out);
-				//pipe_redir_back(main_struct, &p, i);
-				// close(main_struct->cmd_struct_arr[i - 1].exec.fd_in);
-				// close(main_struct->cmd_struct_arr[i - 1].exec.fd_out);
+
 					
 				//exit(0);
 			}

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/15 08:05:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/15 14:50:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ struct	s_cmd_info {
 	char				*outfile;//**outfile;
 	struct s_to_exec	exec;
 	char				*heredoc;
+	int					has_herdoc;
 };
 
 struct	s_main {
@@ -113,6 +114,8 @@ struct	s_main {
 	int					cmd_count;
 	struct s_cmd_info	*cmd_struct_arr;
 	struct s_node		*env_llist;
+
+	int					has_herdoc;
 	
 	int					old_exit_status;
 	pid_t				pid_child;

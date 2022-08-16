@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/16 09:43:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/16 11:09:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,31 @@ int	pipe_redir(struct s_cmd_info *cmd_struct, int p[2][2], int i)
 	return (0);
 }
 
-static int	heredoc(struct s_main *main_struct, int (*p)[2][2])
+static int	heredoc(struct s_cmd_info *cmd_struct, int p[2][2])
 {
 	char	**gnl;
 
-	if (main_struct->cmd_struct_arr->heredoc)
+	if (cmd_struct->heredoc)
 	{
-		printf("stopWORD:%s\n", main_struct->cmd_struct_arr->heredoc);
-		err_chk(pipe((*p)[1]), 0, "");
+		printf("stopWORD:%s\n", cmd_struct->heredoc);
+		err_chk(pipe(p[1]), 0, "");
 		gnl = malloc (sizeof(char **) * 2);
 		if (!gnl)
 			exit(0);
 		while (1)
 		{
-			if (get_next_line(0, gnl) == -1 || ft_strncmp (gnl[0], main_struct->cmd_struct_arr->heredoc,
-					ft_strlen (main_struct->cmd_struct_arr->heredoc) + 1) == 0)
+			if (get_next_line(0, gnl) == -1 || ft_strncmp(gnl[0], cmd_struct->heredoc,
+					ft_strlen (cmd_struct->heredoc) + 1) == 0)
 			{
 				free(gnl[0]);
 				free(gnl);
 				break ;
 			}
-			write((*p)[1][P_IN], gnl[0], ft_strlen(gnl[0]));
+			write(p[1][P_IN], gnl[0], ft_strlen(gnl[0]));
 			free(gnl[0]);
-			write((*p)[1][P_IN], "\n", 1);
+			write(p[1][P_IN], "\n", 1);
 		}
-		close((*p)[1][P_IN]);
+		close(p[1][P_IN]);
 		return (1);
 	}
 	return (0);
@@ -71,6 +71,12 @@ static int	heredoc(struct s_main *main_struct, int (*p)[2][2])
 
 int exec2(struct s_cmd_info *cmd_struct, int saved_in_out[2], int p[2][2], sig_t old_signal[2], int i)//(main_struct->cmd_struct_arr[i - 1], &saved_in_out, &p, &old_signal)
 {
+	if (cmd_struct->has_heredoc == 1)
+	{
+		heredoc(cmd_struct, p);
+	}
+	if (cmd_struct->has_heredoc > 0)
+		err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 	saved_in_out[0] = dup(STD_IN);
 	saved_in_out[1] = dup(STD_OUT);
 	err_chk(pipe(p[CUR]), 1, "");
@@ -125,13 +131,12 @@ int	exec(struct	s_main *main_struct)
 	int p[2][2];
 	sig_t	old_signal[2];
 
-	
-	if (main_struct->has_herdoc == 1)
-	{
-		heredoc(main_struct, &p);
-	}
-	if (main_struct->cmd_struct_arr->heredoc)
-		err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
+	// if (main_struct->has_heredoc == 1)
+	// {
+	// 	heredoc(main_struct, &p);
+	// }
+	// if (main_struct->cmd_struct_arr->heredoc)
+	// 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0])
 		return (1); //make redir and continue
 	if (ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)

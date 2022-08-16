@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/15 11:50:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/16 09:28:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int	is_builtin(char	*s)
 	return (0);
 }
 
-int	exec_builtin(struct	s_main	*main_struct, char **exec_line, int build_n)
+int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 {
 	//char *cmd = s[0];
 
@@ -180,17 +180,17 @@ int	exec_builtin(struct	s_main	*main_struct, char **exec_line, int build_n)
 	//printf ("test%s\n", cmd);
 	//(void) exec_line;
 	if (build_n == ECHO_BUILD)
-		ft_echo(main_struct->cmd_struct_arr->exec.exec_line + 1);
+		ft_echo(cmd_struct->exec.exec_line + 1);
 	else if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
-		ft_cd(&main_struct->env_llist, exec_line);
+		ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
 	else if (build_n == CD_BUILD) //exec all fucns with abs path?
-		ft_pwd(&main_struct->env_llist);
+		ft_pwd(&cmd_struct->env_llist);
 	else if (build_n == EXPORT_BUILD)
-		ft_export(&main_struct->env_llist, exec_line[1]);
+		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
 	else if (build_n == UNSET_BUILD)
-		ft_unset(&main_struct->env_llist, exec_line[1]);
+		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
 	else if (build_n == ENV_BUILD)
-		ft_env(&main_struct->env_llist);
+		ft_env(&cmd_struct->env_llist);
 	//exit (0);
 	return (0);
 }

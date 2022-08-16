@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/16 11:09:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/16 12:49:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	heredoc(struct s_cmd_info *cmd_struct, int p[2][2])
 
 int exec2(struct s_cmd_info *cmd_struct, int saved_in_out[2], int p[2][2], sig_t old_signal[2], int i)//(main_struct->cmd_struct_arr[i - 1], &saved_in_out, &p, &old_signal)
 {
-	if (cmd_struct->has_heredoc == 1)
+	if (cmd_struct->has_heredoc > 0)
 	{
 		heredoc(cmd_struct, p);
 	}

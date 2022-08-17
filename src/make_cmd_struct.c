@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/15 15:14:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/16 11:07:05 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,8 @@ static int	calc_exec_line_len(struct s_cmd_info *cmd_struct)
 	while (i < cmd_struct->token_count)
 	{
 		//value = is_arrow_sign(cmd_struct->curr_line_tokens[i]);
-		printf("DEBUG\n");
-		printf("token count: %d\n", cmd_struct->token_count);
 		if (!is_arrow_sign(cmd_struct->curr_line_tokens[i]))//(value != GREATER  && value != SMALLER)//(cmd_struct->curr_line_tokens[i][0] != '<' && cmd_struct->curr_line_tokens[i][0] != '>')
 		{
-			printf("DEBUG1\n");
 			exec_len++;
 		}
 		else if (is_arrow_sign(cmd_struct->curr_line_tokens[i]))//(value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[i][0] == '<' || cmd_struct->curr_line_tokens[i][0] == '>')
@@ -145,7 +142,20 @@ static int	open_fd_out(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
-// static int	open_fd_out_append(struct s_cmd_info *cmd_struct)
+static int	open_fd_out_append(struct s_cmd_info *cmd_struct)
+{
+	if (cmd_struct->has_appendfile >= 1)
+		cmd_struct->exec.fd_out = open(cmd_struct->appendfile, O_RDONLY | O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (cmd_struct->exec.fd_out < 0)
+	{
+		ft_putstr_fd("Bash: ", 2);
+		ft_putstr_fd(cmd_struct->appendfile, 2);
+		ft_putstr_fd(": ", 2);
+		perror("");
+		exit(-1);
+	}
+	return (1);
+}
 
 static int	redir_check(struct s_cmd_info *cmd_struct)
 {
@@ -175,12 +185,20 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		}
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
 		{
-			cmd_struct->has_herdoc = 1;
+			cmd_struct->has_heredoc++;
 			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
 			// if (open_fd_in_heredoc(cmd_struct) == -1)
 			// 	return (-1);
 		}
-
+		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == APPEND)
+		{
+			if (cmd_struct->has_appendfile >= 1)
+				free(cmd_struct->appendfile);
+			cmd_struct->has_appendfile++;
+			cmd_struct->appendfile = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+			if(open_fd_out_append(cmd_struct) == -1)
+				return (-1);
+		}
 		//if  is APPEND
 		i++;
 	}
@@ -216,9 +234,12 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].exec.cmd_count = main_struct->cmd_count;
 		main_struct->cmd_struct_arr[line].has_infile = 0;
 		main_struct->cmd_struct_arr[line].has_outfile = 0;
+		main_struct->cmd_struct_arr[line].has_appendfile = 0;
 		main_struct->cmd_struct_arr[line].exec.fd_out = 1;
 		main_struct->cmd_struct_arr[line].exec.fd_in = 0;
-		main_struct->cmd_struct_arr[line].has_herdoc = 0;
+		main_struct->cmd_struct_arr[line].has_heredoc = 0;
+		main_struct->cmd_struct_arr[line].env_llist = main_struct->env_llist;
+		main_struct->cmd_struct_arr[line].pid_child = 1;
 		cmd_line_count = 0;
 		while (main_struct->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;
@@ -230,8 +251,8 @@ int	make_cmd_structs(struct s_main *main_struct)
 		copy_token(main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].curr_line_tokens, main_struct->cmd_struct_arr[line].token_count);
 		if (redir_check(&main_struct->cmd_struct_arr[line])  == -1)
 			return (-1);
-		if (main_struct->cmd_struct_arr[line].has_herdoc == 1)
-			main_struct->has_herdoc = 1;
+		// if (main_struct->cmd_struct_arr[line].has_heredoc == 1)
+		// 	main_struct->has_heredoc = 1;
 		//malloc protect
 		make_exec_line(&main_struct->cmd_struct_arr[line]);
 		//if (main_struct->cmd_struct_arr[line].token_count != 0)

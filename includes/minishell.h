@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/15 14:50:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/16 11:06:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,16 @@ struct	s_cmd_info {
 	int					token_count;
 	int					has_infile;
 	int					has_outfile;
+	int					has_appendfile;
+	int					has_heredoc;
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
-	struct s_to_exec	exec;
+	char				*appendfile;
 	char				*heredoc;
-	int					has_herdoc;
+
+	struct s_to_exec	exec;
+	pid_t				pid_child;
+	struct s_node		*env_llist;
 };
 
 struct	s_main {
@@ -115,10 +120,9 @@ struct	s_main {
 	struct s_cmd_info	*cmd_struct_arr;
 	struct s_node		*env_llist;
 
-	int					has_herdoc;
+	//int					has_heredoc;
 	
 	int					old_exit_status;
-	pid_t				pid_child;
 	//pipex
 	//pid_t				pid_child;
 	//int					tube[2];
@@ -135,7 +139,7 @@ char	*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
 int	is_builtin(char	*s);
-int	exec_builtin(struct	s_main *main_struct, char **s, int n);
+int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
 
 //UTILS

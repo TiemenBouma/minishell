@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/10 07:57:45 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/17 08:07:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*find_next_var_in_str(char *input_str, int *index)
 		}
 		if (input_str[*index] == '$')
 		{
-			printf("index == %d\n", *index);
+			//printf("index == %d\n", *index);
 			// if (input_str[*index + 1] && (input_str[*index + 1] == ' ' || ))
 			// {
 			// 	return NULL;// *index = *index + 1;

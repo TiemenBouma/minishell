@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/16 15:06:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/17 08:08:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ int	pipe_redir(struct s_cmd_info *cmd_struct, int (*p)[2][2], int i)
 {
 	if (i == 1)// && !cmd_struct->heredoc) //1st
 	{
-		printf("TEST1\n");
+		//printf("TEST1\n");
 		err_chk(dup2(cmd_struct->exec.fd_in, S_IN), 1, "");
 	}
-	if (i != 1)// || (i == 1 && cmd_struct->heredoc)) // every Other
+	if (i != 1 || (i == 1 && cmd_struct->has_heredoc > 0)) // every Other
 	{
-		printf("TEST2\n");
+		//printf("TEST2\n");
 		err_chk(dup2((*p)[PREV][P_OUT], S_IN), 1, "");
 	}
 	if (i != cmd_struct->exec.cmd_count) //every mid
 	{
-		printf("TEST3\n");
+		//printf("TEST3\n");
 		err_chk(dup2((*p)[CUR][P_IN], S_OUT), 1, "");
 	}
 	if (i == cmd_struct->exec.cmd_count) //end
 	{
-		printf("TEST4\n");
+		//printf("TEST4\n");
 		err_chk(dup2(cmd_struct->exec.fd_out, S_OUT), 1, "");
 	}
 	return (0);
@@ -43,10 +43,10 @@ static int	heredoc(struct s_cmd_info *cmd_struct, int (*p)[2][2])
 {
 	char	**gnl;
 
-	printf("\nIN HEREDOC\n\n");
+	//printf("\nIN HEREDOC\n\n");
 	if (cmd_struct->heredoc)
 	{
-		printf("stopWORD:%s\n", cmd_struct->heredoc);
+		//printf("stopWORD:%s\n", cmd_struct->heredoc);
 		err_chk(pipe((*p)[1]), 0, "");
 		gnl = malloc (sizeof(char **) * 2);
 		if (!gnl)
@@ -74,6 +74,7 @@ int exec2(struct s_cmd_info *cmd_struct, int saved_in_out[2], int (*p)[2][2], si
 {
 	if (cmd_struct->has_heredoc > 0)
 	{
+		//pipe_redir(cmd_struct, p, i);
 		heredoc(cmd_struct, p);
 	}
 	if (cmd_struct->has_heredoc != 0)
@@ -83,16 +84,16 @@ int exec2(struct s_cmd_info *cmd_struct, int saved_in_out[2], int (*p)[2][2], si
 	//err_chk(pipe((*p)[CUR]), 1, "");
 	old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 	old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
-	printf("EXEC START\n");
-	printf("%s\n", cmd_struct->exec.exec_line[0]);
+	//printf("EXEC START\n");
+	//printf("%s\n", cmd_struct->exec.exec_line[0]);
 	if (!is_builtin(cmd_struct->exec.exec_line[0]))//if (check_buildin_fork(&main_struct->cmd_struct_arr[i - 1]))
 	{ // NOT BUILDINS
-		printf("IN SYSTEM FUNC\n");
+		//printf("IN SYSTEM FUNC\n");
 		cmd_struct->pid_child = fork();
 		//err_chk(id, 1, "");
 		if (cmd_struct->pid_child == 0)
 		{
-			printf("SYSTEM FUNC CHILD\n");
+		//	printf("SYSTEM FUNC CHILD\n");
 			pipe_redir(cmd_struct, p, i);
 			execve(cmd_struct->exec.exec_line[0], cmd_struct->exec.exec_line, NULL); //why if command not found exit(0)?
 			exit (0);//For wrong commands We need to handel wrong commands dfferently
@@ -142,9 +143,12 @@ int	exec(struct	s_main *main_struct)
 	// }
 	// if (main_struct->cmd_struct_arr->heredoc)
 	// 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
-	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0])
+	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0] && main_struct->cmd_struct_arr[i].has_heredoc == 0)
+	{
+		//printf("Will renturn\n");
 		return (1); //make redir and continue
-	if (ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
+	}
+	if (main_struct->cmd_struct_arr[i].exec.exec_line[0] && ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
 		exit(0);// Probably need function to check what exit status to use. maybe need other exit code
 	while (i < main_struct->cmd_count)
 	{

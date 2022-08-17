@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/17 08:07:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/17 09:43:59 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 
 void	ft_echo(char **s)
 {
-	int	i = 0;
+	int	i = 1;
+	int	nl;
 
+	i = 1;
+	nl = 1; 
+	if (ft_strncmp(s[i], "-n",  1 + ft_strlen(s[i])) == 0)
+	{
+		nl = 0;
+		i = 2;
+	}
 	while (s[i])
 	{
 		ft_putstr_fd(s[i], 1);
-		write(1, " ", 2);
+		if (nl == 1)
+			write(1, " ", 2);
 		i++;
 	}
-	ft_putstr_fd("\n", 1);
+	if (nl == 1)
+		ft_putstr_fd("\n", 1);
 
 }
 
@@ -180,10 +190,10 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 	//printf ("test%s\n", cmd);
 	//(void) exec_line;
 	if (build_n == ECHO_BUILD)
-		ft_echo(cmd_struct->exec.exec_line + 1);
+		ft_echo(cmd_struct->exec.exec_line);
 	else if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
 		ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
-	else if (build_n == CD_BUILD) //exec all fucns with abs path?
+	else if (build_n == PWD_BUILD) //exec all fucns with abs path?
 		ft_pwd(&cmd_struct->env_llist);
 	else if (build_n == EXPORT_BUILD)
 		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);

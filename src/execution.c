@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/15 15:00:24 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/08/17 14:57:27 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	pipe_redir(struct s_main *main_struct, int (*p)[2][2], int i)
 	return (0);
 }
 
-static int	heredoc(struct s_main *main_struct, int (*p)[2][2])
+static int	heredoc(struct s_main *main_struct, int (*p)[2][2], int i)
 {
 	char	**gnl;
 
@@ -82,13 +82,13 @@ int	exec(struct	s_main *main_struct)
 	if (main_struct->has_herdoc == 1)
 	{
 		printf("DEBUG HERDOC\n");
-		heredoc(main_struct, &p);
+		heredoc(main_struct, &p, i);
 	}
 	if (main_struct->cmd_struct_arr->heredoc)
 		err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 	if (!main_struct->cmd_struct_arr[i].exec.exec_line[0])
 		return (1); //make redir and continue
-	if (ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
+	if (main_struct->cmd_struct_arr[i].exec.exec_line[0] && ft_strncmp(main_struct->cmd_struct_arr[i].exec.exec_line[0], "exit", 4 + 1) == 0)
 		exit(0);// Probably need function to check what exit status to use. maybe need other exit code
 	while (i < main_struct->cmd_count)
 	{

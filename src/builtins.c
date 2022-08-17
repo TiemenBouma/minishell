@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/17 09:43:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/17 12:00:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,37 @@ void	ft_pwd(t_node **list)
 // 	free(match_node->str);
 // 	free(match_node);
 // }
+//------------------------------------
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <dirent.h>
+// #include <errno.h>
 
+// int getdir(char *dir)
+// {
+//     DIR *dp;
+//     struct dirent *dirp;
+
+//     // if (argc != 2) {
+//     //     fprintf(stderr, "Usage: ./program directory_name\n");
+//     //     exit(EXIT_FAILURE);
+//     // }
+
+//     dp = opendir(dir);
+// 	// if (dp == NULL)
+// 	// 	return (1);
+	
+// 	dirp = readdir(dp);
+//     while (dirp != NULL)
+// 	{
+//         printf("%s\n", dirp->d_name);
+// 		dirp = readdir(dp);
+// 	}
+
+//     closedir(dp);
+//     return (0);
+// }
+//------------------------------------
 void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
 {
 	char	*cwd;
@@ -88,12 +118,12 @@ void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not rela
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	if (chdir(exec_line[1]))
 		perror_msg("cd", exec_line[1]);
-	new_str = ft_strjoin("PWD=", exec_line[1]);
-	ft_find_and_edit_node(list, "PWD", new_str);
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
 		perror_msg("pwd", NULL);
+	new_str = ft_strjoin("PWD=", cwd);
+	ft_find_and_edit_node(list, "PWD", new_str);
 	free(cwd);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/16 11:06:33 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/08/17 17:16:08 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct	s_to_exec {
 	int		fd_out;
 	char	**exec_line;
 	int		cmd_count;
+	char	*heredoc;
 };
 
 struct	s_cmd_info {
@@ -104,7 +105,6 @@ struct	s_cmd_info {
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
 	char				*appendfile;
-	char				*heredoc;
 
 	struct s_to_exec	exec;
 	pid_t				pid_child;
@@ -139,7 +139,7 @@ char	*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
 int	is_builtin(char	*s);
-int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
+int	exec_builtin(struct	s_main	*main_struct, struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
 
 //UTILS

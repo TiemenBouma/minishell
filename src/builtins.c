@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/17 12:00:24 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   builtins.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/27 14:09:35 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/08/17 17:12:37 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ int	is_builtin(char	*s)
 	return (0);
 }
 
-int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
+int	exec_builtin(struct	s_main	*main_struct, struct	s_cmd_info	*cmd_struct, int build_n)
 {
 	//char *cmd = s[0];
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   make_cmd_struct.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/16 11:07:05 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   make_cmd_struct.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/22 11:48:30 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/08/17 15:14:18 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
 		{
 			cmd_struct->has_heredoc++;
-			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+			cmd_struct->exec.heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
 			// if (open_fd_in_heredoc(cmd_struct) == -1)
 			// 	return (-1);
 		}
@@ -240,6 +240,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].has_heredoc = 0;
 		main_struct->cmd_struct_arr[line].env_llist = main_struct->env_llist;
 		main_struct->cmd_struct_arr[line].pid_child = 1;
+		main_struct->cmd_struct_arr[line].exec.heredoc = NULL;
 		cmd_line_count = 0;
 		while (main_struct->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;

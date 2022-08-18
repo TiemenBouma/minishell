@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/18 09:37:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 14:45:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_arrow_sign(char *str)
+int	is_arrow_sign(char *str)
 {
 	if (ft_strncmp(str, "<", 2) == 0)
 		return (SMALLER);
@@ -112,20 +112,32 @@ static int	open_fd_in(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
-static int	open_fd_in_heredoc(void)//(struct s_cmd_info *cmd_struct)
-{
-	// cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
-	// //printf("%d\n", cmd_struct->exec.fd_in);
-	// if (cmd_struct->exec.fd_in < 0)
-	// {
-	// 	ft_putstr_fd("Bash: ", 2);
-	// 	ft_putstr_fd(cmd_struct->infile, 2);
-	// 	ft_putstr_fd(": ", 2);
-	// 	perror("");
-	// 	return(-1);
-	// }
-	 return (1);
-}
+// static int	open_fd_in_heredoc(struct s_cmd_info *cmd_struct, int i)//(struct s_cmd_info *cmd_struct)
+// {
+// 	//char *herdoc_filename;
+	
+// 	//if (cmd_struct->heredoc_filename == NULL)
+// 	// {
+// 	// 	cmd_struct->heredoc_filename = make_heredoc_filename(cmd_struct->cmd_index);
+// 	// 	cmd_struct->heredoc_fd_opened = 1;
+// 	// }
+// 	if ()
+// 	heredoc(cmd_struct->heredoc, cmd_struct->heredoc_filename);
+		
+// 	if (cmd_struct->has_heredoc >= 1)
+// 		cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
+// 	//printf("%d\n", cmd_struct->exec.fd_in);
+// 	if (cmd_struct->exec.fd_in < 0)
+// 	{
+// 		ft_putstr_fd("Bash: ", 2);
+// 		ft_putstr_fd(cmd_struct->heredoc, 2);
+// 		ft_putstr_fd(": ", 2);
+// 		perror("");
+// 		return(-1);
+// 	}
+// 	return (1);
+// 	 return (1);
+// }
 
 static int	open_fd_out(struct s_cmd_info *cmd_struct)
 {
@@ -157,11 +169,17 @@ static int	open_fd_out_append(struct s_cmd_info *cmd_struct)
 	return (1);
 }
 
+
+
 static int	redir_check(struct s_cmd_info *cmd_struct)
 {
 	int	i;
+	int	total_heredoc;
+	int	curr_heredoc;
 
 	i = 0;
+	curr_heredoc = 0;
+	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	while (i < cmd_struct->token_count)
 	{
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == SMALLER)
@@ -185,8 +203,17 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		}
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC) // HEREDOC WILL BE MADE HERE IN A FILE
 		{
-			cmd_struct->has_heredoc++;
-			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+			curr_heredoc++;
+			if (total_heredoc > curr_heredoc)
+			{
+				dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
+			}
+			if (total_heredoc == curr_heredoc)
+			{
+				//cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+				heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->heredoc_pipe);
+			}
+			
 			// if (open_fd_in_heredoc(cmd_struct) == -1)
 			// 	return (-1);
 		}
@@ -231,6 +258,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 	main_struct->cmd_struct_arr = malloc(sizeof(struct s_cmd_info) * main_struct->cmd_count);
 	while (line < main_struct->cmd_count)
 	{
+		main_struct->cmd_struct_arr[line].cmd_index = line;
 		main_struct->cmd_struct_arr[line].exec.cmd_count = main_struct->cmd_count;
 		main_struct->cmd_struct_arr[line].has_infile = 0;
 		main_struct->cmd_struct_arr[line].has_outfile = 0;
@@ -238,6 +266,8 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].exec.fd_out = 1;
 		main_struct->cmd_struct_arr[line].exec.fd_in = 0;
 		main_struct->cmd_struct_arr[line].has_heredoc = 0;
+		main_struct->cmd_struct_arr[line].heredoc_fd_opened = 0;
+		main_struct->cmd_struct_arr[line].heredoc_filename = NULL;
 		main_struct->cmd_struct_arr[line].env_llist = main_struct->env_llist;
 		main_struct->cmd_struct_arr[line].pid_child = 1;
 		cmd_line_count = 0;

@@ -6,11 +6,21 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/18 09:03:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 11:09:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int ft_exit(char **s)
+{
+	int exit_code;
+
+	exit_code = 0;
+	if (s[1])
+		exit_code = ft_atoi(s[1]);
+	exit(exit_code % 255);
+}
 
 void	ft_echo(char **s)
 {
@@ -45,65 +55,7 @@ void	ft_pwd(t_node **list)
 	write(1, "\n", 2);
 }
 
-// void	ft_unset(t_node *first_node, char *var_line)
-// {
-// 	t_node	*match_node;
-// 	t_node	*prev;
-// 	t_node	*next;
 
-// 	match_node = find_node_in_list(first_node, var_line);
-// 	if (match_node == NULL)
-// 		return ;
-// 	if (match_node->p == NULL && first_node->n)
-// 	{
-// 		first_node = first_node->n;
-// 		first_node->p = NULL;
-
-// 	}
-// 	if (match_node->p)
-// 		prev = match_node->p;
-// 	if (match_node->n)
-// 		next = match_node->n;
-
-// 	if (prev && next)
-// 	{
-// 		next->p = prev;
-// 		prev->n = next;
-// 	}
-// 	free(match_node->str);
-// 	free(match_node);
-// }
-//------------------------------------
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <dirent.h>
-// #include <errno.h>
-
-// int getdir(char *dir)
-// {
-//     DIR *dp;
-//     struct dirent *dirp;
-
-//     // if (argc != 2) {
-//     //     fprintf(stderr, "Usage: ./program directory_name\n");
-//     //     exit(EXIT_FAILURE);
-//     // }
-
-//     dp = opendir(dir);
-// 	// if (dp == NULL)
-// 	// 	return (1);
-	
-// 	dirp = readdir(dp);
-//     while (dirp != NULL)
-// 	{
-//         printf("%s\n", dirp->d_name);
-// 		dirp = readdir(dp);
-// 	}
-
-//     closedir(dp);
-//     return (0);
-// }
-//------------------------------------
 void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
 {
 	char	*cwd;
@@ -231,6 +183,8 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
 	else if (build_n == ENV_BUILD)
 		ft_env(&cmd_struct->env_llist);
+	else if (build_n == EXIT_BUILD)
+		ft_exit(cmd_struct->exec.exec_line);
 	//exit (0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/16 11:06:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 14:44:54 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,21 @@ struct	s_to_exec {
 };
 
 struct	s_cmd_info {
+	int					cmd_index;
 	char				**curr_line_tokens;
 	int					token_count;
 	int					has_infile;
 	int					has_outfile;
 	int					has_appendfile;
 	int					has_heredoc;
+	int					curr_heredoc;
+	int					heredoc_pipe[2];
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
 	char				*appendfile;
 	char				*heredoc;
+	char				*heredoc_filename;
+	int					heredoc_fd_opened;
 
 	struct s_to_exec	exec;
 	pid_t				pid_child;
@@ -141,6 +146,7 @@ char	*ft_sjf(char *s1, char *s2, int f);
 int	is_builtin(char	*s);
 int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
+int ft_exit(char **s);
 
 //UTILS
 int				error_msg(char *msg, int err);
@@ -165,6 +171,7 @@ char			***make_cmd_lines(char **curr_line_tokens);
 
 //MAKE CMD STRUCTS
 int				make_cmd_structs(struct s_main *cmd_lines);
+int	is_arrow_sign(char *str);
 
 //FREE
 void	free_struct(struct s_main *var);
@@ -192,6 +199,12 @@ void	signals_handeler(void);
 void	sigint_handler_in_process(int sig);
 void	sigquit_handler_in_process(int sig);
 void	sigint_handler_nonl(int sig);
+
+//HEREDOC
+int	heredoc(char *stop_word, int pipe[2]);
+char	*make_heredoc_filename(int index);
+int heredoc_counter(char **curr_line_tokens);
+int	dummy_heredoc(char *stop_word);
 
 //testing
 int	print_structs(struct s_main *s);

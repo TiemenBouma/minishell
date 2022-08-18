@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/18 15:07:47 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/08/18 15:41:00 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,17 @@ int	exec(struct	s_main *main_struct)
 			err_chk(id, 1, "");
 			if (id == 0)
 			{
-				if (main_struct->cmd_struct_arr[i - 1].exec.fd_in != 0)
-					err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_in, S_IN), 1, "");
+				printf ("Heredoc: %d \n", main_struct->cmd_struct_arr[i - 1].has_heredoc);
+				if (main_struct->cmd_struct_arr[i - 1].exec.fd_in != 0 || main_struct->cmd_struct_arr[i - 1].has_heredoc != 0)
+				{
+					if (main_struct->cmd_struct_arr[i - 1].has_heredoc != 0)
+					{
+						write (2, "HEREDOC!\n", 9);
+						err_chk(dup2(main_struct->cmd_struct_arr[i - 1].heredoc[P_OUT], S_IN), 1, "");
+					}
+					else
+						err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_in, S_IN), 1, "");
+				}
 				else
 					err_chk(dup2(p[PREV][P_OUT], S_IN), 1, "");
 					

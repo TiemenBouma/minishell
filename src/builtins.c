@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/18 14:53:45 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 15:03:54 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int	is_builtin(char	*s)
 	return (0);
 }
 
-int	exec_builtin(struct	s_main	*main_struct, struct	s_cmd_info	*cmd_struct, int build_n)
+int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 {
 	//char *cmd = s[0];
 

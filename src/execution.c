@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/18 14:52:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 15:07:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	exec(struct	s_main *main_struct)
 			err_chk(pipe(p[CUR]), 1, "");
 			old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 			old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
+			if (main_struct->cmd_struct_arr[i - 1].exec.exec_line[0] && ft_strncmp(main_struct->cmd_struct_arr[i -1].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
+				ft_exit(main_struct->cmd_struct_arr[i - 1].exec.exec_line); // NEEDS A token 
 			id = fork();
 			err_chk(id, 1, "");
 			if (id == 0)
@@ -47,7 +49,7 @@ int	exec(struct	s_main *main_struct)
 					err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_out, S_OUT), 1, "");
 				if (is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]))
 				{
-					exec_builtin(main_struct, &main_struct->cmd_struct_arr[i - 1], is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]));
+					exec_builtin(&main_struct->cmd_struct_arr[i - 1], is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]));
 					exit(0);
 				}
 				execve(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0], main_struct->cmd_struct_arr[i - 1].exec.exec_line, NULL);

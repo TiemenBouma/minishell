@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   testing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/16 11:08:21 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   testing.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/24 12:42:24 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/08/17 17:16:37 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	print_cmd_info(struct s_main *main_struct)
 		if ( main_struct->cmd_struct_arr[i].has_appendfile == 1)
 			printf("appendfile:\t\t%s\n", main_struct->cmd_struct_arr[i].appendfile);
 		if ( main_struct->cmd_struct_arr[i].has_heredoc == 1)
-			printf("heredoc:\t\t%s\n", main_struct->cmd_struct_arr[i].heredoc);
+			printf("heredoc:\t\t%s\n", main_struct->cmd_struct_arr[i].exec.heredoc);
 		print_dubble_str(main_struct->cmd_struct_arr[i].curr_line_tokens, "CMDline_input:");
 		print_dubble_str(main_struct->cmd_struct_arr[i].exec.exec_line, "Exec_line:");
 		printf("\n");

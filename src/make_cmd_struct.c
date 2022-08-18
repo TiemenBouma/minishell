@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/18 14:45:26 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 14:50:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].heredoc_filename = NULL;
 		main_struct->cmd_struct_arr[line].env_llist = main_struct->env_llist;
 		main_struct->cmd_struct_arr[line].pid_child = 1;
+		main_struct->cmd_struct_arr[line].exec.heredoc = NULL;
 		cmd_line_count = 0;
 		while (main_struct->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;

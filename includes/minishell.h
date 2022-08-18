@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/18 14:44:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 14:53:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ struct	s_to_exec {
 	int		fd_out;
 	char	**exec_line;
 	int		cmd_count;
+	char	*heredoc;
 };
 
 struct	s_cmd_info {
@@ -144,7 +145,7 @@ char	*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
 int	is_builtin(char	*s);
-int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
+int	exec_builtin(struct	s_main	*main_struct, struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_stdinout(struct s_cmd_info *cmd_struct);
 int ft_exit(char **s);
 

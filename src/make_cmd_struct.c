@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/16 11:07:05 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:37:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 			if(open_fd_out(cmd_struct) == -1)
 				return (-1);
 		}
-		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
+		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC) // HEREDOC WILL BE MADE HERE IN A FILE
 		{
 			cmd_struct->has_heredoc++;
 			cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);

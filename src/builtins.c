@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/17 12:00:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:03:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	ft_pwd(t_node **list)
 	t_node	*match_node;
 	
 	match_node = ft_find_node_in_list(list, "PWD=");
-	ft_putstr_fd(match_node->str + 4, 1);
-	write(1, "\n", 1);
+	ft_putstr_fd(match_node->str + 4, 2);
+	write(1, "\n", 2);
 }
 
 // void	ft_unset(t_node *first_node, char *var_line)

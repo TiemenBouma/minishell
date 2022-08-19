@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/19 09:38:02 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 11:10:23 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,37 @@ int	exec(struct	s_main *main_struct)
 			}
 			else
 			{
-					printf("TEST5\n");
-
+				printf("TEST5\n");
 				err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_out, S_OUT), 1, "");
 			}
 			if (is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]))
 			{
-					printf("TEST6\n");
+				printf("TEST6\n");
 				exec_builtin(&main_struct->cmd_struct_arr[i - 1], is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]));
 				exit(0);
 			}
 				printf("TEST7\n");
 			execve(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0], main_struct->cmd_struct_arr[i - 1].exec.exec_line, NULL);
 		}
-		if (main_struct->cmd_struct_arr[i - 1].has_heredoc > 0)
-			close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
+		// if (main_struct->cmd_struct_arr[i - 1].has_heredoc == 2)
+		// {
+		// 	printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
+		// 	close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
+		// }
 		if (i > 1)
+		{
+			printf("close (p[PREV][P_OUT]);%d\n", p[PREV][P_OUT]);
 			close (p[PREV][P_OUT]);
+		}
+		printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
 		close (p[CUR][P_IN]);
 	}
+	if (main_struct->cmd_struct_arr[i - 1].has_heredoc == 2)
+	{
+		printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
+		close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
+	}
+	printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
 	close (p[CUR][P_OUT]);
 	waitpid(id, &i, 0);
 	signal(SIGINT, old_signal[0]);

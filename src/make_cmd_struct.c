@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/19 09:17:27 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 11:13:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,11 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 static int	open_fd_in(struct s_cmd_info *cmd_struct)
 {
 	if (cmd_struct->exec.fd_in != 0)
+	{
+		printf("close(cmd_struct->exec.fd_in); %d\n", cmd_struct->exec.fd_in);
 		close(cmd_struct->exec.fd_in);
+		cmd_struct->exec.fd_in = 0;
+	}
 	cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
 	//printf("%d\n", cmd_struct->exec.fd_in);
 	if (cmd_struct->exec.fd_in < 0)
@@ -154,6 +158,7 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 	i = 0;
 	curr_heredoc = 0;
 	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
+	printf("total heredocs: %d\n", total_heredoc);
 	while (i < cmd_struct->token_count)
 	{
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == SMALLER)
@@ -184,7 +189,9 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 			cmd_struct->has_heredoc = 2;
 			if (cmd_struct->has_infile == 2)
 			{
+				printf("close(cmd_struct->exec.fd_in);%d\n", cmd_struct->exec.fd_in);
 				close(cmd_struct->exec.fd_in);
+				cmd_struct->exec.fd_in = 0;
 				cmd_struct->has_infile = 1;
 			}
 			if (total_heredoc > curr_heredoc)
@@ -216,11 +223,15 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 	// printf("has infile= %d\n", cmd_struct->has_infile);
 	if (cmd_struct->has_heredoc == 2 && cmd_struct->exec.fd_in != 0)
 	{
+		printf("close(cmd_struct->exec.fd_in);%d\n", cmd_struct->exec.fd_in);
 		close(cmd_struct->exec.fd_in);
 		cmd_struct->exec.fd_in = 0;
 	}
 	if (cmd_struct->has_infile == 2)
+	{
+		printf("close(cmd_struct->heredoc_pipe[0]);%d\n", cmd_struct->heredoc_pipe[0]);
 		close(cmd_struct->heredoc_pipe[0]);
+	}
 	return (1);
 }
 

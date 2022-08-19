@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/18 15:04:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 13:59:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@
 # define HEREDOC 22
 # define APPEND 23
 
-# define ECHO_BUILD 40
-# define CD_BUILD 41
-# define PWD_BUILD 42
-# define EXPORT_BUILD 43
-# define UNSET_BUILD 44
-# define ENV_BUILD 45
-# define EXIT_BUILD 46
+# define CD_BUILD 0
+# define EXPORT_BUILD 1
+# define UNSET_BUILD 2
+# define ECHO_BUILD 3
+# define PWD_BUILD 4
+# define ENV_BUILD 5
+# define EXIT_BUILD 6
 
 
 struct	s_redir {
@@ -156,6 +156,7 @@ int 			free_stuff(char *str);
 int				ft_strcmp_var(const char *s1, const char *s2);
 int	is_special_char(char c);
 char	*ft_substr_edit(char const *s, unsigned int start, size_t len);
+char	**make_arr_from_list(t_node **list);
 
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 

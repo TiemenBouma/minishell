@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/11 13:13:44 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 12:47:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,27 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 	}
 	ptr[src_size] = '\0';
 	return (ptr);
+}
+
+char	**make_arr_from_list(t_node **list)
+{
+	t_node	*current;
+	int		len;
+	char	**str_arr;
+	int		i;
+	
+	i = 0;
+	len = ft_list_size(*list);
+	str_arr = malloc(sizeof(char *) * (1 + len));
+	current = *list;
+	while (current)
+	{
+		str_arr[i] = ft_strdup(current->str);
+		i++;
+		if (current->n == NULL)
+			break ;
+		current = current->n;
+	}
+	str_arr[len] = NULL;
+	return (str_arr);
 }

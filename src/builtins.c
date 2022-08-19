@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/18 15:03:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 14:08:53 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	is_builtin(char	*s)
 {
 	// write(1, "Y1!\n", 4);
 	if (!s)
-		return (-1);
+		return (11);
 	if (ft_strncmp(s, "/bin/echo", 9 + 1) == 0)
 		return (ECHO_BUILD);
 	else if (ft_strncmp(s, "/usr/bin/cd", 11 + 1) == 0) //change abs path? exec all fucns with abs path?
@@ -161,7 +161,7 @@ int	is_builtin(char	*s)
 		return (ENV_BUILD);
 	else if (ft_strncmp(s, "exit", 4 + 1) == 0)
 		return (EXIT_BUILD);
-	return (0);
+	return (10);
 }
 
 int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)

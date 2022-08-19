@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/18 14:50:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 09:17:27 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,9 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 
 static int	open_fd_in(struct s_cmd_info *cmd_struct)
 {
-	if (cmd_struct->has_infile >= 1)
-		cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
+	if (cmd_struct->exec.fd_in != 0)
+		close(cmd_struct->exec.fd_in);
+	cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
 	//printf("%d\n", cmd_struct->exec.fd_in);
 	if (cmd_struct->exec.fd_in < 0)
 	{
@@ -111,33 +112,6 @@ static int	open_fd_in(struct s_cmd_info *cmd_struct)
 	}
 	return (1);
 }
-
-// static int	open_fd_in_heredoc(struct s_cmd_info *cmd_struct, int i)//(struct s_cmd_info *cmd_struct)
-// {
-// 	//char *herdoc_filename;
-	
-// 	//if (cmd_struct->heredoc_filename == NULL)
-// 	// {
-// 	// 	cmd_struct->heredoc_filename = make_heredoc_filename(cmd_struct->cmd_index);
-// 	// 	cmd_struct->heredoc_fd_opened = 1;
-// 	// }
-// 	if ()
-// 	heredoc(cmd_struct->heredoc, cmd_struct->heredoc_filename);
-		
-// 	if (cmd_struct->has_heredoc >= 1)
-// 		cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
-// 	//printf("%d\n", cmd_struct->exec.fd_in);
-// 	if (cmd_struct->exec.fd_in < 0)
-// 	{
-// 		ft_putstr_fd("Bash: ", 2);
-// 		ft_putstr_fd(cmd_struct->heredoc, 2);
-// 		ft_putstr_fd(": ", 2);
-// 		perror("");
-// 		return(-1);
-// 	}
-// 	return (1);
-// 	 return (1);
-// }
 
 static int	open_fd_out(struct s_cmd_info *cmd_struct)
 {
@@ -184,10 +158,13 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 	{
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == SMALLER)
 		{
-			if (cmd_struct->has_infile >= 1)
+			if (cmd_struct->infile)
 				free(cmd_struct->infile);
-			cmd_struct->has_infile++;
+			if ( cmd_struct->has_heredoc == 2)
+				cmd_struct->has_heredoc = 1;
+			cmd_struct->has_infile = 2;
 			cmd_struct->infile = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+
 			if (open_fd_in(cmd_struct) == -1)
 				return (-1);
 		}
@@ -204,6 +181,12 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC) // HEREDOC WILL BE MADE HERE IN A FILE
 		{
 			curr_heredoc++;
+			cmd_struct->has_heredoc = 2;
+			if (cmd_struct->has_infile == 2)
+			{
+				close(cmd_struct->exec.fd_in);
+				cmd_struct->has_infile = 1;
+			}
 			if (total_heredoc > curr_heredoc)
 			{
 				dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
@@ -229,6 +212,15 @@ static int	redir_check(struct s_cmd_info *cmd_struct)
 		//if  is APPEND
 		i++;
 	}
+	// printf("has heredoc= %d\n", cmd_struct->has_heredoc);
+	// printf("has infile= %d\n", cmd_struct->has_infile);
+	if (cmd_struct->has_heredoc == 2 && cmd_struct->exec.fd_in != 0)
+	{
+		close(cmd_struct->exec.fd_in);
+		cmd_struct->exec.fd_in = 0;
+	}
+	if (cmd_struct->has_infile == 2)
+		close(cmd_struct->heredoc_pipe[0]);
 	return (1);
 }
 
@@ -268,6 +260,8 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].has_heredoc = 0;
 		main_struct->cmd_struct_arr[line].heredoc_fd_opened = 0;
 		main_struct->cmd_struct_arr[line].heredoc_filename = NULL;
+		main_struct->cmd_struct_arr[line].infile = NULL;
+		main_struct->cmd_struct_arr[line].outfile = NULL;
 		main_struct->cmd_struct_arr[line].env_llist = main_struct->env_llist;
 		main_struct->cmd_struct_arr[line].pid_child = 1;
 		main_struct->cmd_struct_arr[line].exec.heredoc = NULL;

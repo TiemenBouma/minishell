@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/19 11:10:23 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/19 12:02:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,40 +43,20 @@ int	exec(struct	s_main *main_struct)
 		if (id == 0)
 		{
 			if (main_struct->cmd_struct_arr[i - 1].has_infile == 2)
-			{
-				printf("TEST1\n");
 				err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_in, S_IN), 1, "");
-				
-			}
 			else if (main_struct->cmd_struct_arr[i - 1].has_heredoc == 2)
-			{
-				printf("TEST2\n");
 				err_chk(dup2(main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT], S_IN), 1, "");
-			}
 			else
-			{
-				printf("TEST3\n");
-				
-				err_chk(dup2(p[PREV][P_OUT], S_IN), 1, "");
-			}
-				
+				err_chk(dup2(p[PREV][P_OUT], S_IN), 1, "");	
 			if (main_struct->cmd_struct_arr[i - 1].exec.fd_out == 1 && main_struct->cmd_count != i)
-			{
-				printf("TEST4\n");
 				err_chk(dup2(p[CUR][P_IN], S_OUT), 1, "");
-			}
 			else
-			{
-				printf("TEST5\n");
 				err_chk(dup2(main_struct->cmd_struct_arr[i - 1].exec.fd_out, S_OUT), 1, "");
-			}
 			if (is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]))
 			{
-				printf("TEST6\n");
 				exec_builtin(&main_struct->cmd_struct_arr[i - 1], is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]));
 				exit(0);
 			}
-				printf("TEST7\n");
 			execve(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0], main_struct->cmd_struct_arr[i - 1].exec.exec_line, NULL);
 		}
 		// if (main_struct->cmd_struct_arr[i - 1].has_heredoc == 2)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_var_list.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/22 13:36:46 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   env_var_list.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/27 15:05:30 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/08/22 14:48:23 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int	expand_variables(char **input_str, t_node **list, int old_exit_status)
 		}
 	}
 	return (0);
-	
 }
 
 int	ft_print_var_content(t_node **list, char *var_name)
@@ -173,9 +172,32 @@ int	ft_print_var_content(t_node **list, char *var_name)
 	t_node	*match_node;
 	
 	match_node = ft_find_node_in_list(list, var_name);
-	if (match_node == NULL);
+	if (match_node == NULL)
 		return (0);
 	ft_putstr_fd(match_node->str + 4, 2);
 	write(1, "\n", 2);
 	return (0);
+}
+
+void	inc_shlvl(t_node **list)
+{
+	t_node	*new_node;
+	t_node	*match_node;
+	char	*var_line;
+
+	match_node = ft_find_node_in_list(list, "SHLVL=");
+	
+	if (!match_node)
+	{
+		new_node = ft_new_node("SHLVL=1");
+		ft_list_node_add_back(list, new_node);
+	}
+	else
+	{
+		var_line = ft_sjf("SHLVL=", ft_itoa(ft_atoi(&match_node->str[6]) + 1), 0);
+		if (!var_line)
+			return ;
+		free (match_node->str);
+		match_node->str = var_line;
+	}
 }

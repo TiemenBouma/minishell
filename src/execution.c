@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 12:45:06 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/08/22 14:47:39 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	exec(struct	s_main *main_struct)
 	int	build_return;
 	int id = 1;
 	int p[2][2];
-	//char	**env_return;
 	sig_t	old_signal[2];
 	struct s_cmd_info	curr_cmd;
 
@@ -71,8 +70,7 @@ int	exec(struct	s_main *main_struct)
 				exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
 				exit(0);
 			}
-			//env_return = make_arr_from_list(&main_struct->env_llist);
-			if (execve(curr_cmd.exec.exec_line[0], curr_cmd.exec.exec_line, environ) == -1)// check malloc of make_arr_func is freed
+			if (execve(curr_cmd.exec.exec_line[0], curr_cmd.exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
 			{
 				perror(curr_cmd.exec.exec_line[0]);
 				exit(127);	

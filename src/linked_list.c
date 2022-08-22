@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/15 08:37:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:29:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,3 +148,4 @@ int	replace_node_content(t_node *first_node, char *content) //is content malloce
 	first_node->str = ptr; //check after implementation
 	return (0);
 }
+

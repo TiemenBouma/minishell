@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 13:13:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:47:28 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 	main_struct.old_exit_status = 0;
 	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);
+	
 	signals_handeler();
 
 	

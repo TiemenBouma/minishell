@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 12:16:29 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:33:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,10 +192,13 @@ int	replace_node_content(t_node *first_node, char *var_line);
 void	ft_find_and_edit_node(t_node **list, char *var_name, char *content);
 
 
+
 //env_var_list
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
 int	expand_variables(char **input_str, t_node **list, int old_exit_status);
+int	ft_print_var_content(t_node **list, char *var_name);
+char	*find_var_in_list(t_node **list, char *var_name);
 
 //SIGNALS
 void	sigint_handler(int sig);

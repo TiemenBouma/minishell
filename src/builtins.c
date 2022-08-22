@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 11:11:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:37:30 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	ft_echo(char **s)
 
 void	ft_pwd(t_node **list)
 {
-	t_node	*match_node;
-	
-	match_node = ft_find_node_in_list(list, "PWD=");
-	ft_putstr_fd(match_node->str + 4, 2);
-	write(1, "\n", 2);
+	ft_print_var_content(list, "PWD=");
 }
 
 
@@ -61,6 +57,14 @@ int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relat
 	char	*cwd;
 	char	*new_str;
 	
+	if (ft_strncmp(exec_line[1], "-", ft_strlen(exec_line[1] + 1) == 0))
+	{
+		if (find_var_in_list(list, "OLDPWD=") != NULL)
+			ft_print_var_content(list, "OLDPWD=");
+		else
+			write(2, "bash: cd: OLDPWD not set\n", 25);
+		return (0);
+	}
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)

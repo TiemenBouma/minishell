@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/08/22 14:47:39 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
+/*   Updated: 2022/08/22 14:57:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,15 @@ int	exec(struct	s_main *main_struct)
 		if (id == 0 && check_buildin_fork(&curr_cmd) == 1)//Why is is_builtin in this if statment
 		{
 			if (curr_cmd.has_infile == 2 || i == 1)
-			{
-				printf("DEBUG1\n");
-				
 				err_chk(dup2(curr_cmd.exec.fd_in, S_IN), 1, "");
-			}
 			else if (curr_cmd.has_heredoc == 2)
 				err_chk(dup2(curr_cmd.heredoc_pipe[P_OUT], S_IN), 1, "");
 			else
-			{
-				printf("DEBUG2\n");
 				err_chk(dup2(p[PREV][P_OUT], S_IN), 1, "");	
-			}
 			if (curr_cmd.exec.fd_out == 1 && main_struct->cmd_count != i)
 				err_chk(dup2(p[CUR][P_IN], S_OUT), 1, "");
 			else
-			{
-				printf("DEBUG3\n");
 				err_chk(dup2(curr_cmd.exec.fd_out, S_OUT), 1, "");
-			}
 			if (is_builtin(curr_cmd.exec.exec_line[0]) < 7)
 			{
 				exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));

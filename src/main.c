@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/19 15:26:29 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 09:48:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(void)
 		}
 		// test_arr = make_arr_from_list(&main_struct.env_llist);
 		// print_dubble_str(test_arr, "testarr = ");
-		print_structs(&main_struct);
+		//print_structs(&main_struct);
 		main_struct.old_exit_status = exec(&main_struct);
 		free_struct(&main_struct);
 		// cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));

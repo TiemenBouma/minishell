@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/19 10:45:47 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 07:39:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 			free(gnl);
 			break ;
 		}
+		// if (!gnl)
+		// 	signal(SIGINT, sigint_handler_nonl);
 		write(heredoc_pipe[1], gnl[0], ft_strlen(gnl[0]));
 		free(gnl[0]);
 		write(heredoc_pipe[1], "\n", 1);
@@ -90,6 +92,8 @@ int	dummy_heredoc(char *stop_word)
 			free(gnl);
 			break ;
 		}
+		if (!gnl)
+			signal(SIGINT, sigint_handler_nonl);
 		free(gnl[0]);
 	}
 	return (0);

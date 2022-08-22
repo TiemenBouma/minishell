@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/19 15:25:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 07:31:54 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	exec(struct	s_main *main_struct)
 		rr = 0;
 		i++;
 		err_chk(pipe(p[CUR]), 1, "");
-		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
-		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 		if (main_struct->cmd_struct_arr[i - 1].exec.exec_line[0] && ft_strncmp(main_struct->cmd_struct_arr[i -1].exec.exec_line[0], "exit", 4 + 1) == 0 && main_struct->cmd_count == 1)
 			ft_exit(main_struct->cmd_struct_arr[i - 1].exec.exec_line); // NEEDS A token 
 		if (is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]) < 3)
@@ -41,7 +39,11 @@ int	exec(struct	s_main *main_struct)
 			//exit(0);
 		}
 		else
+		{
+			old_signal[0] = signal(SIGINT, sigint_handler_in_process);
+			old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 			id = fork();
+		}
 		err_chk(id, 1, "");
 		if (id == 0 && is_builtin(main_struct->cmd_struct_arr[i - 1].exec.exec_line[0]) > 3)
 		{

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 09:48:12 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 13:13:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	main(void)
 {
 	struct s_main	main_struct;
 	extern char **environ;
+	int rl_catch_signals;
 	//char		**test_arr;
 	//char	*cwd;
 
+	rl_catch_signals = 1;
 	main_struct.old_exit_status = 0;
 	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);
@@ -32,7 +34,10 @@ int	main(void)
 		main_struct.input_str = readline("SuperShell: ");
 		add_history(main_struct.input_str);
 		if (main_struct.input_str == NULL)
+		{
+			write(2, "exit\n", 5);
 			break;
+		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
 		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
 		if (main_struct.all_tokens[0] == NULL)

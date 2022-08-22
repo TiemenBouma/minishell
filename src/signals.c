@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/09 09:56:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 12:18:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,21 @@ void	sigint_handler_nonl(int sig)
 	(void) sig;
 }
 
+void    ft_suppress_output(void)
+{
+    struct termios    new_settings;
+
+    if (tcgetattr(0, &new_settings))
+        perror("minishell: tcsetattr");
+    new_settings.c_lflag &= ~ECHOCTL;
+    if (tcsetattr(0, 0, &new_settings))
+        perror("minishell: tcsetattr");
+}
+
 void	sigint_handler(int sig)
 {
+	ft_suppress_output();
+	
 	write(1, "\n", 1);
 	//printf("\n");
 	rl_on_new_line();

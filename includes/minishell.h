@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 10:59:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 12:16:29 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 # include <sys/param.h>
 # include <signal.h>
-
+# include <termios.h>
 
 # define ERR_FILE		"Infile or outfile error"
 # define ERR_FORK		"Fork error"

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 11:01:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 11:11:01 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,13 +202,12 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
 	else if (build_n == ECHO_BUILD)
 		ft_echo(cmd_struct->exec.exec_line);
-	else if (build_n == PWD_BUILD) //exec all fucns with abs path?
+	else if (build_n == PWD_BUILD)
 		ft_pwd(&cmd_struct->env_llist);
 	else if (build_n == ENV_BUILD)
 		ft_env(&cmd_struct->env_llist);
 	else if (build_n == EXIT_BUILD)
 		ft_exit(cmd_struct->exec.exec_line);
-	//exit (0);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 09:47:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:58:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ int	exec(struct	s_main *main_struct)
 {
 	extern char **environ;
 	int i = 0;
-	int rr;
+	int	build_return;
 	int id = 1;
 	int p[2][2];
 	//char	**env_return;
 	sig_t	old_signal[2];
 	struct s_cmd_info	curr_cmd;
 
+	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 
 
 	while (i < main_struct->cmd_count)
 	{
-		rr = 0;
 		i++;
 		curr_cmd = main_struct->cmd_struct_arr[i - 1];
 		err_chk(pipe(p[CUR]), 1, "");
 		if (curr_cmd.exec.exec_line[0] && is_builtin(curr_cmd.exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 			ft_exit(curr_cmd.exec.exec_line); // NEEDS A token 
 		if (check_buildin_fork(&curr_cmd) == 0)
-			exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
+			build_return =  exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
 		else
 		{
 			old_signal[0] = signal(SIGINT, sigint_handler_in_process);
@@ -68,32 +68,25 @@ int	exec(struct	s_main *main_struct)
 				exit(127);	
 			}
 		}
-		// if (is_builtin(curr_cmd.exec.exec_line[0]) < 3)
-		// {
-		// 	exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
-		// }
-		// if (main_struct->cmd_struct_arr[i - 1].has_heredoc == 2)
-		// {
-		// 	printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
-		// 	close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);
-		// }
 		//if (i > 1)
 		//{
-			printf("close (p[PREV][P_OUT]);%d\n", p[PREV][P_OUT]);
+			//printf("close (p[PREV][P_OUT]);%d\n", p[PREV][P_OUT]);
 			close (p[PREV][P_OUT]);
 		//}
-		printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
+		//printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
 		close (p[CUR][P_IN]);
 		if (curr_cmd.has_heredoc == 2)//This might need to be on a different palce.
 		{
-			printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", curr_cmd.heredoc_pipe[P_OUT]);
+			//printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", curr_cmd.heredoc_pipe[P_OUT]);
 			close (curr_cmd.heredoc_pipe[P_OUT]);
 		}
 	}
-	printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
+	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
 	close (p[CUR][P_OUT]);
 	waitpid(id, &i, 0);
 	signal(SIGINT, old_signal[0]);
 	signal(SIGQUIT, old_signal[1]);
+	if (build_return >= 0)
+		return (build_return);
 	return (WEXITSTATUS(i));
 }

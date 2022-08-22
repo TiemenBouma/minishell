@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 09:35:14 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 11:01:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_pwd(t_node **list)
 }
 
 
-void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
+int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
 {
 	char	*cwd;
 	char	*new_str;
@@ -64,19 +64,20 @@ void ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not rela
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
-		perror_msg("pwd", NULL);
+		return (perror_msg("pwd", NULL, EXIT_PWD));
 	new_str = ft_strjoin("OLDPWD=", cwd);
 	free(cwd);
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	if (chdir(exec_line[1]))
-		perror_msg("cd", exec_line[1]);
+		return (perror_msg("cd", exec_line[1], EXIT_CD));
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)
-		perror_msg("pwd", NULL);
+		return (perror_msg("pwd", NULL, EXIT_PWD));
 	new_str = ft_strjoin("PWD=", cwd);
 	ft_find_and_edit_node(list, "PWD", new_str);
 	free(cwd);
+	return (0);
 }
 
 void	ft_env(t_node **list)
@@ -122,23 +123,45 @@ void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
 		ft_remove_node(list, match_node);
 }
 
+void	print_export(t_node **list)
+{
+	t_node *current;
+
+	current = *list;
+	while (1)
+	{
+		write(1, "declare -x ", 12);
+		write(1, current->str, ft_strlen(current->str));
+		write(1, "\n", 1);
+		if (current->n == NULL)
+			break ;
+		current = current->n;
+	}
+}
+
 void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;
 	char	*var_name;
 
-	var_name = make_var_name(var_line);
-	match_node = ft_find_node_in_list(list, var_name);
-	free(var_name);
-	if (!match_node)
+	if (!var_line)
+		print_export(list);
+	else 
 	{
-		new_node = ft_new_node(var_line);
-		ft_list_node_add_back(list, new_node);	
-	}
-	else
-	{
-		replace_node_content(match_node, var_line);
+		var_name = make_var_name(var_line);
+		match_node = ft_find_node_in_list(list, var_name);
+		free(var_name);
+		if (!match_node)
+		{
+			new_node = ft_new_node(var_line);
+			ft_list_node_add_back(list, new_node);	
+		}
+		else
+		{
+			replace_node_content(match_node, var_line);
+		}
+		
 	}
 }
 
@@ -172,7 +195,7 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 	//printf ("test%s\n", cmd);
 	//(void) exec_line;
 	if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
-		ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
+		return (ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
 	else if (build_n == EXPORT_BUILD)
 		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
 	else if (build_n == UNSET_BUILD)

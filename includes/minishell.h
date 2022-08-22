@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 09:37:04 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:59:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define ERR_PROCCES	"Procces error"
 # define ERR_EXEC		"Execve error"
 # define ERR_PATH		"Path error"
+# define EXIT_CD 1
+# define EXIT_PWD 1
 
 # define P_OUT 0
 # define P_IN 1
@@ -151,7 +153,7 @@ int ft_exit(char **s);
 
 //UTILS
 int				error_msg(char *msg, int err);
-void	perror_msg(char *cmd, char *att);
+int				perror_msg(char *cmd, char *att, int exit_status);
 int 			free_stuff(char *str);
 int				ft_strcmp_var(const char *s1, const char *s2);
 int	is_special_char(char c);

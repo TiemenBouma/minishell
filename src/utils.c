@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/19 14:53:31 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:50:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	error_msg(char *msg, int err)// WE maybe need not to exit
 	return (err);
 }
 
-void	perror_msg(char *cmd, char *att)
+int	perror_msg(char *cmd, char *att, int exit_status)
 {
 	ft_putstr_fd(cmd, 2);
 	write(2, ": ", 2);
 	ft_putstr_fd(att, 2);
 	write(2, ": ", 2);
 	perror(NULL);
-	return ;
+	return (exit_status);
 }
 
 int free_stuff(char *str)

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 13:33:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 14:41:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int				ft_strcmp_var(const char *s1, const char *s2);
 int	is_special_char(char c);
 char	*ft_substr_edit(char const *s, unsigned int start, size_t len);
 char	**make_arr_from_list(t_node **list);
+int	check_n_flag(char *flag);
 
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 

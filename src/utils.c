@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 10:50:41 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 14:42:46 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,23 @@ char	**make_arr_from_list(t_node **list)
 	}
 	str_arr[len] = NULL;
 	return (str_arr);
+}
+
+int	check_n_flag(char *flag)
+{
+	int i;
+	int	k;
+	char	curr;
+
+	i = 1;
+	k = 0;
+	if (flag[0] != '-')
+		return (0);
+	while (flag[i])
+	{
+		if (flag[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }

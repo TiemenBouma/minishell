@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 14:05:29 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/22 14:47:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	ft_echo(char **s)
 
 	i = 1;
 	nl = 1; 
-	if (ft_strncmp(s[i], "-n",  1 + ft_strlen(s[i])) == 0)
+	if (check_n_flag(s[1]))
 	{
 		nl = 0;
 		i = 2;
 	}
+	while (check_n_flag(s[i]))
+		i++;
 	while (s[i])
 	{
 		ft_putstr_fd(s[i], 1);

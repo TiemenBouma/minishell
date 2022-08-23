@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/23 13:05:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/23 14:55:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	find_end_token(char const *input_str, int *index)
 {
 	int 	len;
-	int		in_quotes;
+	//int		in_quotes;
 	char	c;
 
 	len = 0;
-	in_quotes = 0;
+	//in_quotes = 0;
 	while (input_str[*index])
 	{
 		//printf("char = %c\n", input_str[*index]);
 		if (input_str[*index] == '\'' || input_str[*index] == '\"')
 		{
-			in_quotes = 1;
+			//in_quotes = 1;
 			c = input_str[*index];
 			(*index)++;
 			while (input_str[*index] && input_str[*index] != c)
@@ -38,7 +38,7 @@ int	find_end_token(char const *input_str, int *index)
 			// if (input_str[*index])
 			// 	(*index)++;
 			//printf("char_in_q = %c\n", input_str[*index]);
-			in_quotes = 0;
+			//in_quotes = 0;
 
 		}
 		if (input_str[*index] && input_str[*index] == ' ') ///twice in this func 42 and 64
@@ -63,8 +63,8 @@ int	find_end_token(char const *input_str, int *index)
 			(*index)++;
 			return (len);
 		}
-		else if (input_str[*index] == ' ')  ///twice in this func 42 and 64
-				return (len);
+		// else if (input_str[*index] == ' ')  ///twice in this func 42 and 64
+		// 		return (len);
 		else
 		{
 			len++;
@@ -93,6 +93,7 @@ static int	str_maker(char const *input_str, char **str_arr, int amount_of_tokens
 	int	str_len;
 	int	token_n;
 	int	temp_index;
+	char	quote;
 
 	index = 0;
 	token_n = 0;
@@ -100,11 +101,11 @@ static int	str_maker(char const *input_str, char **str_arr, int amount_of_tokens
 	{
 		find_next_token_sign(input_str, &index);
 		temp_index = index;
-		str_len = find_end_token(input_str, &index);
+		str_len = find_end_token(input_str, &index, &quote);
 		//str_arr[token_n] = malloc(sizeof(char) * str_len + 1);
 		str_arr[token_n] = NULL;
-		if (input_str[temp_index] == '\'' || input_str[temp_index] == '\"')
-			temp_index++;
+		// if (input_str[temp_index] == '\'' || input_str[temp_index] == '\"')
+		// 	temp_index++;
 		str_arr[token_n] = ft_substr_edit(input_str, temp_index, str_len);
 		token_n++;
 	}

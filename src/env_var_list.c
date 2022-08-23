@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/22 14:57:16 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/23 13:36:59 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,32 @@ char	*find_next_var_in_str(char *input_str, int *index)
 	int start;
 	int len;
 	char	*temp;
+	int		in_quotes;
 
 	temp = NULL;
+	in_quotes = 0;
 	//i = index;
 	len = 0;
 	while (input_str[*index])
 	{
 		//printf("\ndebug\n\n");
-		if (input_str[*index] == '\'')
+		if (input_str[*index] == '\"' && in_quotes == 0)
+		{
+			(*index)++;
+			in_quotes = 1;
+		}
+		if (input_str[*index] == '\"' && in_quotes == 1)
+		{
+			(*index)++;
+			in_quotes = 0;
+		}
+		if (input_str[*index] == '\'' && in_quotes == 0)
 		{
 			*index = *index + 1;
 			while (input_str[*index] && input_str[*index] != '\'')
 				(*index)++;
+			if (!input_str[*index])
+				return (temp);
 		}
 		if (input_str[*index] == '$')
 		{

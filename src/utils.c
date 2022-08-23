@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/22 14:42:46 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/23 13:13:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 	size_t	src_size;
 	int		skiped_one;
 	char	mem;
+	int		index;
 
 	mem = 0;
 	skiped_one = 0;
@@ -97,28 +98,28 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 	ptr = malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)
 		return (NULL);
-	src_size = 0;
-	while (s[start + src_size + skiped_one] && len > src_size)
+	index = 0;
+	while (s[start + index + skiped_one] && len > index)
 	{
 		if (mem != 0)
 		{
-			if (s[start + src_size + skiped_one] == mem)
+			if (s[start + index + skiped_one] == mem)
 			{
 				skiped_one++;
 				mem = 0;
-				//continue ;
+				continue ;
 			}
 		}
-		else if ((s[start + src_size] == '\'' || s[start + src_size] == '\"'))// && skiped_one == 0)
+		else if ((s[start + index] == '\'' || s[start + index] == '\"'))// && skiped_one == 0)
 		{
-			mem = s[start + src_size + skiped_one];
+			mem = s[start + index + skiped_one];
 			skiped_one++;
-			//continue ;
+			continue ;
 		}
-		ptr[src_size] = s[start + src_size + skiped_one];
-		src_size++;
+		ptr[index] = s[start + index + skiped_one];
+		index++;
 	}
-	ptr[src_size] = '\0';
+	ptr[index] = '\0';
 	return (ptr);
 }
 
@@ -149,7 +150,6 @@ int	check_n_flag(char *flag)
 {
 	int i;
 	int	k;
-	char	curr;
 
 	i = 1;
 	k = 0;

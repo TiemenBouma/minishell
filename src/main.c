@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/08/22 14:28:13 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/08/23 13:41:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ int	main(void)
 {
 	struct s_main	main_struct;
 	extern char **environ;
-	int rl_catch_signals;
 	//char		**test_arr;
 	//char	*cwd;
 
-	rl_catch_signals = 1;
 	main_struct.old_exit_status = 0;
 	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);
@@ -41,6 +39,7 @@ int	main(void)
 			break;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
+		printf("|%s|\n", main_struct.input_str);
 		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
 		if (main_struct.all_tokens[0] == NULL)
 			continue ;

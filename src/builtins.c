@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 14:47:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/24 11:11:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	ft_echo(char **s)
 
 	i = 1;
 	nl = 1; 
-	if (check_n_flag(s[1]))
+	if (s[1] && check_n_flag(s[1]))
 	{
 		nl = 0;
 		i = 2;
 	}
-	while (check_n_flag(s[i]))
+	while (s[1] && check_n_flag(s[i]))
 		i++;
 	while (s[i])
 	{
@@ -119,16 +119,50 @@ char	*make_var_name(char *var_line)
 	return(var_name);
 }
 
-void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
+int	check_char_unset(char *str)
+{
+	int i;
+	int has_char;
+
+	i = 0;
+	has_char = 0;
+	if (!ft_strchr(str, '='))
+	{
+		error_msg("bash: unset: : not a valid identifier", 1);
+		return (0);
+	}
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			has_char = 1;
+		i++;
+	}
+	if (has_char == 0)
+	{
+		error_msg("bash: unset: : not a valid identifier", 1);
+		return (0);
+	}
+	return (1);
+}
+
+void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 {
 	t_node	*match_node;
 	char	*var_name;
+	int		i;
 
-	var_name = make_var_name(var_line);
-	match_node = ft_find_node_in_list(list, var_name);
-	free(var_name);
-	if (match_node)
-		ft_remove_node(list, match_node);
+	i = 1;
+	while (exec_line[i])
+	{
+		if (check_char_unset(exec_line[i]))
+			return ;
+		var_name = make_var_name(exec_line[i]);
+		match_node = ft_find_node_in_list(list, var_name);
+		free(var_name);
+		if (match_node)
+			ft_remove_node(list, match_node);
+		i++;
+	}
 }
 
 void	print_export(t_node **list)
@@ -147,29 +181,33 @@ void	print_export(t_node **list)
 	}
 }
 
-void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char *var_line)
+void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;
 	char	*var_name;
+	int	i;
 
-	if (!var_line)
+	i = 1;
+
+	if (!exec_line[1])
 		print_export(list);
 	else 
 	{
-		var_name = make_var_name(var_line);
-		match_node = ft_find_node_in_list(list, var_name);
-		free(var_name);
-		if (!match_node)
+		while (exec_line[i])
 		{
-			new_node = ft_new_node(var_line);
-			ft_list_node_add_back(list, new_node);	
+			var_name = make_var_name(exec_line[i]);
+			match_node = ft_find_node_in_list(list, var_name);
+			free(var_name);
+			if (!match_node)
+			{
+				new_node = ft_new_node(exec_line[i]);
+				ft_list_node_add_back(list, new_node);	
+			}
+			else
+				replace_node_content(match_node, exec_line[i]);
+			i++;
 		}
-		else
-		{
-			replace_node_content(match_node, var_line);
-		}
-		
 	}
 }
 
@@ -205,9 +243,9 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 	if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
 		return (ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
 	else if (build_n == EXPORT_BUILD)
-		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
+		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
 	else if (build_n == UNSET_BUILD)
-		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line[1]);
+		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
 	else if (build_n == ECHO_BUILD)
 		ft_echo(cmd_struct->exec.exec_line);
 	else if (build_n == PWD_BUILD)

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/23 13:36:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/24 09:20:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*find_next_var_in_str(char *input_str, int *index)
 	int len;
 	char	*temp;
 	int		in_quotes;
+	char	c;
 
 	temp = NULL;
 	in_quotes = 0;
@@ -61,25 +62,27 @@ char	*find_next_var_in_str(char *input_str, int *index)
 	while (input_str[*index])
 	{
 		//printf("\ndebug\n\n");
-		if (input_str[*index] == '\"' && in_quotes == 0)
+		if ((input_str[*index] == '\"' || input_str[*index] == '\'') && in_quotes == 0)
 		{
+			c = input_str[*index];
 			(*index)++;
 			in_quotes = 1;
 		}
-		if (input_str[*index] == '\"' && in_quotes == 1)
+		if (c == '\'' && in_quotes == 1)
 		{
-			(*index)++;
-			in_quotes = 0;
-		}
-		if (input_str[*index] == '\'' && in_quotes == 0)
-		{
-			*index = *index + 1;
 			while (input_str[*index] && input_str[*index] != '\'')
 				(*index)++;
+			c = 0;
 			if (!input_str[*index])
 				return (temp);
 		}
-		if (input_str[*index] == '$')
+		if (input_str[*index] && c == input_str[*index] && in_quotes == 1)
+		{
+			//(*index)++;
+			c = 0;
+			in_quotes = 0;
+		}
+		if (input_str[*index] && input_str[*index] == '$')
 		{
 			//printf("index == %d\n", *index);
 			// if (input_str[*index + 1] && (input_str[*index + 1] == ' ' || ))
@@ -96,7 +99,44 @@ char	*find_next_var_in_str(char *input_str, int *index)
 			temp = ft_substr(input_str, start, len);
 			return (temp);
 		}
-		*index = *index + 1;
+		(*index)++;
+		
+		// if (input_str[*index] == '\"' && in_quotes == 0)
+		// {
+		// 	(*index)++;
+		// 	in_quotes = 1;
+		// }
+		// if (input_str[*index] == '\"' && in_quotes == 1)
+		// {
+		// 	(*index)++;
+		// 	in_quotes = 0;
+		// }
+		// if (input_str[*index] == '\'' && in_quotes == 0)
+		// {
+		// 	*index = *index + 1;
+		// 	while (input_str[*index] && input_str[*index] != '\'')
+		// 		(*index)++;
+		// 	if (!input_str[*index])
+		// 		return (temp);
+		// }
+		// if (input_str[*index] == '$')
+		// {
+		// 	//printf("index == %d\n", *index);
+		// 	// if (input_str[*index + 1] && (input_str[*index + 1] == ' ' || ))
+		// 	// {
+		// 	// 	return NULL;// *index = *index + 1;
+		// 	// 	// continue;
+		// 	// }
+		// 	(*index)++;
+		// 	if (input_str[*index] == '\0' || input_str[*index] == ' ')
+		// 		return (temp);
+		// 	start = *index;
+		// 	while (input_str[start + len] && !is_special_char(input_str[start + len]))
+		// 		len++;
+		// 	temp = ft_substr(input_str, start, len);
+		// 	return (temp);
+		// }
+		// *index = *index + 1;
 		//*index = len + start;
 	}
 	return (temp);

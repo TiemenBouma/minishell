@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/23 14:55:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/24 09:16:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,15 @@ int	find_end_token(char const *input_str, int *index)
 			(*index)++;
 			while (input_str[*index] && input_str[*index] != c)
 			{
+				// write(1, &input_str[*index], 1);
 				len++;
 				(*index)++;
+			}
+			if (input_str[*index] == c)
+			{
+				(*index)++;
+				if (len == 0)
+					return (-1);
 			}
 			if (!input_str[*index])
 				return (len);
@@ -43,7 +50,7 @@ int	find_end_token(char const *input_str, int *index)
 		}
 		if (input_str[*index] && input_str[*index] == ' ') ///twice in this func 42 and 64
 				return (len);
-		else if (input_str[*index] && (input_str[*index] == '<' || input_str[*index] == '>'))
+		if (input_str[*index] && (input_str[*index] == '<' || input_str[*index] == '>'))
 		{
 			if (len > 0)
 				return (len);
@@ -55,7 +62,7 @@ int	find_end_token(char const *input_str, int *index)
 			}
 			return (len);
 		}
-		else if (input_str[*index] == '|')
+		if (input_str[*index] == '|')
 		{
 			if (len > 0)
 				return (len);
@@ -63,19 +70,8 @@ int	find_end_token(char const *input_str, int *index)
 			(*index)++;
 			return (len);
 		}
-		// else if (input_str[*index] == ' ')  ///twice in this func 42 and 64
-		// 		return (len);
-		else
-		{
-			len++;
-			*index = *index + 1;
-		}
-			// while (input_str[*index] && !is_special_char(input_str[*index]))
-			// {
-			// 	len++;
-			// 	(*index)++;
-			// }
-			// return (len);
+		len++;
+		(*index)++;
 	}
 	return (len);
 }
@@ -101,7 +97,12 @@ static int	str_maker(char const *input_str, char **str_arr, int amount_of_tokens
 	{
 		find_next_token_sign(input_str, &index);
 		temp_index = index;
-		str_len = find_end_token(input_str, &index, &quote);
+		//printf("index = %d, letter = %c, token_n = %d amout_tokens = %d\n", index, input_str[index], token_n, amount_of_tokens);
+		//write(1, &input_str[index], 1);
+		str_len = find_end_token(input_str, &index);//, &quote);
+		if (str_len == -1)
+			continue;
+		//printf("strlen = %d\n", str_len);
 		//str_arr[token_n] = malloc(sizeof(char) * str_len + 1);
 		str_arr[token_n] = NULL;
 		// if (input_str[temp_index] == '\'' || input_str[temp_index] == '\"')
@@ -126,7 +127,8 @@ static int	str_counter(char const *input_str)
 			count++;
 		else
 			return (count);
-		find_end_token(input_str, &index);
+		if (find_end_token(input_str, &index) == -1)
+			count--;
 		if (input_str[index] == '\0')
 			return (count);
 		//index++;

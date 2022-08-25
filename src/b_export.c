@@ -6,11 +6,16 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 08:54:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 09:33:51 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int export_num_check(char *str)
+{
+	return (ft_isdigit(str[0]));
+}
 
 void	print_export(t_node **list)
 {
@@ -43,6 +48,14 @@ void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 	{
 		while (exec_line[i])
 		{
+			if (export_num_check(exec_line[i]))
+			{
+				ft_putstr_fd("bash: export: `", 2);
+				ft_putstr_fd(exec_line[i], 2);
+				ft_putstr_fd("': not a valid identifier\n", 2);
+				i++;
+				continue;
+			}
 			var_name = make_var_name(exec_line[i]);
 			match_node = ft_find_node_in_list(list, var_name);
 			free(var_name);

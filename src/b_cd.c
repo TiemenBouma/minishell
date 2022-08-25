@@ -6,11 +6,25 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 08:59:46 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 15:26:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char *set_home(t_node **list)
+{
+	t_node *curr_node;
+	curr_node = ft_find_node_in_list(list, "HOME=");
+	if (curr_node == NULL)
+	{
+		ft_putstr_fd("bash: cd: HOME not set\n", 2);
+		return(NULL);
+	}
+	
+	return (curr_node->str + 5);
+	
+}
 
 int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
 {
@@ -18,7 +32,11 @@ int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relat
 	char	*new_str;
 	
 	if (exec_line[1] == NULL)
-		return (0);
+	{
+		exec_line[1] = set_home(list);
+		if (exec_line[1] == NULL)
+			return (1);
+	}
 	if (ft_strncmp(exec_line[1], "-", ft_strlen(exec_line[1] + 1)) == 0)
 	{
 		if (find_var_in_list(list, "OLDPWD=") != NULL)

@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/18 14:42:27 by tbouma           ###   ########.fr        #
+#    Updated: 2022/08/25 09:02:09 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,14 @@ OBJFILES := obj/src/main.o \
 			obj/src/testing.o \
 			obj/src/get_next_line.o \
 			obj/src/get_next_line_utils.o \
-			obj/src/heredoc.o
+			obj/src/heredoc.o \
+			obj/src/b_exit.o \
+			obj/src/b_export.o \
+			obj/src/b_unset.o  \
+			obj/src/b_cd.o \
+			obj/src/b_pwd.o \
+			obj/src/b_echo.o \
+			obj/src/b_env.o 
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra  -fsanitize=address -g3 #-Werror

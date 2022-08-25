@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 09:06:31 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 14:02:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,9 @@ int	find_end_token(char const *input_str, int *index)
 	return (len);
 }
 
-int is_char_next_token(char c)
-{
-	return (c == ' ' || c == '|' || c == '<' || c == '>');
-}
-
 int	find_next_token_sign(char const *input_str, int *index)
 {
-	while (input_str[*index] && input_str[*index] == ' ')//is_char_next_token(input_str[*index]))
+	while (input_str[*index] && input_str[*index] == ' ')
 		*index = *index + 1;
 	return (input_str[*index] != '\0');
 }

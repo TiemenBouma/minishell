@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/25 08:44:17 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 13:57:34 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec(struct	s_main *main_struct)
 	int id = 1;
 	int p[2][2];
 	sig_t	old_signal[2];
-	struct s_cmd_info	curr_cmd;
+	struct s_cmd_info	*curr_cmd;
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
@@ -31,15 +31,17 @@ int	exec(struct	s_main *main_struct)
 	while (i < main_struct->cmd_count)
 	{
 		i++;
-		curr_cmd = main_struct->cmd_struct_arr[i - 1];
+		curr_cmd = &main_struct->cmd_struct_arr[i - 1];
 		err_chk(pipe(p[CUR]), 1, "");
-		if (curr_cmd.exec.exec_line[0] && is_builtin(curr_cmd.exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
+		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 		{
-			ft_exit(curr_cmd.exec.exec_line); // NEEDS A token 
+			ft_exit(curr_cmd->exec.exec_line); // NEEDS A token 
 			continue;
 		}
-		if (check_buildin_fork(&curr_cmd) == 0)
-			build_return =  exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
+		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0)
+			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+		else if (check_buildin_fork(curr_cmd) == 0)
+			;
 		else
 		{
 			old_signal[0] = signal(SIGINT, sigint_handler_in_process);
@@ -47,28 +49,58 @@ int	exec(struct	s_main *main_struct)
 			id = fork();
 		}
 		err_chk(id, 1, "");
-		if (id == 0 && check_buildin_fork(&curr_cmd) == 1)//Why is is_builtin in this if statment
+		if (id == 0 && check_buildin_fork(curr_cmd) == 1)//Why is is_builtin in this if statment
 		{
-			if (curr_cmd.has_infile == 2 || i == 1)
-				err_chk(dup2(curr_cmd.exec.fd_in, S_IN), 1, "");
-			else if (curr_cmd.has_heredoc == 2)
-				err_chk(dup2(curr_cmd.heredoc_pipe[P_OUT], S_IN), 1, "");
-			else
-				err_chk(dup2(p[PREV][P_OUT], S_IN), 1, "");	
-			if (curr_cmd.exec.fd_out == 1 && main_struct->cmd_count != i)
-				err_chk(dup2(p[CUR][P_IN], S_OUT), 1, "");
-			else
-				err_chk(dup2(curr_cmd.exec.fd_out, S_OUT), 1, "");
-			if (is_builtin(curr_cmd.exec.exec_line[0]) < 7)
+			//printf("EXEC1\n");
+			if (curr_cmd->has_heredoc == 2)
 			{
-				exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
+			//	printf("EXEC3\n");
+				
+				err_chk(dup2(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
+			}
+			else if (curr_cmd->has_infile == 2 || i == 1)
+			{
+				//printf("EXEC2\n");
+				
+				err_chk(dup2(curr_cmd->exec.fd_in, S_IN), 2, "");
+				//printf("EXEC2.1\n");
+			}
+			else
+			{
+				//printf("EXEC4\n");
+				
+				err_chk(dup2(p[PREV][P_OUT], S_IN), 2, "");	
+			}
+			if (curr_cmd->exec.fd_out == 1 && main_struct->cmd_count != i)
+			{
+				//printf("EXEC5\n");
+				
+				err_chk(dup2(p[CUR][P_IN], S_OUT), 2, "");
+			}
+			else
+			{
+				//printf("EXEC6\n");
+				
+				err_chk(dup2(curr_cmd->exec.fd_out, S_OUT), 2, "");
+			}
+			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
+			{
+				//printf("EXEC7\n");
+				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
-			if (execve(curr_cmd.exec.exec_line[0], curr_cmd.exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
+			//printf("EXEC8\n");
+			if (curr_cmd->set_file_err == 0)
 			{
-				perror(curr_cmd.exec.exec_line[0]);
-				exit(127);	
+				//printf("EXEC9\n");
+				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
+				{
+					perror(curr_cmd->exec.exec_line[0]);
+					exit(127);	
+				}	
 			}
+			else
+				exit(1);
 		}
 		if (i > 1)
 		{
@@ -77,10 +109,10 @@ int	exec(struct	s_main *main_struct)
 		}
 		//printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
 		close (p[CUR][P_IN]);
-		if (curr_cmd.has_heredoc == 2)//This might need to be on a different palce.
+		if (curr_cmd->has_heredoc == 2)//This might need to be on a different palce.
 		{
-			//printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", curr_cmd.heredoc_pipe[P_OUT]);
-			close (curr_cmd.heredoc_pipe[P_OUT]);
+			//printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", curr_cmd->heredoc_pipe[P_OUT]);
+			close (curr_cmd->heredoc_pipe[P_OUT]);
 		}
 	}
 	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);

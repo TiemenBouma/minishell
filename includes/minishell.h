@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/25 09:04:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 13:22:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ struct	s_cmd_info {
 	char				*heredoc;
 	char				*heredoc_filename;
 	int					heredoc_fd_opened;
+	int					set_file_err;
 
 	struct s_to_exec	exec;
 	pid_t				pid_child;

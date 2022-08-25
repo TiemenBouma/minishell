@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/22 14:57:26 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 08:44:17 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	exec(struct	s_main *main_struct)
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
-
+	// if (main_struct->cmd_count == 1 && is_builtin(main_struct->cmd_struct_arr[i].exec.exec_line[0]) == EXIT_BUILD)
+	// 	ft_exit(main_struct->cmd_struct_arr[i].exec.exec_line);
 
 	while (i < main_struct->cmd_count)
 	{
@@ -33,7 +34,10 @@ int	exec(struct	s_main *main_struct)
 		curr_cmd = main_struct->cmd_struct_arr[i - 1];
 		err_chk(pipe(p[CUR]), 1, "");
 		if (curr_cmd.exec.exec_line[0] && is_builtin(curr_cmd.exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
+		{
 			ft_exit(curr_cmd.exec.exec_line); // NEEDS A token 
+			continue;
+		}
 		if (check_buildin_fork(&curr_cmd) == 0)
 			build_return =  exec_builtin(&curr_cmd, is_builtin(curr_cmd.exec.exec_line[0]));
 		else

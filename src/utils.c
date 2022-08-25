@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/24 09:22:13 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 07:55:40 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 	size_t	src_size;
 	int		skiped_one;
 	char	mem;
-	int		index;
+	size_t		index;
 
 	mem = 0;
 	skiped_one = 0;
@@ -110,7 +110,7 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 				continue ;
 			}
 		}
-		else if ((s[start + index] == '\'' || s[start + index] == '\"'))// && skiped_one == 0)
+		else if ((s[start + index + skiped_one] == '\'' || s[start + index + skiped_one] == '\"'))// && skiped_one == 0)
 		{
 			mem = s[start + index + skiped_one];
 			skiped_one++;

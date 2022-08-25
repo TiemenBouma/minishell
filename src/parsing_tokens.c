@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:49:14 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/24 09:16:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/25 07:36:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	str_maker(char const *input_str, char **str_arr, int amount_of_tokens
 	int	str_len;
 	int	token_n;
 	int	temp_index;
-	char	quote;
+	//char	quote;
 
 	index = 0;
 	token_n = 0;

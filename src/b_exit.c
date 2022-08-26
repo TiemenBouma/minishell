@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:51:36 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 08:28:41 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 14:43:00 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int exit_num_check(char *str)
 	return (1);
 }
 
-int ft_exit(char **s)
+int ft_exit(char **s, int is_in_child)
 {
 	int exit_code;
 
 	exit_code = 0;
 	//printf("DEBUG");
-	ft_putstr_fd("exit\n", 1);
+	if (is_in_child == 0)
+		ft_putstr_fd("exit\n", 1);
 	if (s[1])
 	{
 		if (exit_num_check(s[1]))

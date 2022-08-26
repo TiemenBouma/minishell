@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 13:14:25 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 15:10:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,14 @@ int	exec(struct	s_main *main_struct)
 	int p[2][2];
 	sig_t	old_signal[2];
 	struct s_cmd_info	*curr_cmd;
+	int wpid = 1;
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 	// if (main_struct->cmd_count == 1 && is_builtin(main_struct->cmd_struct_arr[i].exec.exec_line[0]) == EXIT_BUILD)
 	// 	ft_exit(main_struct->cmd_struct_arr[i].exec.exec_line);
 
-	while (i < main_struct->cmd_count)
+	if (i < main_struct->cmd_count)
 	{
 		i++;
 		curr_cmd = &main_struct->cmd_struct_arr[i - 1];
@@ -70,8 +71,8 @@ int	exec(struct	s_main *main_struct)
 		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 		{
 			// printf("DEBUG0\n");
-			ft_exit(curr_cmd->exec.exec_line); // NEEDS A token 
-			continue;
+			ft_exit(curr_cmd->exec.exec_line, 0); // NEEDS A token 
+			//continue;
 		}
 		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0)
 		{
@@ -169,6 +170,8 @@ int	exec(struct	s_main *main_struct)
 			close (curr_cmd->heredoc_pipe[P_OUT]);
 			// printf("EXEC14\n");
 		}
+		exec(main_struct);
+		
 	}
 	// printf("EXEC15\n");
 	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);

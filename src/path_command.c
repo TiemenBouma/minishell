@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/19 14:28:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:25:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**find_path(t_node **list)
 	match_node = ft_find_node_in_list(list, "PATH=");
 	if (match_node == NULL)
 	{
-		error_msg(ERR_PATH, 1);
+		//error_msg(ERR_PATH, 1);
 		return (NULL);	
 	}
 	ptr = match_node->str + 5;

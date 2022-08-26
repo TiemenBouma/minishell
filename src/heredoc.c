@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 08:59:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 12:32:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 	g_sig = 0;
 	while (g_sig == 0)
 	{
-		signal(SIGINT, sigint_here_doc_handler);
+		//signal(SIGINT, sigint_here_doc_handler);
+		signal(SIGINT, SIG_IGN);
 		write(2, "> ", 2);
 		if (get_next_line(0, gnl) == -1 || ft_strncmp(gnl[0], stop_word,
 				ft_strlen (stop_word) + 1) == 0)

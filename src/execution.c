@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 12:21:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 13:14:25 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int	exec(struct	s_main *main_struct)
 		}
 		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0)
 		{
-			printf("DEBUG1\n");
+			//printf("DEBUG1\n");
 			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
 		else if (check_buildin_fork(curr_cmd) == 0)
-			printf("DEBUG2\n");
+			{}//printf("DEBUG2\n");
 		else
 		{
-			printf("DEBUG3\n");
+			//printf("DEBUG3\n");
 			id = fork();
 		}
 		old_signal[0] = signal(SIGINT, sigint_handler_in_process);

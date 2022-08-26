@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 12:21:05 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 12:21:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,11 +181,5 @@ int	exec(struct	s_main *main_struct)
 	// printf("EXEC18\n");
 	if (build_return >= 0)
 		return (build_return);
-<<<<<<< HEAD
 	return (WEXITSTATUS(i)); //check if exited with WIFSIGNALED or  WIFSTOPPED
-=======
-	// printf("EXEC19\n");
-	
-	return (WEXITSTATUS(i));
->>>>>>> tiemen
 }

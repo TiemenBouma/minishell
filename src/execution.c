@@ -1,17 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/25 13:57:34 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/08/26 12:09:03 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static void	execve_error(char *path, int error)
+{
+	// if (error == EACCES)
+	// {
+	// 	if (path)
+	// 	{
+	// 		ft_putstr_fd("minishell: ", 2);
+	// 		ft_putstr_fd(path, 2);
+	// 		ft_putstr_fd(": is a directory\n", 2);
+	// 		exit (126);
+	// 	}
+	// 	else
+	// 	{
+
+	// 		ft_putstr_fd("minishell: ", 2);
+	// 		ft_putstr_fd(path, 2);
+	// 		ft_putstr_fd(": Premission denied\n", 2);
+	// 	}
+	// }
+	if (error == ENOENT)
+	{
+
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(path, 2);
+			ft_putstr_fd(": command not found\n", 2);
+	}
+	else
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(path, 2);
+			ft_putstr_fd(": execve error\n", 2);
+		}
+	exit (127);
+}
 
 int	exec(struct	s_main *main_struct)
 {
@@ -93,11 +127,18 @@ int	exec(struct	s_main *main_struct)
 			if (curr_cmd->set_file_err == 0)
 			{
 				//printf("EXEC9\n");
-				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
+				// if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
+				// {
+				// 	perror(curr_cmd->exec.exec_line[0]);
+				// 	exit(127);	
+				// }	
+				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)
 				{
+
+					execve_error(curr_cmd->exec.exec_line[0], errno);
 					perror(curr_cmd->exec.exec_line[0]);
-					exit(127);	
-				}	
+					exit(1);
+				}
 			}
 			else
 				exit(1);
@@ -122,5 +163,5 @@ int	exec(struct	s_main *main_struct)
 	signal(SIGQUIT, old_signal[1]);
 	if (build_return >= 0)
 		return (build_return);
-	return (WEXITSTATUS(i));
+	return (WEXITSTATUS(i)); //check if exited with WIFSIGNALED or  WIFSTOPPED
 }

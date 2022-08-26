@@ -6,12 +6,28 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 13:34:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 08:59:07 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/get_next_line.h"
+
+int g_sig;
+
+static void	sigint_here_doc_handler(int sig)
+{
+	int	pipefd[2];
+
+	g_sig = 1;
+	(void) sig;
+	if (pipe(pipefd) < 0)
+		perror("Pipe: ");
+	dup2(pipefd[0], STDIN_FILENO);
+	write(pipefd[1], "\n\n", 2);
+	close(pipefd[0]);
+	close(pipefd[1]);
+}
 
 int heredoc_counter(char **curr_line_tokens)
 {
@@ -52,8 +68,11 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 	gnl = malloc (sizeof(char **) * 2);
 	if (!gnl)
 		exit(0);
-	while (1)
+	g_sig = 0;
+	while (g_sig == 0)
 	{
+		signal(SIGINT, sigint_here_doc_handler);
+		write(2, "> ", 2);
 		if (get_next_line(0, gnl) == -1 || ft_strncmp(gnl[0], stop_word,
 				ft_strlen (stop_word) + 1) == 0)
 		{
@@ -67,6 +86,8 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 		free(gnl[0]);
 		write(heredoc_pipe[1], "\n", 1);
 	}
+	g_sig = 0;
+	signal(SIGINT, sigint_handler);
 	// printf("close(heredoc_pipe[1]);%d\n", heredoc_pipe[1]);
 	// printf("heredoc_pipe[0]= %d\n", heredoc_pipe[0]);
 	close(heredoc_pipe[1]);

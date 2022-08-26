@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:55:48 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 15:02:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:23:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 	int		i;
 
 	i = 1;
-	print_dubble_str(exec_line, "execline:");
+	//ft_env(list);
 	while (exec_line[i])
 	{
 		if (!check_char_unset(exec_line[i]))
@@ -41,11 +41,14 @@ void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 		}
 		//var_name = make_var_name(exec_line[i]);
 		match_node = ft_find_node_in_list(list, exec_line[i]);
+		//printf("matchnode= %s\n", match_node->str);
 		
 		//free(var_name);
 		if (match_node)
 		{
 			ft_remove_node(list, match_node);
+			//ft_env(list);
+			break ;
 		}
 		i++;
 	}

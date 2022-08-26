@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/25 14:28:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:38:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ int	is_builtin(char	*s)
 	// write(1, "Y1!\n", 4);
 	if (!s)
 		return (11);
-	else if (ft_strncmp(s, "/usr/bin/cd", 11 + 1) == 0) //change abs path? exec all fucns with abs path?
+	else if (ft_strncmp(s, "cd", 11 + 1) == 0) //change abs path? exec all fucns with abs path?
 		return (CD_BUILD);
 	else if (ft_strncmp(s, "export", 6 + 1) == 0)
 		return (EXPORT_BUILD);
 	else if (ft_strncmp(s, "unset", 5 + 1) == 0)
 		return (UNSET_BUILD);
-	else if (ft_strncmp(s, "/bin/echo", 9 + 1) == 0)
+	else if (ft_strncmp(s, "echo", 9 + 1) == 0)
 		return (ECHO_BUILD);
-	else if (ft_strncmp(s, "/bin/pwd", 8 + 1) == 0) //exec all fucns with abs path?
+	else if (ft_strncmp(s, "pwd", 8 + 1) == 0) //exec all fucns with abs path?
 		return (PWD_BUILD);
 	else if (ft_strncmp(s, "env", 3 + 1) == 0)
 		return (ENV_BUILD);

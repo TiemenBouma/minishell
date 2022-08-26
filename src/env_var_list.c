@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/24 09:20:12 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:14:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ char	*find_var_in_list(t_node **list, char *var_name)
 	t_node	*current;
 
 	current = *list;
-	while (current->n != NULL)
+	while (1)
 	{
 		if (!ft_strcmp_var(current->str, var_name))
 			return (current->str + 1 + ft_strlen(var_name));
-		current = current->n;
 		if (current->n == NULL)
 			break ;
+		current = current->n;
 	}	
 	return (NULL);
 }

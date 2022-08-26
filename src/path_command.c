@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/19 14:28:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:59:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**find_path(t_node **list)
 	match_node = ft_find_node_in_list(list, "PATH=");
 	if (match_node == NULL)
 	{
-		error_msg(ERR_PATH, 1);
+		//error_msg(ERR_PATH, 1);
 		return (NULL);	
 	}
 	ptr = match_node->str + 5;
@@ -41,11 +41,13 @@ int	add_path(char **exec_line, char **root_paths)
 	i = 0;
 	if (root_paths == NULL || exec_line[0] == NULL)
 		return (0);
+	if (is_builtin(exec_line[0]) > 0 && is_builtin(exec_line[0]) < 6)
+		return (0);
 	if (access(exec_line[0], F_OK) == 0)
 		return (0);
 	cmd_temp = ft_strdup(exec_line[0]);
-	if (is_builtin(exec_line[0]) < 7) //New feature, checking on buildin
-		return (0);
+	// if (is_builtin(exec_line[0]) < 7) //New feature, checking on buildin
+	// 	return (0);
 	while (root_paths[i])
 	{
 		temp = ft_strjoin(root_paths[i], "/");
@@ -54,6 +56,7 @@ int	add_path(char **exec_line, char **root_paths)
 		temp2 = ft_strjoin(temp, cmd_temp);
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
+		// printf("temp2 = %s\n", temp2);
 		free(exec_line[0]);
 		exec_line[0] = temp2;
 		free(temp);

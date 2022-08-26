@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/26 10:50:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/26 10:59:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	add_path(char **exec_line, char **root_paths)
 		temp2 = ft_strjoin(temp, cmd_temp);
 		if (temp == NULL)
 			error_msg(ERR_MALLOC, 1);
+		// printf("temp2 = %s\n", temp2);
 		free(exec_line[0]);
 		exec_line[0] = temp2;
 		free(temp);

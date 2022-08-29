@@ -26,6 +26,10 @@
 # include <termios.h>
 # include <errno.h>
 
+# include <sys/types.h>
+# include <sys/wait.h>
+
+
 # define ERR_FILE		"Infile or outfile error"
 # define ERR_FORK		"Fork error"
 # define ERR_INPUT		"Invalid number of arguments"

@@ -11,6 +11,7 @@ OBJFILES_EXTRA:= obj/ft_isspace.o obj/ft_lstnew_bonus.o obj/ft_lstadd_front_bonu
 obj/ft_lstsize_bonus.o obj/ft_lstlast_bonus.o obj/ft_lstadd_back_bonus.o obj/ft_lstdelone_bonus.o \
 obj/ft_lstclear_bonus.o obj/ft_lstiter_bonus.o obj/ft_lstmap_bonus.o obj/ft_hexlen.o obj/ft_ull_base.o
 CFLAGS := -Wall -Wextra -Werror
+CC := gcc
 
 all : $(NAME)
 
@@ -19,7 +20,8 @@ $(NAME): $(OBJFILES) $(OBJFILES_EXTRA)
 
 obj/%.o: %.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $< -I $(HEADERFILES)
+	$(CC) -c $(CFLAGS) -o $@ $< 
+#-I $(HEADERFILES)
 
 clean:
 	rm -f $(OBJFILES) $(OBJFILES_EXTRA)

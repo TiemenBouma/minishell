@@ -49,7 +49,6 @@ static void	execve_error(char *path, int error)
 
 int	exec(struct	s_main *main_struct)
 {
-	extern char **environ;
 	int i = 0;
 	int	build_return;
 	int id = 1;

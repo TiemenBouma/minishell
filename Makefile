@@ -37,7 +37,8 @@ OBJFILES := obj/src/main.o \
 			obj/src/b_echo.o \
 			obj/src/b_env.o 
 LIBFT := includes/libft/libft.a
-HEADERS := -I libft/
+HEADERS := 
+#-I libft/
 CFLAGS := -Wall -Wextra  -fsanitize=address -g3 #-Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc

@@ -54,7 +54,7 @@ int	main(void)
 		// print_dubble_str(test_arr, "testarr = ");
 		//print_structs(&main_struct);
 		//printf("--------------------EXEC---------------------\n");
-		main_struct.old_exit_status = exec(&main_struct);
+		main_struct.old_exit_status = exec(&main_struct, 0);
 		//printf("-------------------endEXEC--------------------\n");
 		free_struct(&main_struct);
 		// cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));

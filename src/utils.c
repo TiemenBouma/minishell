@@ -149,10 +149,9 @@ char	**make_arr_from_list(t_node **list)
 int	check_n_flag(char *flag)
 {
 	int i;
-	int	k;
+
 
 	i = 1;
-	k = 0;
 	if (flag || flag[0] != '-')
 		return (0);
 	while (flag[i])

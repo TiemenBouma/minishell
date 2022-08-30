@@ -82,10 +82,9 @@ static int	calc_exec_line_len(struct s_cmd_info *cmd_struct)
 
 static int	make_exec_line(struct s_cmd_info *cmd_struct)
 {
-	int i;
 	int	exec_len;
 
-	i = 0;
+
 	exec_len = 0;
 	exec_len = calc_exec_line_len(cmd_struct);
 	cmd_struct->exec.exec_line = malloc(sizeof(char *) * (exec_len + 1));
@@ -190,12 +189,12 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 static int	redir_check(struct s_cmd_info *cmd_struct)
 {
 	int	i;
-	int	total_heredoc;
+	//int	total_heredoc;
 	int	curr_heredoc;
 
 	i = 0;
 	curr_heredoc = 0;
-	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
+	//total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	//printf("total heredocs: %d\n", total_heredoc);
 	while (i < cmd_struct->token_count)
 	{
@@ -330,11 +329,14 @@ int	make_cmd_structs(struct s_main *main_struct)
 	int line;
 	int	cmd_line_count;
 	
+	main_struct->cmd_count = 0;
 	line = 0;
 	cmd_line_count = 0;
 	while (main_struct->cmd_lines[main_struct->cmd_count])
 		main_struct->cmd_count++;
-	main_struct->cmd_struct_arr = malloc(sizeof(struct s_cmd_info) * main_struct->cmd_count);
+	main_struct->cmd_struct_arr = malloc(sizeof(struct s_cmd_info) * (main_struct->cmd_count));
+	//malloc protection
+	//main_struct->cmd_struct_arr[main_struct->cmd_count] = NULL;
 	
 	while (line < main_struct->cmd_count)
 	{

@@ -26,6 +26,10 @@
 # include <termios.h>
 # include <errno.h>
 
+# include <sys/types.h>
+# include <sys/wait.h>
+
+
 # define ERR_FILE		"Infile or outfile error"
 # define ERR_FORK		"Fork error"
 # define ERR_INPUT		"Invalid number of arguments"
@@ -140,11 +144,15 @@ struct	s_main {
 	//int					curr_exec_cmd_n;
 	//char				**env_var;
 	// t_node				*env_llist;
+	int	build_return;
+	int id;
+	int p[2][2];
+	sig_t	old_signal[2];
 };
 
 //DAN
 int	err_chk(int i, int t, char *s);
-int	exec(struct	s_main *main_struct);
+int	exec(struct	s_main *main_struct, int i);
 char	*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's

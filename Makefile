@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/25 09:02:09 by tbouma           ###   ########.fr        #
+#    Updated: 2022/08/31 07:23:45 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,13 +49,13 @@ $(LIBFT):
 
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
-	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline  -L /usr/lib/x86_64-linux-gnu/
-#-L ~/.brew/opt/readline/lib 
+	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L ~/.brew/opt/readline/lib
+#  -L /usr/lib/x86_64-linux-gnu/
 obj/%.o: %.c
 	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $< -I /usr/include/readline/
+	$(CC) -c $(CFLAGS) -o $@ $< -I ~/.brew/opt/readline/include
+#-I /usr/include/readline/
 
-#-I ~/.brew/opt/readline/include
 
 clean:
 	rm -f $(OBJFILES)

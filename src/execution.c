@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 15:10:41 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 08:16:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	execve_error(char *path, int error)
 	exit (127);
 }
 
-int	exec2(struct	s_main *main_struct, int i)
+int	exec2(struct	s_main *main_struct, int i, int *status)
 {
 	struct s_cmd_info	*curr_cmd;
 	
@@ -94,7 +94,7 @@ int	exec2(struct	s_main *main_struct, int i)
 				err_chk(dup2(curr_cmd->exec.fd_in, S_IN), 2, "");
 				// printf("EXEC2.1\n");
 			}
-			else
+			else if (i > 1)
 			{
 				// printf("EXEC4\n");
 				
@@ -158,8 +158,8 @@ int	exec2(struct	s_main *main_struct, int i)
 			close (curr_cmd->heredoc_pipe[P_OUT]);
 			// printf("EXEC14\n");
 		}
-		exec2(main_struct, i);
-		waitpid(main_struct->id, &i, 0);
+		exec2(main_struct, i, status);
+		waitpid(main_struct->id, status, 0);
 		
 	}
 	return (0);
@@ -168,6 +168,7 @@ int	exec2(struct	s_main *main_struct, int i)
 int	exec(struct	s_main *main_struct, int i)
 {
 	//int i = 0;
+	int status;
 
 
 	main_struct->id = 1;
@@ -175,18 +176,18 @@ int	exec(struct	s_main *main_struct, int i)
 	err_chk(pipe(main_struct->p[CUR]), 1, ""); //CUR = 1
 	// if (main_struct->cmd_count == 1 && is_builtin(main_struct->cmd_struct_arr[i].exec.exec_line[0]) == EXIT_BUILD)
 	// 	ft_exit(main_struct->cmd_struct_arr[i].exec.exec_line);
-	exec2(main_struct, i);
+	exec2(main_struct, i, &status);
 	
 	// printf("EXEC15\n");
 	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
 	close (main_struct->p[CUR][P_OUT]);
 	// printf("EXEC16\n");
-	waitpid(main_struct->id, &i, 0);
+	//waitpid(main_struct->id, &status, 0);
 	// printf("EXEC17\n");
 	signal(SIGINT, main_struct->old_signal[0]);
 	signal(SIGQUIT, main_struct->old_signal[1]);
 	// printf("EXEC18\n");
 	if (main_struct->build_return >= 0)
 		return (main_struct->build_return);
-	return (WEXITSTATUS(i)); //check if exited with WIFSIGNALED or  WIFSTOPPED
+	return (WEXITSTATUS(status)); //check if exited with WIFSIGNALED or  WIFSTOPPED
 }

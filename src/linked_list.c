@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:08:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 15:02:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 11:41:45 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ t_node *ft_find_node_in_list(t_node **list, char *var_name)
 	while (current)
 	{
 		len = 0;
-		while (current->str[len] && current->str[len] != '=')
-			len++;
+		// while (current->str[len] && current->str[len] != '=')
+		// 	len++;
 		// if (ft_strlen(var_name) > len)
-		// 	len = ft_strlen(var_name);
+		len = ft_strlen(var_name);
 		if (!ft_strncmp(current->str, var_name, len))
 			return (current);
 		if (current->n == NULL)

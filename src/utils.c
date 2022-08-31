@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/25 07:55:40 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:17:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,8 @@ char	**make_arr_from_list(t_node **list)
 int	check_n_flag(char *flag)
 {
 	int i;
-	int	k;
 
 	i = 1;
-	k = 0;
 	if (flag || flag[0] != '-')
 		return (0);
 	while (flag[i])

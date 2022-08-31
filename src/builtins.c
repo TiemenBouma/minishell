@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 10:38:47 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:14:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 	else if (build_n == ENV_BUILD)
 		ft_env(&cmd_struct->env_llist);
 	else if (build_n == EXIT_BUILD)
-		ft_exit(cmd_struct->exec.exec_line);
+		ft_exit(cmd_struct->exec.exec_line, 1);
 	return (0);
 }
 

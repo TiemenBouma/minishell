@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 10:14:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:15:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_node	*add_env_to_list(char **environ)
 		ft_list_node_add_back(&env_llist, temp_node);
 		i++;
 	}
+	inc_shlvl(&env_llist);
 	return (env_llist);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/31 10:01:53 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:16:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	exec(struct	s_main *main_struct)
 		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 		{
 			// printf("DEBUG0\n");
-			ft_exit(curr_cmd->exec.exec_line); // NEEDS A token 
-			continue;
+			ft_exit(curr_cmd->exec.exec_line, 0); // NEEDS A token 
+			//continue;
 		}
 		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0)
 		{

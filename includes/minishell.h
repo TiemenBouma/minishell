@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/08/25 20:56:59 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/08/31 10:12:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int	is_builtin(char	*s);
 int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_fork(struct s_cmd_info *cmd_struct);
 char	*make_var_name(char *var_line);
-int ft_exit(char **s);
+int ft_exit(char **s, int is_in_child);
 int ft_cd(t_node **list, char **exec_line);
 void	ft_echo(char **s);
 void	ft_env(t_node **list);

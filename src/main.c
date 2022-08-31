@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/26 12:28:46 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:40:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 	main_struct.env_llist = add_env_to_list(environ);
 	
 	signals_handeler();
-	inc_shlvl(&main_struct.env_llist);
+	//inc_shlvl(&main_struct.env_llist);
 
 	
 	while (1)

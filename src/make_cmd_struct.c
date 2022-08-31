@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 13:52:30 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:36:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 	
 	line = 0;
 	cmd_line_count = 0;
+	main_struct->cmd_count = 0;
 	while (main_struct->cmd_lines[main_struct->cmd_count])
 		main_struct->cmd_count++;
 	main_struct->cmd_struct_arr = malloc(sizeof(struct s_cmd_info) * main_struct->cmd_count);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/31 10:16:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 15:18:59 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	exec(struct	s_main *main_struct)
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
+	close (p[CUR][P_IN]);
 	// if (main_struct->cmd_count == 1 && is_builtin(main_struct->cmd_struct_arr[i].exec.exec_line[0]) == EXIT_BUILD)
 	// 	ft_exit(main_struct->cmd_struct_arr[i].exec.exec_line);
 
@@ -153,13 +154,12 @@ int	exec(struct	s_main *main_struct)
 			else
 				exit(1);
 		}
-		if (i > 1)
-		{
+
 			// printf("EXEC10\n");
 
 			//printf("close (p[PREV][P_OUT]);%d\n", p[PREV][P_OUT]);
-			close (p[PREV][P_OUT]);
-		}
+		close (p[PREV][P_OUT]);
+
 		//printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
 		// printf("EXEC11\n");
 		close (p[CUR][P_IN]);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/26 13:14:25 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 10:01:53 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	exec(struct	s_main *main_struct)
 	int p[2][2];
 	sig_t	old_signal[2];
 	struct s_cmd_info	*curr_cmd;
+	int child_n = 0;
+	int status;
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
@@ -174,12 +176,16 @@ int	exec(struct	s_main *main_struct)
 	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
 	close (p[CUR][P_OUT]);
 	// printf("EXEC16\n");
-	waitpid(id, &i, 0);
+	while (child_n < main_struct->cmd_count)
+	{
+		waitpid(-1, &status, 0);
+		child_n++;
+	}
 	// printf("EXEC17\n");
 	signal(SIGINT, old_signal[0]);
 	signal(SIGQUIT, old_signal[1]);
 	// printf("EXEC18\n");
 	if (build_return >= 0)
 		return (build_return);
-	return (WEXITSTATUS(i)); //check if exited with WIFSIGNALED or  WIFSTOPPED
+	return (WEXITSTATUS(status)); //check if exited with WIFSIGNALED or  WIFSTOPPED
 }

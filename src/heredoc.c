@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 13:15:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 14:46:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,28 @@ int heredoc_counter(char **curr_line_tokens)
 int	heredoc(char *stop_word, int heredoc_pipe[2])
 {
 	//char	**gnl;
-	char	*input;
+	char	**input;
 
 	//printf("\nIN HEREDOC\n\n");
 
 	//printf("stopWORD:%s\n", cmd_struct->heredoc);
 	//err_chk(pipe((*p)[1]), 0, "");
 	err_chk(pipe(heredoc_pipe), 1, "");
-	// gnl = malloc (sizeof(char **) * 2);
-	// if (!gnl)
-	// 	exit(0);
+	input = malloc (sizeof(char **) * 2);
+	if (!input)
+		exit(0);
 	//g_sig = 0;
+	signal(SIGINT, sigint_handler_nonl);
+	
 	while (1)//(g_sig == 0)
 	{
 		//signal(SIGINT, sigint_handler_nonl);
 		//signal(SIGINT, sigint_here_doc_handler);
-		signal(SIGINT, SIG_IGN);
 		//write(2, "> ", 2);
-		input = readline(">");
-		if (!input || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
+		get_next_line(STD_IN, input);//input = readline(">");
+		if (!(*input) || !ft_strncmp(*input, stop_word, ft_strlen (stop_word) + 1))
 		{
+			free(*input);
 			free(input);
 			// free(gnl[0]);
 			// free(gnl);
@@ -86,14 +88,15 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 		}
 
 		// 	signal(SIGINT, sigint_handler_nonl);
-		write(heredoc_pipe[1], input, ft_strlen(input));
-		free(input);
+		write(heredoc_pipe[1], *input, ft_strlen(*input));
+		free(*input);
 		write(heredoc_pipe[1], "\n", 1);
 		// write(heredoc_pipe[1], gnl[0], ft_strlen(gnl[0]));
 		// free(gnl[0]);
 		// write(heredoc_pipe[1], "\n", 1);
 	}
 	//g_sig = 0;
+
 	signal(SIGINT, sigint_handler);
 	// printf("close(heredoc_pipe[1]);%d\n", heredoc_pipe[1]);
 	// printf("heredoc_pipe[0]= %d\n", heredoc_pipe[0]);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/08/31 15:18:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 14:51:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ static void	execve_error(char *path, int error)
 	// 		ft_putstr_fd(": Premission denied\n", 2);
 	// 	}
 	// }
-	if (error == ENOENT)
+	if (ft_strncmp(path, "./", 2) == 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (error == ENOENT)
 	{
 
 			ft_putstr_fd("minishell: ", 2);
@@ -81,29 +87,25 @@ int	exec(struct	s_main *main_struct)
 			//printf("DEBUG1\n");
 			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
-		else if (check_buildin_fork(curr_cmd) == 0)
-			{}//printf("DEBUG2\n");
-		else
-		{
-			//printf("DEBUG3\n");
-			id = fork();
-		}
+		else if (check_buildin_fork(curr_cmd) != 0)
+			id = fork();//printf("DEBUG2\n");
+
 		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
-		// printf("ID= %d\n", id);
+		 printf("ID= %d\n", id);
 		err_chk(id, 1, "");
 		if (id == 0 && check_buildin_fork(curr_cmd) == 1)//Why is is_builtin in this if statment
 		{
 			// printf("EXEC1\n");
 			if (curr_cmd->has_heredoc == 2)
 			{
-				// printf("EXEC3\n");
+				 //printf("EXEC3\n");
 				
 				err_chk(dup2(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
 			}
 			else if (curr_cmd->has_infile == 2 || i == 1)
 			{
-				// printf("EXEC2\n");
+				//printf("EXEC2\n");
 				
 				err_chk(dup2(curr_cmd->exec.fd_in, S_IN), 2, "");
 				// printf("EXEC2.1\n");
@@ -135,12 +137,13 @@ int	exec(struct	s_main *main_struct)
 			// printf("EXEC8\n");
 			if (curr_cmd->set_file_err == 0)
 			{
-				//printf("EXEC9\n");
+				// printf("EXEC9\n");
 				// if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)// check malloc of make_arr_func is freed
 				// {
 				// 	perror(curr_cmd->exec.exec_line[0]);
 				// 	exit(127);	
 				// }	
+				// dprintf(2, "\nprocces: %d\n", i);
 				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
@@ -155,33 +158,33 @@ int	exec(struct	s_main *main_struct)
 				exit(1);
 		}
 
-			// printf("EXEC10\n");
+			//  printf("EXEC10\n");
 
 			//printf("close (p[PREV][P_OUT]);%d\n", p[PREV][P_OUT]);
 		close (p[PREV][P_OUT]);
 
 		//printf("close (p[CUR][P_IN]);%d\n", p[CUR][P_IN]);
-		// printf("EXEC11\n");
+		//  printf("EXEC11\n");
 		close (p[CUR][P_IN]);
-		// printf("EXEC12\n");
+		//  printf("EXEC12\n");
 		if (curr_cmd->has_heredoc == 2)//This might need to be on a different palce.
 		{
-			// printf("EXEC13\n");
+			//  printf("EXEC13\n");
 			//printf("close (main_struct->cmd_struct_arr[i - 1].heredoc_pipe[P_OUT]);%d\n", curr_cmd->heredoc_pipe[P_OUT]);
 			close (curr_cmd->heredoc_pipe[P_OUT]);
-			// printf("EXEC14\n");
+			//  printf("EXEC14\n");
 		}
 	}
-	// printf("EXEC15\n");
+	//  printf("EXEC15\n");
 	//printf("close (p[CUR][P_OUT]);%d\n", p[CUR][P_OUT]);
 	close (p[CUR][P_OUT]);
-	// printf("EXEC16\n");
+	//  printf("EXEC16\n");
 	while (child_n < main_struct->cmd_count)
 	{
 		waitpid(-1, &status, 0);
 		child_n++;
 	}
-	// printf("EXEC17\n");
+	//  printf("EXEC17\n");
 	signal(SIGINT, old_signal[0]);
 	signal(SIGQUIT, old_signal[1]);
 	// printf("EXEC18\n");

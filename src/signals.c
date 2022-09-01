@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 13:07:43 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 13:36:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@ void	sigquit_handler_in_process(int sig)
 	printf("Quit: %d\n", sig);
 }
 
-void	sigint_handler_nonl(int sig)
-{
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	(void) sig;
-}
-
 void    ft_suppress_output(void)
 {
     struct termios    new_settings;
@@ -45,12 +37,22 @@ void    ft_suppress_output(void)
         perror("minishell: tcsetattr");
 }
 
+void	sigint_handler_nonl(int sig)
+{
+	ft_suppress_output();
+	
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	(void) sig;
+}
+
+
 void	sigint_handler(int sig)
 {
 	ft_suppress_output();
 	
 	write(1, "\n", 1);
-	//printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

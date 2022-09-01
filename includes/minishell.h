@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/31 10:12:49 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 15:32:34 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,8 @@ int	dummy_heredoc(char *stop_word);
 int	print_structs(struct s_main *s);
 int	print_dubble_str(char **str, char *name);
 int	print_linked_list(t_node **list);
+
+
+void    ft_suppress_output(void);
 
 #endif

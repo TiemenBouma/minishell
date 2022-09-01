@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/31 15:29:55 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 15:55:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 	
 	signals_handeler();
 	//inc_shlvl(&main_struct.env_llist);
-
+	//rl_catch_signals = 0;
 	
 	while (1)
 	{

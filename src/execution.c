@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/01 14:51:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 15:10:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	exec(struct	s_main *main_struct)
 
 		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
-		 printf("ID= %d\n", id);
+		//printf("ID= %d\n", id);
 		err_chk(id, 1, "");
 		if (id == 0 && check_buildin_fork(curr_cmd) == 1)//Why is is_builtin in this if statment
 		{

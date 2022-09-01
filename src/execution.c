@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/01 16:49:30 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/09/01 22:52:30 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,6 @@
 
 static void	execve_error(char *path, int error)
 {
-	// if (error == EACCES)
-	// {
-	// 	if (path)
-	// 	{
-	// 		ft_putstr_fd("minishell: ", 2);
-	// 		ft_putstr_fd(path, 2);
-	// 		ft_putstr_fd(": is a directory\n", 2);
-	// 		exit (126);
-	// 	}
-	// 	else
-	// 	{
-
-	// 		ft_putstr_fd("minishell: ", 2);
-	// 		ft_putstr_fd(path, 2);
-	// 		ft_putstr_fd(": Premission denied\n", 2);
-	// 	}
-	// }
 	if (ft_strncmp(path, "./", 2) == 0)
 	{
 		ft_putstr_fd("minishell: ", 2);
@@ -80,8 +63,8 @@ int	exec(struct	s_main *main_struct)
 		{
 			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
-		if (check_buildin_fork(curr_cmd) == 1)
-			id = fork();
+
+		id = fork();
 		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 		err_chk(id, 1, "");
@@ -132,7 +115,7 @@ int	exec(struct	s_main *main_struct)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);
-					execve_error(curr_cmd->exec.exec_line[0], errno);
+					execve_error_messaging(errno, curr_cmd->exec.exec_line[0]);
 				}
 			}
 			else
@@ -140,7 +123,8 @@ int	exec(struct	s_main *main_struct)
 		}
 		close (p[PREV][P_OUT]);
 		close (p[CUR][P_IN]);
-		close (p[PREV][P_IN]);
+		if (i == 1)
+			close (p[PREV][P_IN]);
 	}
 	close (p[CUR][P_OUT]);
 	close (p[PREV][P_IN]);

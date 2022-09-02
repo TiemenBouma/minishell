@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/02 15:42:53 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:43:16 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//test
+
 int	main(void)
 {
 	struct s_main	main_struct;

@@ -6,15 +6,15 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/02 15:10:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:51:01 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	execve_error(char *path, int error)
+static void	execve_error(char *path, int error, char *envpath)
 {
-	if (ft_strncmp(path, "./", 2) == 0)
+	if (ft_strncmp(path, "./", 2) == 0 || envpath == NULL)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(path, 2);
@@ -45,6 +45,7 @@ int	exec(struct	s_main *main_struct)
 	int p[2][2];
 	//sig_t	old_signal[2];
 	struct s_cmd_info	*curr_cmd;
+	char	*path;
 
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
@@ -119,7 +120,8 @@ int	exec(struct	s_main *main_struct)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);
-					execve_error(curr_cmd->exec.exec_line[0], errno);
+					path = find_var_in_list(&main_struct->env_llist, "PATH");
+					execve_error(curr_cmd->exec.exec_line[0], errno, path);
 				}
 			}
 			else

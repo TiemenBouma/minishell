@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 09:33:51 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 07:42:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
 				continue;
 			}
 			var_name = make_var_name(exec_line[i]);
+			// printf("varname= %s\n", var_name);
 			match_node = ft_find_node_in_list(list, var_name);
+			// if (match_node)
+			// 	printf("matchnode s= %s\n", match_node->str);
 			free(var_name);
 			if (!match_node)
 			{

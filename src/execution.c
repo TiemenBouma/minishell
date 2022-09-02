@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/09/01 22:52:30 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
+/*   Updated: 2022/09/02 08:53:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,29 @@ int	exec(struct	s_main *main_struct)
 		i++;
 		curr_cmd = &main_struct->cmd_struct_arr[i - 1];
 		err_chk(pipe(p[CUR]), 1, "");
+		
+		//-------------------------------func singel command, is spesific buidlin--------------------------
 		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 		{
-			ft_exit(curr_cmd->exec.exec_line, 0); // NEEDS A token 
+			ft_exit(curr_cmd->exec.exec_line, 0);
 			continue;
 		}
-		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0)
+		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count == 1)
 		{
 			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
-
-		id = fork();
+		//-------------------------------func singel command, is spesific buidlin--------------------------
+		
+		if (check_buildin_fork(curr_cmd) == 1 || main_struct->cmd_count > 1)
+		{
+			id = fork();
+		}
 		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
 		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 		err_chk(id, 1, "");
-		if (id == 0 && check_buildin_fork(curr_cmd) == 1)//Why is is_builtin in this if statment
+		if ((id == 0 && check_buildin_fork(curr_cmd) == 1) || (id == 0 && main_struct->cmd_count > 1))//Why is is_builtin in this if statment
 		{
+			// ---------------------------- make redir function? ---------------------------------
 			if (curr_cmd->has_heredoc == 2)
 			{
 				
@@ -94,32 +101,40 @@ int	exec(struct	s_main *main_struct)
 			}
 			else
 			{
-				
 				err_chk(dup2(curr_cmd->exec.fd_out, S_OUT), 2, "");
-			}
-			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
-			{
-				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
-				exit(0);
 			}
 			close (p[CUR][P_OUT]);
 			close (p[PREV][P_IN]);
-			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
+			// ---------------------------- make redir function? ---------------------------------
+			
+			// ---------------------------- make exec function? ---------------------------------
+			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count < 1)
 			{
+				write(2, "EXEC: IN buildin\n", 17);
 				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
-			if (curr_cmd->set_file_err == 0)
+			else if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
+			{
+				write(2, "EXEC: IN buildin2\n", 18);
+				write(2, curr_cmd->exec.exec_line[0], ft_strlen(curr_cmd->exec.exec_line[0]));
+				write(2, "\n", 1);
+				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+				exit(0);
+			}
+			else if (curr_cmd->set_file_err == 0)
 			{
 				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);
-					execve_error_messaging(errno, curr_cmd->exec.exec_line[0]);
+					//execve_error_messaging(errno, );
+					execve_error(curr_cmd->exec.exec_line[0], errno);
 				}
 			}
 			else
 				exit(126);
+			// ---------------------------- make exec function? ---------------------------------
 		}
 		close (p[PREV][P_OUT]);
 		close (p[CUR][P_IN]);

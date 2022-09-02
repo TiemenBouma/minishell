@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/02 11:06:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:10:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,24 +79,19 @@ int	exec(struct	s_main *main_struct)
 			// ---------------------------- make redir function? ---------------------------------
 			if (curr_cmd->has_heredoc == 2)
 			{
-				
-				err_chk(dup2(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
-				close (curr_cmd->heredoc_pipe[P_OUT]);
+				err_chk(dup2(g_pipe_heredoc[P_OUT], S_IN), 2, "");//(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
+				close (g_pipe_heredoc[P_OUT]);//(curr_cmd->heredoc_pipe[P_OUT]);
 			}
 			else if (curr_cmd->has_infile == 2 || i == 1)
 			{
-				
 				err_chk(dup2(curr_cmd->exec.fd_in, S_IN), 2, "");
-
 			}
 			else
 			{
-				
 				err_chk(dup2(p[PREV][P_OUT], S_IN), 2, "");	
 			}
 			if (curr_cmd->exec.fd_out == 1 && main_struct->cmd_count != i)
 			{
-				
 				err_chk(dup2(p[CUR][P_IN], S_OUT), 2, "");
 			}
 			else
@@ -108,12 +103,12 @@ int	exec(struct	s_main *main_struct)
 			// ---------------------------- make redir function? ---------------------------------
 			
 			// ---------------------------- make exec function? ---------------------------------
-			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count < 1)
-			{
-				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
-				exit(0);
-			}
-			else if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
+			// if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count < 1)
+			// {
+			// 	exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+			// 	exit(0);
+			// }
+			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 			{
 				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
@@ -133,7 +128,7 @@ int	exec(struct	s_main *main_struct)
 		}
 		close (p[PREV][P_OUT]);
 		close (p[CUR][P_IN]);
-		if (i == 1)
+		if (i == 1 || curr_cmd->has_heredoc == 2)
 			close (p[PREV][P_IN]);
 	}
 	close (p[CUR][P_OUT]);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 10:55:31 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:12:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,26 +156,20 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 	int	total_heredoc;
 	int	curr_heredoc;
 	int id;
+	int status;
 
 	i = 0;
 	curr_heredoc = 0;
 	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	while (i < cmd_struct->token_count)
 	{
-		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC) // HEREDOC WILL BE MADE HERE IN A FILE
+		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC) 
 		{
 			curr_heredoc++;
-			// cmd_struct->has_heredoc = 2;
-			// if (cmd_struct->has_infile == 2)
-			// {
-			// 	//printf("close(cmd_struct->exec.fd_in);%d\n", cmd_struct->exec.fd_in);
-			// 	close(cmd_struct->exec.fd_in);
-			// 	cmd_struct->exec.fd_in = 0;
-			// 	cmd_struct->has_infile = 1;
-			// }
+
 			signal(SIGINT, SIG_IGN);
 			if (total_heredoc == curr_heredoc)
-				err_chk(pipe(cmd_struct->heredoc_pipe), 1, "");
+				err_chk(pipe(g_pipe_heredoc), 1, "");//(cmd_struct->heredoc_pipe), 1, "");
 			id = fork();
 			if (id == 0)
 			{
@@ -186,15 +180,28 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 				}
 				if (total_heredoc == curr_heredoc)
 				{
-					//cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
 					heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->heredoc_pipe);
 					exit(0);
 				}
 			}
-			waitpid(id, NULL, 0);
-			if (total_heredoc > curr_heredoc)
-				close(cmd_struct->heredoc_pipe[P_OUT]); 
-			close(cmd_struct->heredoc_pipe[P_IN]); 
+			close(g_pipe_heredoc[P_IN]);//(cmd_struct->heredoc_pipe[P_IN]);
+			waitpid(id, &status, 0);
+			if (WEXITSTATUS(status) == 10)
+			{
+				cmd_struct->set_file_err = 1;
+				write(1, "\n", 1);
+				rl_on_new_line();
+				rl_replace_line("", 0);
+			//	rl_redisplay();
+				// if (total_heredoc > curr_heredoc)
+				// 	close(cmd_struct->heredoc_pipe[P_OUT]); 
+				//close(cmd_struct->heredoc_pipe[P_IN]); 
+				signal(SIGINT, sigint_handler);
+				break;
+			}
+			// if (total_heredoc > curr_heredoc)
+			// 	close(cmd_struct->heredoc_pipe[P_OUT]); 
+			//close(cmd_struct->heredoc_pipe[P_IN]); 
 			signal(SIGINT, sigint_handler);
 		}
 		i++;

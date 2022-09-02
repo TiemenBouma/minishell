@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/01 15:55:03 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 13:21:10 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	sigint_handler_in_process(int sig)
 {
 	(void) sig;
 	write(1, "\n", 1);
-	//printf("\n");
 }
 
 void	sigquit_handler_in_process(int sig)
@@ -36,9 +35,6 @@ void    ft_suppress_output(void)
     if (tcsetattr(0, 0, &new_settings))
         perror("minishell: tcsetattr");
 }
-
-
-
 
 void	sigint_handler(int sig)
 {

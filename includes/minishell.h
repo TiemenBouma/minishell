@@ -6,12 +6,15 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/01 15:32:34 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:12:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+// int g_sig;
+int g_pipe_heredoc[2];
 
 # include <stdlib.h>
 # include <stdio.h>

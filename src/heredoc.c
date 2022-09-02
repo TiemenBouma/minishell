@@ -6,31 +6,22 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 10:54:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:15:23 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/get_next_line.h"
 
-int g_sig;
+// int g_sig;
+int g_pipe_heredoc[2];
 
 void	sigint_handler_heredoc(int sig)
 {
-
-	int	temp_pipe[2];
-
+	//g_sig = 1;
 	(void) sig;
-	if (pipe(temp_pipe) < 0)
-		perror("Pipe: ");
-	dup2(temp_pipe[0], STDIN_FILENO);
-	write(temp_pipe[1], "\n\n", 2);
-	close(temp_pipe[0]);
-	close(temp_pipe[1]);
-
-	g_sig = 1;
-
-	(void) sig;
+	close(g_pipe_heredoc[P_IN]);
+	exit(10);
 }
 
 
@@ -55,51 +46,31 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 {
 	char	*input;
 
-	// input = malloc (sizeof(char **) * 2);
-	// if (!input)
-	// 	exit(0);
-	g_sig = 0;
-
-	signal(SIGINT, sigint_handler_heredoc);
-	// input = readline(">");
-	while (g_sig == 0)
+	//g_sig = 0;
+	close(heredoc_pipe[P_OUT]);
+	signal(SIGINT, sigint_handler_heredoc);// we need to close pipe in if signal;
+	while (1)//(g_sig == 0)
 	{
-		//signal(SIGINT, sigint_handler_nonl);
-		//signal(SIGINT, sigint_here_doc_handler);
-		//write(2, "> ", 2);
-		if (g_sig)
-			break;
-		rl_on_new_line();
-		
-		input = readline(">");//get_next_line(STD_IN, input);
+		// if (g_sig)
+		// 	break;
+		input = readline("> ");
 		if (!(input) || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
 		{
-			//free(*input);
 			free(input);
-			// free(gnl[0]);
-			// free(gnl);
 			break ;
 		}
-
-		// 	signal(SIGINT, sigint_handler_nonl);
 		write(heredoc_pipe[P_IN], input, ft_strlen(input));
 		free(input);
-		//*input = NULL;
 		write(heredoc_pipe[P_IN], "\n", 1);
-		
-		// write(heredoc_pipe[1], gnl[0], ft_strlen(gnl[0]));
-		// free(gnl[0]);
-		// write(heredoc_pipe[1], "\n", 1);
-		if (g_sig ==1)
-			close(heredoc_pipe[P_OUT]);
+		// if (g_sig ==1)
+		// {
+		// 	close(heredoc_pipe[P_OUT]);
+		// }
 	}
-	g_sig = 0;
+	//g_sig = 0;
 
 	signal(SIGINT, sigint_handler);
-	// printf("close(heredoc_pipe[1]);%d\n", heredoc_pipe[1]);
 	close(heredoc_pipe[P_IN]); 
-	//close(heredoc_pipe[0]);
-	
 	return (0);
 }
 
@@ -107,7 +78,7 @@ int	dummy_heredoc(char *stop_word)
 {
 	char	**gnl;
 
-	g_sig = 0;
+	//g_sig = 0;
 
 	signal(SIGINT, sigint_handler_heredoc);
 	gnl = malloc (sizeof(char **) * 2);

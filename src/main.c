@@ -6,12 +6,11 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/02 10:46:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 13:08:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 int	main(void)
 {
@@ -19,7 +18,6 @@ int	main(void)
 	extern char **environ;
 	//char		**test_arr;
 	//char	*cwd;
-
 	main_struct.old_exit_status = 0;
 	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/02 11:04:49 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 11:06:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,11 @@ int	exec(struct	s_main *main_struct)
 			// ---------------------------- make exec function? ---------------------------------
 			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count < 1)
 			{
-				write(2, "EXEC: IN buildin\n", 17);
 				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
 			else if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 			{
-				write(2, "EXEC: IN buildin2\n", 18);
-				write(2, curr_cmd->exec.exec_line[0], ft_strlen(curr_cmd->exec.exec_line[0]));
-				write(2, "\n", 1);
 				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
@@ -128,7 +124,6 @@ int	exec(struct	s_main *main_struct)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);
-					//execve_error_messaging(errno, );
 					execve_error(curr_cmd->exec.exec_line[0], errno);
 				}
 			}

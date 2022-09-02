@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/01 15:58:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 10:54:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,24 @@
 
 int g_sig;
 
-void	sigint_handler_nonl(int sig)
+void	sigint_handler_heredoc(int sig)
 {
-	//write(2, "DEBUG1\n", 7);
-	// int save_fd = dup(STDIN_FILENO);
-	// close(STDIN_FILENO);
-	//ft_suppress_output();
+
+	int	temp_pipe[2];
+
+	(void) sig;
+	if (pipe(temp_pipe) < 0)
+		perror("Pipe: ");
+	dup2(temp_pipe[0], STDIN_FILENO);
+	write(temp_pipe[1], "\n\n", 2);
+	close(temp_pipe[0]);
+	close(temp_pipe[1]);
+
 	g_sig = 1;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line(" ", 1);
-	rl_redisplay();
-	// dup2(save_fd, STDIN_FILENO);
+
 	(void) sig;
 }
 
-// static void	sigint_here_doc_handler(int sig)
-// {
-// 	int	pipefd[2];
-
-// 	g_sig = 1;
-// 	(void) sig;
-// 	if (pipe(pipefd) < 0)
-// 		perror("Pipe: ");
-// 	dup2(pipefd[0], STDIN_FILENO);
-// 	write(pipefd[1], "\n\n", 2);
-// 	close(pipefd[0]);
-// 	close(pipefd[1]);
-// }
 
 int heredoc_counter(char **curr_line_tokens)
 {
@@ -60,32 +50,17 @@ int heredoc_counter(char **curr_line_tokens)
 	return (heredoc_counter);
 }
 
-// char	*make_heredoc_filename(int index)
-// {
-// 	char	*heredoc_filename;
-// 	char	*num;
-	
-// 	num = ft_itoa(index);
-// 	heredoc_filename = ft_strjoin(num, "_heredoc");
-// 	free(num);
-// 	return (heredoc_filename);
-// }
 
 int	heredoc(char *stop_word, int heredoc_pipe[2])
 {
-	//char	**gnl;
-	char	**input;
+	char	*input;
 
-	//printf("\nIN HEREDOC\n\n");
-
-	//printf("stopWORD:%s\n", cmd_struct->heredoc);
-	//err_chk(pipe((*p)[1]), 0, "");
-	err_chk(pipe(heredoc_pipe), 1, "");
-	input = malloc (sizeof(char **) * 2);
-	if (!input)
-		exit(0);
+	// input = malloc (sizeof(char **) * 2);
+	// if (!input)
+	// 	exit(0);
 	g_sig = 0;
-	signal(SIGINT, sigint_handler_nonl);
+
+	signal(SIGINT, sigint_handler_heredoc);
 	// input = readline(">");
 	while (g_sig == 0)
 	{
@@ -95,10 +70,11 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 		if (g_sig)
 			break;
 		rl_on_new_line();
-		get_next_line(STD_IN, input);//input = readline(">");
-		if (!(input) || !ft_strncmp(*input, stop_word, ft_strlen (stop_word) + 1))
+		
+		input = readline(">");//get_next_line(STD_IN, input);
+		if (!(input) || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
 		{
-			free(*input);
+			//free(*input);
 			free(input);
 			// free(gnl[0]);
 			// free(gnl);
@@ -106,23 +82,22 @@ int	heredoc(char *stop_word, int heredoc_pipe[2])
 		}
 
 		// 	signal(SIGINT, sigint_handler_nonl);
-		write(heredoc_pipe[1], *input, ft_strlen(*input));
+		write(heredoc_pipe[P_IN], input, ft_strlen(input));
 		free(input);
 		//*input = NULL;
-		write(heredoc_pipe[1], "\n", 1);
+		write(heredoc_pipe[P_IN], "\n", 1);
 		
 		// write(heredoc_pipe[1], gnl[0], ft_strlen(gnl[0]));
 		// free(gnl[0]);
 		// write(heredoc_pipe[1], "\n", 1);
 		if (g_sig ==1)
-			close(heredoc_pipe[0]);
+			close(heredoc_pipe[P_OUT]);
 	}
 	g_sig = 0;
 
 	signal(SIGINT, sigint_handler);
 	// printf("close(heredoc_pipe[1]);%d\n", heredoc_pipe[1]);
-	// printf("heredoc_pipe[0]= %d\n", heredoc_pipe[0]);
-	close(heredoc_pipe[1]);
+	close(heredoc_pipe[P_IN]); 
 	//close(heredoc_pipe[0]);
 	
 	return (0);
@@ -132,15 +107,15 @@ int	dummy_heredoc(char *stop_word)
 {
 	char	**gnl;
 
-	//printf("\nIN HEREDOC\n\n");
+	g_sig = 0;
 
-	//printf("stopWORD:%s\n", cmd_struct->heredoc);
-	//err_chk(pipe((*p)[1]), 0, "");
+	signal(SIGINT, sigint_handler_heredoc);
 	gnl = malloc (sizeof(char **) * 2);
 	if (!gnl)
 		exit(0);
 	while (1)
 	{
+		write(2, "> ", 2);
 		if (get_next_line(0, gnl) == -1 || ft_strncmp(gnl[0], stop_word,
 				ft_strlen (stop_word) + 1) == 0)
 		{
@@ -148,8 +123,6 @@ int	dummy_heredoc(char *stop_word)
 			free(gnl);
 			break ;
 		}
-		if (!gnl)
-			signal(SIGINT, sigint_handler_nonl);
 		free(gnl[0]);
 	}
 	return (0);

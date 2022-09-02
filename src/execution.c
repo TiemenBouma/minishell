@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/02 08:53:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 11:04:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec(struct	s_main *main_struct)
 	int	build_return;
 	int id = 1;
 	int p[2][2];
-	sig_t	old_signal[2];
+	//sig_t	old_signal[2];
 	struct s_cmd_info	*curr_cmd;
 
 	build_return = -1;
@@ -67,12 +67,12 @@ int	exec(struct	s_main *main_struct)
 		}
 		//-------------------------------func singel command, is spesific buidlin--------------------------
 		
+		signal(SIGINT, sigint_handler_in_process);
+		signal(SIGQUIT, sigquit_handler_in_process);
 		if (check_buildin_fork(curr_cmd) == 1 || main_struct->cmd_count > 1)
 		{
 			id = fork();
 		}
-		old_signal[0] = signal(SIGINT, sigint_handler_in_process);
-		old_signal[1] = signal(SIGQUIT, sigquit_handler_in_process);
 		err_chk(id, 1, "");
 		if ((id == 0 && check_buildin_fork(curr_cmd) == 1) || (id == 0 && main_struct->cmd_count > 1))//Why is is_builtin in this if statment
 		{
@@ -145,8 +145,7 @@ int	exec(struct	s_main *main_struct)
 	close (p[PREV][P_IN]);
 	waitpid(id, &i, 0);
 	while (wait(NULL) != -1);
-	signal(SIGINT, old_signal[0]);
-	signal(SIGQUIT, old_signal[1]);
+	signals_handeler();
 	if (build_return >= 0)
 		return (build_return);
 	return (WEXITSTATUS(i)); //check if exited with WIFSIGNALED or  WIFSTOPPED

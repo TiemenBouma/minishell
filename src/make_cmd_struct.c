@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/31 10:36:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 10:55:31 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 		int	i;
 	int	total_heredoc;
 	int	curr_heredoc;
+	int id;
 
 	i = 0;
 	curr_heredoc = 0;
@@ -172,15 +173,29 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 			// 	cmd_struct->exec.fd_in = 0;
 			// 	cmd_struct->has_infile = 1;
 			// }
-			if (total_heredoc > curr_heredoc)
-			{
-				dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
-			}
+			signal(SIGINT, SIG_IGN);
 			if (total_heredoc == curr_heredoc)
+				err_chk(pipe(cmd_struct->heredoc_pipe), 1, "");
+			id = fork();
+			if (id == 0)
 			{
-				//cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
-				heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->heredoc_pipe);
+				if (total_heredoc > curr_heredoc)
+				{
+					dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
+					exit(0);
+				}
+				if (total_heredoc == curr_heredoc)
+				{
+					//cmd_struct->heredoc = ft_strdup(cmd_struct->curr_line_tokens[i + 1]);
+					heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->heredoc_pipe);
+					exit(0);
+				}
 			}
+			waitpid(id, NULL, 0);
+			if (total_heredoc > curr_heredoc)
+				close(cmd_struct->heredoc_pipe[P_OUT]); 
+			close(cmd_struct->heredoc_pipe[P_IN]); 
+			signal(SIGINT, sigint_handler);
 		}
 		i++;
 	}

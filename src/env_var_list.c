@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 16:49:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:39:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ char	*find_next_var_in_str(char *input_str, int *index)
 			temp = ft_substr(input_str, start, len);
 			return (temp);
 		}
-		(*index)++;
+		if(input_str[*index])
+			(*index)++;
 		
 		// if (input_str[*index] == '\"' && in_quotes == 0)
 		// {

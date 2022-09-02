@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/25 15:26:55 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:26:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ char *set_home(t_node **list)
 	
 }
 
-int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relative. NEED TO BUILD IN CHECKS IF  getcwd AND chdir WORKED.
+int ft_cd(t_node **list, char **exec_line)
 {
 	char	*cwd;
 	char	*new_str;
+	t_node	*temp_node;
 	
 	if (exec_line[1] == NULL)
 	{
@@ -37,13 +38,16 @@ int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relat
 		if (exec_line[1] == NULL)
 			return (1);
 	}
-	if (ft_strncmp(exec_line[1], "-", ft_strlen(exec_line[1] + 1)) == 0)
+	if (ft_strncmp(exec_line[1], "-", 2) == 0)
 	{
-		if (find_var_in_list(list, "OLDPWD=") != NULL)
-			ft_print_var_content(list, "OLDPWD=");
-		else
+		temp_node = ft_find_node_in_list(list, "OLDPWD=");
+		if (temp_node == NULL)
+		{
 			write(2, "bash: cd: OLDPWD not set\n", 25);
-		return (0);
+			return (1);
+		}
+		else
+			ft_print_var_content(list, "OLDPWD=");
 	}
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
@@ -51,6 +55,11 @@ int ft_cd(t_node **list, char **exec_line)// WORKS WITH ABSOLUTE PATH, not relat
 		return (perror_msg("pwd", NULL, EXIT_PWD));
 	new_str = ft_strjoin("OLDPWD=", cwd);
 	free(cwd);
+	if (ft_strncmp(exec_line[1], "-", 2) == 0)
+	{
+		free(exec_line[1]);
+		exec_line[1] = ft_strdup(temp_node->str + 7);
+	}
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	if (chdir(exec_line[1]))
 		return (perror_msg("cd", exec_line[1], EXIT_CD));

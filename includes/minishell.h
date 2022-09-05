@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/02 15:12:19 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:34:02 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // int g_sig;
-int g_pipe_heredoc[2];
+int **g_pipe_heredoc;
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -223,7 +223,7 @@ void	sigquit_handler_in_process(int sig);
 void	sigint_handler_nonl(int sig);
 
 //HEREDOC
-int	heredoc(char *stop_word, int pipe[2]);
+int	heredoc(char *stop_word, int index);//int	heredoc(char *stop_word);//int	heredoc(char *stop_word, int pipe[2]);
 char	*make_heredoc_filename(int index);
 int heredoc_counter(char **curr_line_tokens);
 int	dummy_heredoc(char *stop_word);

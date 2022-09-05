@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 15:24:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:37:28 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,10 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 			curr_heredoc++;
 
 			signal(SIGINT, SIG_IGN);
+			printf("cmd+index %d\n", cmd_struct->cmd_index);
 			if (total_heredoc == curr_heredoc)
-				err_chk(pipe(g_pipe_heredoc), 1, "");//(cmd_struct->heredoc_pipe), 1, "");
+				err_chk(pipe(g_pipe_heredoc[cmd_struct->cmd_index + 1]), 1, "");//(cmd_struct->heredoc_pipe), 1, "");
+			printf("g_pipe_heredoc IN: %d OUT: %d\n", g_pipe_heredoc[cmd_struct->cmd_index + 1][P_IN], g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
 			id = fork();
 			if (id == 0)
 			{
@@ -180,11 +182,13 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 				}
 				if (total_heredoc == curr_heredoc)
 				{
-					heredoc(cmd_struct->curr_line_tokens[i + 1], g_pipe_heredoc);//cmd_struct->heredoc_pipe);
+					close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
+					heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->cmd_index);//, g_pipe_heredoc);//cmd_struct->heredoc_pipe);
 					exit(0);
 				}
 			}
-			close(g_pipe_heredoc[P_IN]);//(cmd_struct->heredoc_pipe[P_IN]);
+			if (total_heredoc == curr_heredoc)
+				close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_IN]);//(cmd_struct->heredoc_pipe[P_IN]);
 			waitpid(id, &status, 0);
 			if (WEXITSTATUS(status) == 10)
 			{
@@ -371,6 +375,7 @@ int	make_cmd_structs(struct s_main *main_struct)
 		main_struct->cmd_struct_arr[line].curr_line_tokens[cmd_line_count] = NULL;
 		copy_token(main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].curr_line_tokens, main_struct->cmd_struct_arr[line].token_count);
 		init_cmd_struct(main_struct, &main_struct->cmd_struct_arr[line], line);
+		g_pipe_heredoc[0][0] = line;
 		heredoc_redir_check(&main_struct->cmd_struct_arr[line]);
 		line++;
 	}

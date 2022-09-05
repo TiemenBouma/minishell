@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/02 17:51:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:30:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int	exec(struct	s_main *main_struct)
 			// ---------------------------- make redir function? ---------------------------------
 			if (curr_cmd->has_heredoc == 2)
 			{
-				err_chk(dup2(g_pipe_heredoc[P_OUT], S_IN), 2, "");//(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
-				close (g_pipe_heredoc[P_OUT]);//(curr_cmd->heredoc_pipe[P_OUT]);
+				err_chk(dup2(g_pipe_heredoc[curr_cmd->cmd_index + 1][P_OUT], S_IN), 2, "");//(curr_cmd->heredoc_pipe[P_OUT], S_IN), 2, "");
+				close (g_pipe_heredoc[curr_cmd->cmd_index + 1][P_OUT]);//(curr_cmd->heredoc_pipe[P_OUT]);
 			}
 			else if (curr_cmd->has_infile == 2 || i == 1)
 			{
@@ -132,6 +132,8 @@ int	exec(struct	s_main *main_struct)
 		close (p[CUR][P_IN]);
 		if (i == 1 || curr_cmd->has_heredoc == 2)
 			close (p[PREV][P_IN]);
+		if (curr_cmd->has_heredoc == 2 && id != 0)
+			close (g_pipe_heredoc[curr_cmd->cmd_index + 1][P_OUT]);//(curr_cmd->heredoc_pipe[P_OUT]);
 	}
 	close (p[CUR][P_OUT]);
 	close (p[PREV][P_IN]);

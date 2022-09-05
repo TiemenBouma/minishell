@@ -6,14 +6,14 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/05 15:43:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 15:45:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //rl_catch_signals = 0;
-int	main(void)
+int	main(int argc, char **argv)
 {
 	struct s_main	main_struct;
 	extern char		**environ;

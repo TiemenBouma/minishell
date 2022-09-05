@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 09:00:43 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/31 11:21:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 15:58:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	ft_echo(char **s)
 	while (s[i])
 	{
 		ft_putstr_fd(s[i], 1);
-		if (nl == 1)
-			write(1, " ", 2);
+		if (s[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (nl == 1)
 		ft_putstr_fd("\n", 1);
-
 }

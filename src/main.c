@@ -6,27 +6,21 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/05 14:12:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 15:08:11 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
+//rl_catch_signals = 0;
 int	main(void)
 {
 	struct s_main	main_struct;
-	extern char **environ;
-	//char		**test_arr;
-	//char	*cwd;
+	extern char		**environ;
+
 	main_struct.old_exit_status = 0;
-	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);
-	
 	signals_handeler();
-	//inc_shlvl(&main_struct.env_llist);
-	//rl_catch_signals = 0;
-	
 	while (1)
 	{
 		main_struct.root_paths = find_path(&main_struct.env_llist);
@@ -35,7 +29,7 @@ int	main(void)
 		if (main_struct.input_str == NULL)
 		{
 			write(2, "exit\n", 5);
-			break;
+			break ;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
 		//printf("|%s|\n", main_struct.input_str);

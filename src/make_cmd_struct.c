@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/05 12:37:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:13:38 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,8 @@ static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 			curr_heredoc++;
 
 			signal(SIGINT, SIG_IGN);
-			printf("cmd+index %d\n", cmd_struct->cmd_index);
 			if (total_heredoc == curr_heredoc)
 				err_chk(pipe(g_pipe_heredoc[cmd_struct->cmd_index + 1]), 1, "");//(cmd_struct->heredoc_pipe), 1, "");
-			printf("g_pipe_heredoc IN: %d OUT: %d\n", g_pipe_heredoc[cmd_struct->cmd_index + 1][P_IN], g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
 			id = fork();
 			if (id == 0)
 			{

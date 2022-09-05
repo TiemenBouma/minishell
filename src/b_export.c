@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 07:42:55 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:41:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	print_export(t_node **list)
 	while (1)
 	{
 		write(1, "declare -x ", 12);
-		write(1, current->str, ft_strlen(current->str));
+		write(1, current->str, ft_strchr(current->str, '=') - current->str + 1);//ft_strlen(current->str));
+		write(1, "\"", 1);
+		write(1, ft_strchr(current->str, '=') + 1, ft_strlen(ft_strchr(current->str, '=')) - 1);//ft_strlen(current->str));
+		write(1, "\"", 1);
 		write(1, "\n", 1);
 		if (current->n == NULL)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:51:36 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 15:58:11 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:25:01 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int exit_num_check(char *str)
 			if ((str[i] == '-' || str[i] == '+') && i == 0)
 			{
 				i++;
-				continue ;
+				if (str[i])
+					continue ;
 			}	
 			return (0);
 		}

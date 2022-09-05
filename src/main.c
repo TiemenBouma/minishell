@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/02 17:35:27 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:12:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(void)
 		}
 		// test_arr = make_arr_from_list(&main_struct.env_llist);
 		// print_dubble_str(test_arr, "testarr = ");
-		print_structs(&main_struct);
+		//print_structs(&main_struct);
 		//printf("--------------------EXEC---------------------\n");
 		main_struct.old_exit_status = exec(&main_struct);
 		//printf("-------------------endEXEC--------------------\n");

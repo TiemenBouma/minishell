@@ -97,7 +97,7 @@ char	***make_cmd_lines(char **all_tokens)
 	g_pipe_heredoc = malloc(sizeof(int *) * (cmd_lines + 1)); // +1 is for sending the current pipe as first value, I know it is super dirty. (TIEMEN)
 	if(g_pipe_heredoc == NULL)
 		return (NULL); //ERROR malloc (TIEMEN)
-	while (i < cmd_lines)
+	while (i < cmd_lines + 1)
 	{
 		g_pipe_heredoc[i] = ft_calloc(2, sizeof(int));
 		if(g_pipe_heredoc[i] == NULL)

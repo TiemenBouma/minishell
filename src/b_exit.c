@@ -63,6 +63,7 @@ int ft_exit(char **s, int is_in_child, struct s_main *main_struct)
 			return (1);
 		}
 	}
-	free_struct(main_struct);
+	if (is_in_child == 0)
+		free_struct(main_struct);
 	exit(exit_code % 256);
 }

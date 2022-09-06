@@ -94,7 +94,6 @@ char	***make_cmd_lines(char **all_tokens)
 	cmd_lines = 1;
 	cmd_lines = get_cmd_line_count(all_tokens, cmd_lines);	
 	cmds = malloc(sizeof(char **) * (cmd_lines + 1));
-	printf("cmd_lines = %d\n", cmd_lines);
 	g_pipe_heredoc = malloc(sizeof(int *) * (cmd_lines + 1)); // +1 is for sending the current pipe as first value, I know it is super dirty. (TIEMEN)
 	if(g_pipe_heredoc == NULL)
 		return (NULL); //ERROR malloc (TIEMEN)

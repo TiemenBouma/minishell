@@ -56,7 +56,7 @@ void free_global(struct s_main *main_struct)
 	int	i;
 
 	i = 0;
-	while (i < main_struct->cmd_count)
+	while (i < main_struct->cmd_count + 1)
 	{
 		free(g_pipe_heredoc[i]);
 		i++;

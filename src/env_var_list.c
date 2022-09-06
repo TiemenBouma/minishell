@@ -246,7 +246,7 @@ void	inc_shlvl(t_node **list)
 		ft_list_node_add_back(list, ft_new_node("SHLVL=1"));
 	else
 	{
-		var_line = ft_sjf("SHLVL=", ft_itoa(ft_atoi(&match_node->str[6]) + 1), 0);
+		var_line = ft_sjf("SHLVL=", ft_itoa(ft_atoi(&match_node->str[6]) + 1), 2);
 		if (!var_line)
 			return ;
 		free (match_node->str);

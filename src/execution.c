@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int **g_pipe_heredoc;
+
 static void	execve_error(char *path, int error, char *envpath)
 {
 	if (ft_strncmp(path, "./", 2) == 0 || envpath == NULL)

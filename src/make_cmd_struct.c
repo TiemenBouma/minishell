@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int **g_pipe_heredoc;
+
 int	is_arrow_sign(char *str)
 {
 	if (ft_strncmp(str, "<", 2) == 0)

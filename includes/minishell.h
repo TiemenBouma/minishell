@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // int g_sig;
-int **g_pipe_heredoc;
+
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -239,5 +239,7 @@ int	print_linked_list(t_node **list);
 
 
 void    ft_suppress_output(void);
+
+// int **g_pipe_heredoc;
 
 #endif

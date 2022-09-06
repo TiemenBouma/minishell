@@ -13,6 +13,8 @@
 #include "../includes/minishell.h"
 #include "../includes/get_next_line.h"
 
+extern int **g_pipe_heredoc;
+
 // int g_sig;
 //int g_pipe_heredoc[2];
 

@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int **g_pipe_heredoc;
+
 //rl_catch_signals = 0;
 int	main(int argc, char **argv)
 {

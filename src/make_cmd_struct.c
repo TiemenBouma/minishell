@@ -347,6 +347,7 @@ void	init_cmd_struct(struct s_main *main_struct, struct s_cmd_info *cmd_struct, 
 	cmd_struct->pid_child = 1;
 	cmd_struct->exec.heredoc = NULL;
 	cmd_struct->set_file_err = 0;
+	cmd_struct->arr_env_list = NULL;
 }
 
 int	make_cmd_structs(struct s_main *main_struct)

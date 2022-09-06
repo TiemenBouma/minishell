@@ -149,3 +149,29 @@ int	replace_node_content(t_node *first_node, char *content) //is content malloce
 	return (0);
 }
 
+int	free_linked_list(t_node **list)
+{
+	t_node	*curr;
+	t_node	*next;
+
+	curr = *list;
+	while (1)
+	{
+		if (curr->n)
+			next = curr->n;
+		free(curr->str);
+		if (curr->n)
+		{
+			free(curr);
+			curr = next;
+			continue ;
+		}
+		else
+		{
+			free(curr);
+			break ;
+		}
+	}
+	return (0);
+}
+

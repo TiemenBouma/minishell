@@ -14,14 +14,29 @@
 
 int **g_pipe_heredoc;
 
+
+int init_main_struct(struct	s_main *main_struct)
+{
+	extern char		**environ;
+
+	main_struct->old_exit_status = 0;
+	main_struct->env_llist = add_env_to_list(environ);
+	main_struct->all_tokens = NULL;
+	main_struct->cmd_count = 0;
+	main_struct->cmd_lines = NULL;
+	main_struct->cmd_struct_arr = NULL;
+	main_struct->input_str = NULL;
+	main_struct->root_paths = NULL;
+	return (0);
+}
+
 //rl_catch_signals = 0;
 int	main(int argc, char **argv)
 {
 	struct s_main	main_struct;
-	extern char		**environ;
 
-	main_struct.old_exit_status = 0;
-	main_struct.env_llist = add_env_to_list(environ);
+	g_pipe_heredoc = NULL;
+	init_main_struct(&main_struct);
 	signals_handeler();
 	while (1)
 	{
@@ -34,6 +49,7 @@ int	main(int argc, char **argv)
 		if (main_struct.input_str == NULL)
 		{
 			write(2, "exit\n", 5);
+			free_struct(&main_struct);
 			break ;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
@@ -63,6 +79,7 @@ int	main(int argc, char **argv)
 		// printf("cwd parent = %s\n", cwd);
 		//print_structs(&main_struct);
 	}
+	free_linked_list(&main_struct.env_llist);
 	return (main_struct.old_exit_status);
 }
 

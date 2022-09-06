@@ -117,7 +117,8 @@ int	exec(struct	s_main *main_struct)
 			}
 			else if (curr_cmd->set_file_err == 0)
 			{
-				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, make_arr_from_list(&main_struct->env_llist)) == -1)
+				curr_cmd->arr_env_list = make_arr_from_list(&main_struct->env_llist);
+				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, curr_cmd->arr_env_list) == -1)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);

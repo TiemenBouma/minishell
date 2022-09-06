@@ -126,6 +126,7 @@ struct	s_cmd_info {
 	struct s_to_exec	exec;
 	pid_t				pid_child;
 	struct s_node		*env_llist;
+	char				**arr_env_list;
 };
 
 struct	s_main {
@@ -207,6 +208,7 @@ t_node *ft_find_node_in_list(t_node **list, char *var_line);
 void	ft_find_and_remove_node(t_node **list, char *var_line);
 int	replace_node_content(t_node *first_node, char *var_line);
 void	ft_find_and_edit_node(t_node **list, char *var_name, char *content);
+int	free_linked_list(t_node **list);
 
 
 

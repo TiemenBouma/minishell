@@ -156,10 +156,10 @@ char	*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
 int	is_builtin(char	*s);
-int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
+int	exec_builtin(struct s_main *main_struct, struct	s_cmd_info	*cmd_struct, int build_n);//int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_fork(struct s_cmd_info *cmd_struct);
 char	*make_var_name(char *var_line);
-int ft_exit(char **s, int is_in_child);
+int ft_exit(char **s, int is_in_child, struct s_main *main_struct);//int ft_exit(char **s, int is_in_child);
 int ft_cd(t_node **list, char **exec_line);
 void	ft_echo(char **s);
 void	ft_env(t_node **list);

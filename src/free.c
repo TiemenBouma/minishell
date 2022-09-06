@@ -77,12 +77,12 @@ void	free_struct(struct s_main *main_struct)
 	free_triple_str(main_struct->cmd_lines);
 	if (main_struct->root_paths != NULL)
 		free_double_str(main_struct->root_paths);
-	main_struct->cmd_count = 0;
 	while (i < main_struct->cmd_count)
 	{
 		free_cmd_info(&main_struct->cmd_struct_arr[i]);
 		i++;
 	}
+	main_struct->cmd_count = 0;
 	free(main_struct->cmd_struct_arr);
 	//main_struct->curr_exec_cmd_n = 0;
 }

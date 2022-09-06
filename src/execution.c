@@ -60,12 +60,12 @@ int	exec(struct	s_main *main_struct)
 		//-------------------------------func singel command, is spesific buidlin--------------------------
 		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
 		{
-			ft_exit(curr_cmd->exec.exec_line, 0);
+			ft_exit(curr_cmd->exec.exec_line, 0, main_struct);
 			continue;
 		}
 		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count == 1)
 		{
-			build_return =  exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+			build_return =  exec_builtin(main_struct, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
 		//-------------------------------func singel command, is spesific buidlin--------------------------
 		
@@ -112,7 +112,7 @@ int	exec(struct	s_main *main_struct)
 			// }
 			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 			{
-				exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+				exec_builtin(main_struct, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
 			else if (curr_cmd->set_file_err == 0)

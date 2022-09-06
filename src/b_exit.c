@@ -34,7 +34,7 @@ int exit_num_check(char *str)
 	return (1);
 }
 
-int ft_exit(char **s, int is_in_child)
+int ft_exit(char **s, int is_in_child, struct s_main *main_struct)
 {
 	int exit_code;
 
@@ -45,9 +45,13 @@ int ft_exit(char **s, int is_in_child)
 	if (s[1])
 	{
 		if (exit_num_check(s[1]))
+		{
 			exit_code = ft_atoi(s[1]);
+			free_struct(main_struct);
+		}
 		else
 		{
+			free_struct(main_struct);
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd(s[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
@@ -59,5 +63,6 @@ int ft_exit(char **s, int is_in_child)
 			return (1);
 		}
 	}
+	free_struct(main_struct);
 	exit(exit_code % 256);
 }

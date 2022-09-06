@@ -49,7 +49,7 @@ int	is_builtin(char	*s)
 	return (10);
 }
 
-int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
+int	exec_builtin(struct s_main *main_struct, struct	s_cmd_info	*cmd_struct, int build_n)
 {
 	//char *cmd = s[0];
 
@@ -69,7 +69,7 @@ int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n)
 	else if (build_n == ENV_BUILD)
 		ft_env(&cmd_struct->env_llist);
 	else if (build_n == EXIT_BUILD)
-		ft_exit(cmd_struct->exec.exec_line, 1);
+		ft_exit(cmd_struct->exec.exec_line, 1, main_struct);
 	return (0);
 }
 

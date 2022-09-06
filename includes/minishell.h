@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/08/25 20:56:59 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/05 13:42:53 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+// int g_sig;
+int **g_pipe_heredoc;
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -156,7 +159,7 @@ int	is_builtin(char	*s);
 int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int	check_buildin_fork(struct s_cmd_info *cmd_struct);
 char	*make_var_name(char *var_line);
-int ft_exit(char **s);
+int ft_exit(char **s, int is_in_child);
 int ft_cd(t_node **list, char **exec_line);
 void	ft_echo(char **s);
 void	ft_env(t_node **list);
@@ -224,7 +227,7 @@ void	sigquit_handler_in_process(int sig);
 void	sigint_handler_nonl(int sig);
 
 //HEREDOC
-int	heredoc(char *stop_word, int pipe[2]);
+int	heredoc(char *stop_word, int index);//int	heredoc(char *stop_word);//int	heredoc(char *stop_word, int pipe[2]);
 char	*make_heredoc_filename(int index);
 int heredoc_counter(char **curr_line_tokens);
 int	dummy_heredoc(char *stop_word);
@@ -233,5 +236,8 @@ int	dummy_heredoc(char *stop_word);
 int	print_structs(struct s_main *s);
 int	print_dubble_str(char **str, char *name);
 int	print_linked_list(t_node **list);
+
+
+void    ft_suppress_output(void);
 
 #endif

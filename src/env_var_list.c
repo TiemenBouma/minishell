@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 10:14:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/02 17:39:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_node	*add_env_to_list(char **environ)
 		ft_list_node_add_back(&env_llist, temp_node);
 		i++;
 	}
+	inc_shlvl(&env_llist);
 	return (env_llist);
 }
 
@@ -99,7 +100,8 @@ char	*find_next_var_in_str(char *input_str, int *index)
 			temp = ft_substr(input_str, start, len);
 			return (temp);
 		}
-		(*index)++;
+		if(input_str[*index])
+			(*index)++;
 		
 		// if (input_str[*index] == '\"' && in_quotes == 0)
 		// {
@@ -228,7 +230,7 @@ int	ft_print_var_content(t_node **list, char *var_name)
 	match_node = ft_find_node_in_list(list, var_name);
 	if (match_node == NULL)
 		return (0);
-	ft_putstr_fd(match_node->str + ft_strlen(var_name), 2);
+	ft_putstr_fd(match_node->str + ft_strlen(var_name), 1);
 	write(1, "\n", 2);
 	return (0);
 }

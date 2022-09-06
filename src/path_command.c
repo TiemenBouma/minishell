@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/26 10:59:33 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/01 14:50:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	add_path(char **exec_line, char **root_paths)
 	i = 0;
 	if (root_paths == NULL || exec_line[0] == NULL)
 		return (0);
-	if (is_builtin(exec_line[0]) > 0 && is_builtin(exec_line[0]) < 6)
+	if (is_builtin(exec_line[0]) >= 0 && is_builtin(exec_line[0]) < 6)
 		return (0);
 	if (access(exec_line[0], F_OK) == 0)
+		return (0);
+	if (ft_strncmp(exec_line[0], "./", 2) == 0)
 		return (0);
 	cmd_temp = ft_strdup(exec_line[0]);
 	// if (is_builtin(exec_line[0]) < 7) //New feature, checking on buildin

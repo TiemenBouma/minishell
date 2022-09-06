@@ -6,37 +6,33 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/26 12:28:46 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 15:45:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int	main(void)
+//rl_catch_signals = 0;
+int	main(int argc, char **argv)
 {
 	struct s_main	main_struct;
-	extern char **environ;
-	//char		**test_arr;
-	//char	*cwd;
+	extern char		**environ;
 
 	main_struct.old_exit_status = 0;
-	//main_struct.has_heredoc = 0;
 	main_struct.env_llist = add_env_to_list(environ);
-	
 	signals_handeler();
-	inc_shlvl(&main_struct.env_llist);
-
-	
 	while (1)
 	{
 		main_struct.root_paths = find_path(&main_struct.env_llist);
-		main_struct.input_str = readline("SuperShell: ");
+		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+			main_struct.input_str = argv[2];
+		else
+			main_struct.input_str = readline("SuperShell: ");
 		add_history(main_struct.input_str);
 		if (main_struct.input_str == NULL)
 		{
 			write(2, "exit\n", 5);
-			break;
+			break ;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
 		//printf("|%s|\n", main_struct.input_str);
@@ -55,6 +51,8 @@ int	main(void)
 		//print_structs(&main_struct);
 		//printf("--------------------EXEC---------------------\n");
 		main_struct.old_exit_status = exec(&main_struct);
+		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+			exit(main_struct.old_exit_status);
 		//printf("-------------------endEXEC--------------------\n");
 		free_struct(&main_struct);
 		// cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));

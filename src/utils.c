@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/25 07:55:40 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/08/31 11:22:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	check_n_flag(char *flag)
 	int i;
 
 	i = 1;
-	if (flag || flag[0] != '-')
+	if (!flag || flag[0] != '-')
 		return (0);
 	while (flag[i])
 	{

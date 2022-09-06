@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/08 15:02:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/05 14:13:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,22 @@ char	***make_cmd_lines(char **all_tokens)
 {
 	int cmd_lines;
 	char	***cmds;
-
+	int i;
+	
+	i = 0;
 	cmd_lines = 1;
 	cmd_lines = get_cmd_line_count(all_tokens, cmd_lines);	
 	cmds = malloc(sizeof(char **) * (cmd_lines + 1));
+	g_pipe_heredoc = malloc(sizeof(int *) * (cmd_lines + 1)); // +1 is for sending the current pipe as first value, I know it is super dirty. (TIEMEN)
+	if(g_pipe_heredoc == NULL)
+		return (NULL); //ERROR malloc (TIEMEN)
+	while (i < cmd_lines + 1)
+	{
+		g_pipe_heredoc[i] = malloc(sizeof(int) * 2);
+		if(g_pipe_heredoc[i] == NULL)
+			return (NULL); //ERROR malloc (TIEMEN)
+		i++;
+	}
 	cmds[cmd_lines] = NULL;
 	
 	get_cmds(all_tokens, cmds, cmd_lines);

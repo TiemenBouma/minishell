@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/07 10:27:05 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 11:46:20 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	main(int argc, char **argv)
 		main_struct.old_exit_status = exec(&main_struct);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 			exit(main_struct.old_exit_status);
-		free_struct(&main_struct);
 		//print_structs(&main_struct);
+		free_struct(&main_struct);
 	}
 	free_linked_list(&main_struct.env_llist);
 	return (main_struct.old_exit_status);

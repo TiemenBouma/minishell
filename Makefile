@@ -6,36 +6,39 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/08/31 07:23:45 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/07 11:21:49 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-OBJFILES := obj/src/main.o \
-			obj/src/utils.o \
-			obj/src/path_command.o \
-			obj/src/parsing_tokens.o \
-			obj/src/parsing_cmd_lines.o \
-			obj/src/history.o \
-			obj/src/make_cmd_struct.o \
-			obj/src/executils.o \
-			obj/src/execution.o \
-			obj/src/free.o \
-			obj/src/env_var_list.o \
-			obj/src/linked_list.o \
-			obj/src/builtins.o \
-			obj/src/signals.o \
-			obj/src/testing.o \
-			obj/src/get_next_line.o \
-			obj/src/get_next_line_utils.o \
-			obj/src/heredoc.o \
+OBJFILES := \
+			obj/src/b_cd.o \
+			obj/src/b_echo.o \
+			obj/src/b_env.o  \
 			obj/src/b_exit.o \
 			obj/src/b_export.o \
-			obj/src/b_unset.o  \
-			obj/src/b_cd.o \
 			obj/src/b_pwd.o \
-			obj/src/b_echo.o \
-			obj/src/b_env.o 
+			obj/src/b_unset.o  \
+			obj/src/builtins.o \
+			obj/src/env_var_list.o \
+			obj/src/executils.o \
+			obj/src/execution.o \
+			obj/src/expand_variables.o \
+			obj/src/free.o \
+			obj/src/get_next_line_utils.o \
+			obj/src/get_next_line.o \
+			obj/src/heredoc.o \
+			obj/src/history.o \
+			obj/src/linked_list.o \
+			obj/src/main.o \
+			obj/src/make_cmd_struct.o \
+			obj/src/parsing_cmd_lines.o \
+			obj/src/parsing_tokens.o \
+			obj/src/path_command.o \
+			obj/src/signals.o \
+			obj/src/testing.o \
+			obj/src/utils.o
+			
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
 CFLAGS := -Wall -Wextra  -fsanitize=address -g3 #-Werror

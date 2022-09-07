@@ -6,12 +6,11 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 13:21:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 10:06:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 void	sigint_handler_in_process(int sig)
 {
@@ -25,21 +24,20 @@ void	sigquit_handler_in_process(int sig)
 	printf("Quit: %d\n", sig);
 }
 
-void    ft_suppress_output(void)
+void	ft_suppress_output(void)
 {
-    struct termios    new_settings;
+	struct termios	new_settings;
 
-    if (tcgetattr(0, &new_settings))
-        perror("minishell: tcsetattr");
-    new_settings.c_lflag &= ~ECHOCTL;
-    if (tcsetattr(0, 0, &new_settings))
-        perror("minishell: tcsetattr");
+	if (tcgetattr(0, &new_settings))
+		perror("minishell: tcsetattr");
+	new_settings.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, 0, &new_settings))
+		perror("minishell: tcsetattr");
 }
 
 void	sigint_handler(int sig)
 {
 	ft_suppress_output();
-	
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

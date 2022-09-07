@@ -6,16 +6,15 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/05 15:45:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 10:27:05 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int **g_pipe_heredoc;
+int	**g_pipe_heredoc;
 
-
-int init_main_struct(struct	s_main *main_struct)
+int	init_main_struct(struct	s_main *main_struct)
 {
 	extern char		**environ;
 
@@ -31,6 +30,7 @@ int init_main_struct(struct	s_main *main_struct)
 }
 
 //rl_catch_signals = 0;
+
 int	main(int argc, char **argv)
 {
 	struct s_main	main_struct;
@@ -53,30 +53,19 @@ int	main(int argc, char **argv)
 			break ;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
-		//printf("|%s|\n", main_struct.input_str);
 		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
-		//print_dubble_str(main_struct.all_tokens, "Tokens");
 		if (main_struct.all_tokens[0] == NULL)
 			continue ;
 		main_struct.cmd_lines = make_cmd_lines(main_struct.all_tokens);
 		if (make_cmd_structs(&main_struct) == -1)
 		{
 			free_struct(&main_struct);
-			continue;
+			continue ;
 		}
-		// test_arr = make_arr_from_list(&main_struct.env_llist);
-		// print_dubble_str(test_arr, "testarr = ");
-		//print_structs(&main_struct);
-		//printf("--------------------EXEC---------------------\n");
 		main_struct.old_exit_status = exec(&main_struct);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 			exit(main_struct.old_exit_status);
-		//printf("-------------------endEXEC--------------------\n");
 		free_struct(&main_struct);
-		// cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
-		// cwd[PATH_MAX] = '\0';
-		// getcwd(cwd, MAXPATHLEN);//checked if switch worked
-		// printf("cwd parent = %s\n", cwd);
 		//print_structs(&main_struct);
 	}
 	free_linked_list(&main_struct.env_llist);

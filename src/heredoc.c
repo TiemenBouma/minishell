@@ -6,14 +6,14 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/05 12:33:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 10:16:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/get_next_line.h"
 
-extern int **g_pipe_heredoc;
+extern int	**g_pipe_heredoc;
 
 // int g_sig;
 //int g_pipe_heredoc[2];
@@ -21,20 +21,20 @@ extern int **g_pipe_heredoc;
 void	sigint_handler_heredoc(int sig)
 {
 	//g_sig = 1;
+	ft_suppress_output();
 	(void) sig;
 	close(g_pipe_heredoc[g_pipe_heredoc[0][0]][P_IN]);
 	exit(10);
 }
 
-
-int heredoc_counter(char **curr_line_tokens)
+int	heredoc_counter(char **curr_line_tokens)
 {
 	int i;
 	int	heredoc_counter;
 
 	heredoc_counter = 0;
 	i = 0;
-	while(curr_line_tokens[i])
+	while (curr_line_tokens[i])
 	{
 		if (is_arrow_sign(curr_line_tokens[i]) == HEREDOC)
 			heredoc_counter++;
@@ -43,8 +43,7 @@ int heredoc_counter(char **curr_line_tokens)
 	return (heredoc_counter);
 }
 
-
-int	heredoc(char *stop_word, int index)//, int heredoc_pipe[2])
+int	heredoc(char *stop_word, int index)
 {
 	char	*input;
 
@@ -78,26 +77,21 @@ int	heredoc(char *stop_word, int index)//, int heredoc_pipe[2])
 
 int	dummy_heredoc(char *stop_word)
 {
-	char	**gnl;
+		char	*input;
 
-	//g_sig = 0;
 
 	signal(SIGINT, sigint_handler_heredoc);
-	gnl = malloc (sizeof(char **) * 2);
-	if (!gnl)
-		exit(0);
 	while (1)
 	{
-		write(2, "> ", 2);
-		if (get_next_line(0, gnl) == -1 || ft_strncmp(gnl[0], stop_word,
-				ft_strlen (stop_word) + 1) == 0)
+
+		input = readline("> ");
+		if (!(input) || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
 		{
-			free(gnl[0]);
-			free(gnl);
+			free(input);
 			break ;
 		}
-		free(gnl[0]);
 	}
+	signal(SIGINT, sigint_handler);
 	return (0);
 }
 

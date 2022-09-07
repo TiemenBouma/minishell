@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:56:02 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/01 14:50:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 10:47:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ char	**find_path(t_node **list)
 
 	match_node = ft_find_node_in_list(list, "PATH=");
 	if (match_node == NULL)
-	{
-		//error_msg(ERR_PATH, 1);
-		return (NULL);	
-	}
+		return (NULL);
 	ptr = match_node->str + 5;
 	root_paths = ft_split(ptr, ':');
 	if (root_paths == NULL)
@@ -31,14 +28,38 @@ char	**find_path(t_node **list)
 	return (root_paths);
 }
 
-int	add_path(char **exec_line, char **root_paths)
+char	*add_path2(char **exec_line, char **root_paths,	char *cmd_temp)
 {
 	char	*temp;
 	char	*temp2;
-	char	*cmd_temp;
 	int		i;
 
 	i = 0;
+	while (root_paths[i])
+	{
+		temp = ft_strjoin(root_paths[i], "/");
+		if (temp == NULL)
+			error_msg(ERR_MALLOC, 1);
+		temp2 = ft_strjoin(temp, cmd_temp);
+		if (temp == NULL)
+			error_msg(ERR_MALLOC, 1);
+		free(exec_line[0]);
+		exec_line[0] = temp2;
+		free(temp);
+		if (access(exec_line[0], F_OK) == 0)
+		{
+			free(cmd_temp);
+			return (NULL);
+		}
+		i++;
+	}
+	return (cmd_temp);
+}
+
+int	add_path(char **exec_line, char **root_paths)
+{
+	char	*cmd_temp;
+
 	if (root_paths == NULL || exec_line[0] == NULL)
 		return (0);
 	if (is_builtin(exec_line[0]) >= 0 && is_builtin(exec_line[0]) < 6)
@@ -48,68 +69,10 @@ int	add_path(char **exec_line, char **root_paths)
 	if (ft_strncmp(exec_line[0], "./", 2) == 0)
 		return (0);
 	cmd_temp = ft_strdup(exec_line[0]);
-	// if (is_builtin(exec_line[0]) < 7) //New feature, checking on buildin
-	// 	return (0);
-	while (root_paths[i])
-	{
-		temp = ft_strjoin(root_paths[i], "/");
-		if (temp == NULL)
-			error_msg(ERR_MALLOC, 1);
-		temp2 = ft_strjoin(temp, cmd_temp);
-		if (temp == NULL)
-			error_msg(ERR_MALLOC, 1);
-		// printf("temp2 = %s\n", temp2);
-		free(exec_line[0]);
-		exec_line[0] = temp2;
-		free(temp);
-		//free(temp2);
-		if (access(exec_line[0], F_OK) == 0)
-		{
-			free(cmd_temp);
-			return (0);
-		}
-		i++;
-	}
-		
-	// if the command is EXIT and maybe other commands need to be handeld here. (See begin func for handeling buildins)
-	
+	cmd_temp = add_path2(exec_line, root_paths, cmd_temp);
+	if (cmd_temp == NULL)
+		return (0);
 	free(exec_line[0]);
 	exec_line[0] = cmd_temp;
-	//error_msg(ERR_CMD, 127);
 	return (0);
 }
-
-// int	find_cmd_in_line(char **cmd_line)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (cmd_line[i])
-// 	{
-// 		if (cmd[i][0] == '<' || cmd[i][0] == '>')
-// 		{
-// 			if (cmd[i] && cmd[i + 1])
-// 				i += 2;
-// 		}
-// 	}
-// }
-
-// char	***add_path_to_cmd(char ***cmd_lines, char **root_paths)
-// {
-// 	int	i;
-// 	int	cmd_count;
-// 	char	***exec_lines;
-
-// 	i = 0;
-// 	cmd_count = 4;//needs function to know or get from struct form parse tokens
-// 	exec_lines = malloc(sizeof(char **) * (cmd_count + 1));
-// 	while (i < cmd_count)
-// 	{
-// 		find_cmd_in_line(cmd_lines[i]);
-// 		exec_lines[i] = find_cmd_path(exec_lines[i], root_paths, cmd_lines[i][0]);
-// 		i++;
-// 	}
-	
-	
-// }
-

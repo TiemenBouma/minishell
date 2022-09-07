@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/02 17:26:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 15:03:31 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int ft_cd(t_node **list, char **exec_line)
 	}
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	if (chdir(exec_line[1]))
-		return (perror_msg("cd", exec_line[1], EXIT_CD));
+		return (perror_msg("bash: cd", exec_line[1], EXIT_CD));
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/07 12:40:27 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 15:18:30 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	replace_input(char **in, char *content, int *i, char *v_name)
 	if ((*in)[s + l] == ' ')
 		temp2 = ft_substr(*in, s + l, ft_strlen(*in + s + l));
 	else
-		temp2 = ft_substr(*in, s + ft_strlen(v_name), ft_strlen(*in + s + l));
+		temp2 = ft_substr(*in, s + ft_strlen(v_name), ft_strlen(*in + s + l));	
 	free(*in);
 	*in = ft_calloc(sizeof(char), (len_new_str + 1));
 	if (*in == NULL)
@@ -66,10 +66,10 @@ char	*find_var_in_list(t_node **list, char *v_name)
 	return (NULL);
 }
 
-int	is_dollar()
-{
+// int	is_dollar()
+// {
 	
-}
+// }
 
 int	is_close_single_quote(int *in_q, int *index, char *old_c, char *input)
 {
@@ -124,10 +124,10 @@ char	*find_next_var_in_str(char *input, int *index)
 		if (input[*index] && input[*index] == '$')
 		{
 			(*index)++;
-			if (input[*index] == '\0' || input[*index] == ' ')
+			if (input[*index] == '\0' || input[*index] == ' ')// || input[*index] == '/')
 				return (temp);
 			s = *index;
-			while (input[s + l] && !is_special_char(input[s + l]))
+			while (input[s + l] && !is_special_char(input[s + l]))// && input[s + l] !=  '/')
 				l++;
 			temp = ft_substr(input, s, l);
 			return (temp);

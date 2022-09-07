@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/08/31 11:22:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/07 15:20:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_strcmp_var(const char *s1, const char *s2)
 
 int	is_special_char(char c)
 {
-	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ');
+	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ' || c == '/');//Maybe this only needed for CD
 }
 
 // Not needed anymore

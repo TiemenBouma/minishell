@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/09/08 14:04:16 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/09/08 14:23:59 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	execve_error(char *path, int error, char *envpath)
 	exit (127);
 }
 
-void	ft_exec_child(struct s_main *main_struct, struct s_cmd_info *curr_cmd)
+static void	ft_execution_in_child(struct s_main *main_struct, struct s_cmd_info *curr_cmd)
 {
 	if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 	{
@@ -58,7 +58,7 @@ void	ft_exec_child(struct s_main *main_struct, struct s_cmd_info *curr_cmd)
 		exit(126);
 }
 
-void	ft_child(struct s_main *main_struct, int (*p)[2][2], int i, int id, struct s_cmd_info *curr_cmd)
+static void	ft_redirections(struct s_main *main_struct, int (*p)[2][2], int i, int id, struct s_cmd_info *curr_cmd)
 {
 	if ((id == 0 && check_buildin_fork(curr_cmd) == 1) || (id == 0 && main_struct->cmd_count > 1))
 	{
@@ -77,7 +77,7 @@ void	ft_child(struct s_main *main_struct, int (*p)[2][2], int i, int id, struct 
 			err_chk(dup2(curr_cmd->exec.fd_out, S_OUT), 2, "");
 		close ((*p)[CUR][P_OUT]);
 		close ((*p)[PREV][P_IN]);
-		ft_exec_child(main_struct, curr_cmd);
+		ft_execution_in_child(main_struct, curr_cmd);
 	}
 	close ((*p)[PREV][P_OUT]);
 	close ((*p)[CUR][P_IN]);
@@ -112,7 +112,7 @@ int	exec(struct	s_main *main_struct)
 		if (check_buildin_fork(&main_struct->cmd_struct_arr[i - 1]) == 1 || main_struct->cmd_count > 1)
 			id = fork();
 		err_chk(id, 1, "");
-		ft_child(main_struct, &p, i, id, &main_struct->cmd_struct_arr[i - 1]);
+		ft_redirections(main_struct, &p, i, id, &main_struct->cmd_struct_arr[i - 1]);
 	}
 	close (p[CUR][P_OUT]);
 	close (p[PREV][P_IN]);

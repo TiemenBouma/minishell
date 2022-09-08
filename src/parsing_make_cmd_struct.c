@@ -6,17 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:44:04 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:46:34 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 extern int	**g_pipe_heredoc;
-
-
-
-
 
 static int	copy_token(char **src_str, char **dest_str, int count)//main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].tokens);
 {

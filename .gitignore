@@ -6,3 +6,4 @@ minishell
 .vscode
 obj/
 includes/libft/libft.a
+tester1/

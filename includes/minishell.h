@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 10:38:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:44:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,9 @@ void	error_exit_redir(char *str);
 int	is_arrow_sign(char *str);
 int	is_special_c_redir(char *str);
 void	set_redir_error(struct s_cmd_info *cmd_struct, char *token);
+
+//parsing_make_exec_line
+int	make_exec_line(struct s_cmd_info *cmd_struct);
 
 void    ft_suppress_output(void);
 

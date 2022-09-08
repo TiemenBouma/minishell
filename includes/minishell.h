@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/07 10:04:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 08:46:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ struct	s_cmd_info {
 	char				*heredoc_filename;
 	int					heredoc_fd_opened;
 	int					set_file_err;
+	int					err_syntax;
 
 	struct s_to_exec	exec;
 	pid_t				pid_child;
@@ -151,39 +152,39 @@ struct	s_main {
 };
 
 //DAN
-int	err_chk(int i, int t, char *s);
-int	exec(struct	s_main *main_struct);
-char	*ft_sjf(char *s1, char *s2, int f);
+int					err_chk(int i, int t, char *s);
+int					exec(struct	s_main *main_struct);
+char				*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
-int	is_builtin(char	*s);
-int	exec_builtin(struct s_main *main_struct, struct	s_cmd_info	*cmd_struct, int build_n);//int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
-int	check_buildin_fork(struct s_cmd_info *cmd_struct);
-char	*make_var_name(char *var_line);
-int ft_exit(char **s, int is_in_child, struct s_main *main_struct);//int ft_exit(char **s, int is_in_child);
-int ft_cd(t_node **list, char **exec_line);
-void	ft_echo(char **s);
-void	ft_env(t_node **list);
-void	ft_export(t_node **list, char **exec_line);
-void	ft_pwd(t_node **list);
-void	ft_unset(t_node **list, char **exec_line);
+int					is_builtin(char	*s);
+int					exec_builtin(struct s_main *main_struct, struct	s_cmd_info	*cmd_struct, int build_n);//int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
+int					check_buildin_fork(struct s_cmd_info *cmd_struct);
+char				*make_var_name(char *var_line);
+int 				ft_exit(char **s, int is_in_child, struct s_main *main_struct);//int ft_exit(char **s, int is_in_child);
+int 				ft_cd(t_node **list, char **exec_line);
+void				ft_echo(char **s);
+void				ft_env(t_node **list);
+void				ft_export(t_node **list, char **exec_line);
+void				ft_pwd(t_node **list);
+void				ft_unset(t_node **list, char **exec_line);
 
 //UTILS
-int				error_msg(char *msg, int err);
-int				perror_msg(char *cmd, char *att, int exit_status);
-int 			free_stuff(char *str);
-int				ft_strcmp_var(const char *s1, const char *s2);
-int	is_special_char(char c);
-char	*ft_substr_edit(char const *s, unsigned int start, size_t len);
-char	**make_arr_from_list(t_node **list);
-int	check_n_flag(char *flag);
+int					error_msg(char *msg, int err);
+int					perror_msg(char *cmd, char *att, int exit_status);
+int 				free_stuff(char *str);
+int					ft_strcmp_var(const char *s1, const char *s2);
+int					is_special_char(char c);
+char				*ft_substr_edit(char const *s, unsigned int start, size_t len);
+char				**make_arr_from_list(t_node **list);
+int					check_n_flag(char *flag);
 
 //size_t			ft_strlcpy(char *dest, const char *src, size_t dest_size);
 
 //PATH COMMAND
-char	**find_path(t_node **list);
-int	add_path(char **exec_line, char **root_paths);
-char			*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
+char				**find_path(t_node **list);
+int					add_path(char **exec_line, char **root_paths);
+char				*find_cmd_path(char **path_and_cmd_lines, char **root_paths, char *cmd);
 
 //PARSING_tokens
 char			**ft_split_tokens(char const *s);

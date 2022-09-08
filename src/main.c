@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/07 14:59:31 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 09:59:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	main(int argc, char **argv)
 			break ;
 		}
 		expand_variables(&main_struct.input_str, &main_struct.env_llist, main_struct.old_exit_status);
-		//printf("imputsting after expand %s\n", main_struct.input_str);
 		main_struct.all_tokens = ft_split_tokens(main_struct.input_str);
 		if (main_struct.all_tokens[0] == NULL)
 			continue ;
@@ -63,10 +62,10 @@ int	main(int argc, char **argv)
 			free_struct(&main_struct);
 			continue ;
 		}
+		print_structs(&main_struct);
 		main_struct.old_exit_status = exec(&main_struct);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 			exit(main_struct.old_exit_status);
-		//print_structs(&main_struct);
 		free_struct(&main_struct);
 	}
 	free_linked_list(&main_struct.env_llist);

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/05 15:01:30 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_export(t_node **list)
 	}
 }
 
-void	ft_export(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
+void	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;

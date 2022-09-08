@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/09/07 17:20:02 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
+/*   Updated: 2022/09/08 11:51:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	execve_error(char *path, int error, char *envpath)
 	exit (127);
 }
 
-int	exec(struct	s_main *main_struct)
+int	exec(struct	s_main *m_s)
 {
 	int i = 0;
 	int	build_return;
@@ -51,32 +51,32 @@ int	exec(struct	s_main *main_struct)
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, ""); //CUR = 1
 
-	while (i < main_struct->cmd_count)
+	while (i < m_s->cmd_count)
 	{
 		i++;
-		curr_cmd = &main_struct->cmd_struct_arr[i - 1];
+		curr_cmd = &m_s->c_s_arr[i - 1];
 		err_chk(pipe(p[CUR]), 1, "");
 		
 		//-------------------------------func singel command, is spesific buidlin--------------------------
-		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && main_struct->cmd_count == 1)
+		if (curr_cmd->exec.exec_line[0] && is_builtin(curr_cmd->exec.exec_line[0]) == EXIT_BUILD && m_s->cmd_count == 1)
 		{
-			ft_exit(curr_cmd->exec.exec_line, 0, main_struct);
+			ft_exit(curr_cmd->exec.exec_line, 0, m_s);
 			continue;
 		}
-		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count == 1)
+		if (check_buildin_fork(curr_cmd) == 0 && curr_cmd->set_file_err == 0 &&  m_s->cmd_count == 1)
 		{
-			build_return =  exec_builtin(main_struct, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+			build_return =  exec_builtin(m_s, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 		}
 		//-------------------------------func singel command, is spesific buidlin--------------------------
 		
 		signal(SIGINT, sigint_handler_in_process);
 		signal(SIGQUIT, sigquit_handler_in_process);
-		if (check_buildin_fork(curr_cmd) == 1 || main_struct->cmd_count > 1)
+		if (check_buildin_fork(curr_cmd) == 1 || m_s->cmd_count > 1)
 		{
 			id = fork();
 		}
 		err_chk(id, 1, "");
-		if ((id == 0 && check_buildin_fork(curr_cmd) == 1) || (id == 0 && main_struct->cmd_count > 1))//Why is is_builtin in this if statment
+		if ((id == 0 && check_buildin_fork(curr_cmd) == 1) || (id == 0 && m_s->cmd_count > 1))//Why is is_builtin in this if statment
 		{
 			// ---------------------------- make redir function? ---------------------------------
 			if (curr_cmd->has_heredoc == 2)
@@ -92,7 +92,7 @@ int	exec(struct	s_main *main_struct)
 			{
 				err_chk(dup2(p[PREV][P_OUT], S_IN), 2, "");	
 			}
-			if (curr_cmd->exec.fd_out == 1 && main_struct->cmd_count != i)
+			if (curr_cmd->exec.fd_out == 1 && m_s->cmd_count != i)
 			{
 				err_chk(dup2(p[CUR][P_IN], S_OUT), 2, "");
 			}
@@ -105,24 +105,24 @@ int	exec(struct	s_main *main_struct)
 			// ---------------------------- make redir function? ---------------------------------
 			
 			// ---------------------------- make exec function? ---------------------------------
-			// if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  main_struct->cmd_count < 1)
+			// if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0 &&  m_s->cmd_count < 1)
 			// {
 			// 	exec_builtin(curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 			// 	exit(0);
 			// }
 			if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 			{
-				exec_builtin(main_struct, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
+				exec_builtin(m_s, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
 				exit(0);
 			}
 			else if (curr_cmd->set_file_err == 0)
 			{
-				curr_cmd->arr_env_list = make_arr_from_list(&main_struct->env_llist);
+				curr_cmd->arr_env_list = make_arr_from_list(&m_s->env_llist);
 				if (execve(curr_cmd->exec.exec_line[0], curr_cmd->exec.exec_line, curr_cmd->arr_env_list) == -1)
 				{
 					if(curr_cmd->exec.exec_line[0] == NULL)
 						exit(0);
-					path = find_var_in_list(&main_struct->env_llist, "PATH");
+					path = find_var_in_list(&m_s->env_llist, "PATH");
 					execve_error(curr_cmd->exec.exec_line[0], errno, path);
 				}
 			}

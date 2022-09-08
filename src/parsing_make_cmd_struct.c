@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_cmd_struct.c                                  :+:      :+:    :+:   */
+/*   parsing_make_cmd_struct.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:46:34 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 11:51:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	**g_pipe_heredoc;
 
-static int	copy_token(char **src_str, char **dest_str, int count)//main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].tokens);
+static int	copy_token(char **src_str, char **dest_str, int count)//m_s->cmd_lines[line], m_s->c_s_arr[line].tokens);
 {
 	int i;
 
@@ -40,10 +40,10 @@ void	set_err(struct s_cmd_info *cmd_struct)
 	//cmd_struct->exec.exec_line[0] = NULL;
 }
 
-void	init_cmd_struct(struct s_main *main_struct, struct s_cmd_info *cmd_struct, int line)
+void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line)
 {
 	cmd_struct->cmd_index = line;
-	cmd_struct->exec.cmd_count = main_struct->cmd_count;
+	cmd_struct->exec.cmd_count = m_s->cmd_count;
 	cmd_struct->has_infile = 0;
 	cmd_struct->has_outfile = 0;
 	cmd_struct->has_appendfile = 0;
@@ -54,7 +54,7 @@ void	init_cmd_struct(struct s_main *main_struct, struct s_cmd_info *cmd_struct, 
 	cmd_struct->heredoc_filename = NULL;
 	cmd_struct->infile = NULL;
 	cmd_struct->outfile = NULL;
-	cmd_struct->env_llist = main_struct->env_llist;
+	cmd_struct->env_llist = m_s->env_llist;
 	cmd_struct->pid_child = 1;
 	cmd_struct->exec.heredoc = NULL;
 	cmd_struct->arr_env_list = NULL;
@@ -62,42 +62,46 @@ void	init_cmd_struct(struct s_main *main_struct, struct s_cmd_info *cmd_struct, 
 	cmd_struct->set_file_err = 0;
 }
 
-int	make_cmd_structs(struct s_main *main_struct)
+void	redir_execline_path(struct s_main *m_s)
 {
-	int line;
+	int	line;
+
+	line = 0;
+	while (line < m_s->cmd_count)
+	{
+		redir_check(&m_s->c_s_arr[line]);
+		make_exec_line(&m_s->c_s_arr[line]);
+		add_path(m_s->c_s_arr[line].exec.exec_line, m_s->root_paths);
+		line++;
+	}
+}
+
+int	make_cmd_structs(struct s_main *m_s)
+{
+	int	line;
 	int	cmd_line_count;
-	
-	main_struct->cmd_count = 0;
+
 	line = 0;
 	cmd_line_count = 0;
-	main_struct->cmd_count = 0;
-	while (main_struct->cmd_lines[main_struct->cmd_count])
-		main_struct->cmd_count++;
-	main_struct->cmd_struct_arr = malloc(sizeof(struct s_cmd_info) * main_struct->cmd_count);
-	
-	while (line < main_struct->cmd_count)
+	while (m_s->cmd_lines[m_s->cmd_count])
+		m_s->cmd_count++;
+	m_s->c_s_arr = malloc(sizeof(struct s_cmd_info) * m_s->cmd_count);
+	while (line < m_s->cmd_count)
 	{
 		cmd_line_count = 0;
-		while (main_struct->cmd_lines[line][cmd_line_count])
+		while (m_s->cmd_lines[line][cmd_line_count])
 			cmd_line_count++;
-		main_struct->cmd_struct_arr[line].token_count = cmd_line_count;
-		main_struct->cmd_struct_arr[line].curr_line_tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
-		if (main_struct->cmd_struct_arr[line].curr_line_tokens == NULL)
+		m_s->c_s_arr[line].token_count = cmd_line_count;
+		m_s->c_s_arr[line].curr_line_tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
+		if (m_s->c_s_arr[line].curr_line_tokens == NULL)
 			exit (1);//(ERR_MALLOC);
-		main_struct->cmd_struct_arr[line].curr_line_tokens[cmd_line_count] = NULL;
-		copy_token(main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].curr_line_tokens, main_struct->cmd_struct_arr[line].token_count);
-		init_cmd_struct(main_struct, &main_struct->cmd_struct_arr[line], line);
+		m_s->c_s_arr[line].curr_line_tokens[cmd_line_count] = NULL;
+		copy_token(m_s->cmd_lines[line], m_s->c_s_arr[line].curr_line_tokens, m_s->c_s_arr[line].token_count);
+		init_cmd_struct(m_s, &m_s->c_s_arr[line], line);
 		g_pipe_heredoc[0][0] = line;
-		heredoc_redir_check(&main_struct->cmd_struct_arr[line]);
+		heredoc_redir_check(&m_s->c_s_arr[line]);
 		line++;
 	}
-	line = 0;
-	while (line < main_struct->cmd_count)
-	{
-		redir_check(&main_struct->cmd_struct_arr[line]);
-		make_exec_line(&main_struct->cmd_struct_arr[line]);
-		add_path(main_struct->cmd_struct_arr[line].exec.exec_line, main_struct->root_paths);
-		line++;
-	}
+	redir_execline_path(m_s);
 	return (1);
 }

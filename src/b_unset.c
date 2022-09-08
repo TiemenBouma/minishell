@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:55:48 by tbouma            #+#    #+#             */
-/*   Updated: 2022/08/26 10:23:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_char_unset(char *str)
 	return (1);
 }
 
-void	ft_unset(t_node **list, /*struct	s_main	*main_struct,*/ char **exec_line)
+void	ft_unset(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 {
 	t_node	*match_node;
 	//char	*var_name;

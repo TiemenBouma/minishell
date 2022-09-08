@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 10:44:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 11:51:53 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ struct	s_main {
 	char				**all_tokens;//
 	char				***cmd_lines;// maybe remove it out of the struct
 	int					cmd_count;
-	struct s_cmd_info	*cmd_struct_arr;
+	struct s_cmd_info	*c_s_arr;
 	struct s_node		*env_llist;
 
 	//int					has_heredoc;
@@ -153,15 +153,15 @@ struct	s_main {
 
 //DAN
 int					err_chk(int i, int t, char *s);
-int					exec(struct	s_main *main_struct);
+int					exec(struct	s_main *m_s);
 char				*ft_sjf(char *s1, char *s2, int f);
 
 //BUILDIN's
 int					is_builtin(char	*s);
-int					exec_builtin(struct s_main *main_struct, struct	s_cmd_info	*cmd_struct, int build_n);//int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
+int					exec_builtin(struct s_main *m_s, struct	s_cmd_info	*cmd_struct, int build_n);//int	exec_builtin(struct	s_cmd_info	*cmd_struct, int build_n);
 int					check_buildin_fork(struct s_cmd_info *cmd_struct);
 char				*make_var_name(char *var_line);
-int 				ft_exit(char **s, int is_in_child, struct s_main *main_struct);//int ft_exit(char **s, int is_in_child);
+int 				ft_exit(char **s, int is_in_child, struct s_main *m_s);//int ft_exit(char **s, int is_in_child);
 int 				ft_cd(t_node **list, char **exec_line);
 void				ft_echo(char **s);
 void				ft_env(t_node **list);

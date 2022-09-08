@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:51:36 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/05 14:25:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int exit_num_check(char *str)
 	return (1);
 }
 
-int ft_exit(char **s, int is_in_child, struct s_main *main_struct)
+int ft_exit(char **s, int is_in_child, struct s_main *m_s)
 {
 	int exit_code;
 
@@ -47,11 +47,11 @@ int ft_exit(char **s, int is_in_child, struct s_main *main_struct)
 		if (exit_num_check(s[1]))
 		{
 			exit_code = ft_atoi(s[1]);
-			free_struct(main_struct);
+			free_struct(m_s);
 		}
 		else
 		{
-			free_struct(main_struct);
+			free_struct(m_s);
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd(s[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
@@ -64,6 +64,6 @@ int ft_exit(char **s, int is_in_child, struct s_main *main_struct)
 		}
 	}
 	if (is_in_child == 0)
-		free_struct(main_struct);
+		free_struct(m_s);
 	exit(exit_code % 256);
 }

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 08:46:49 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:38:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,20 @@ int	print_structs(struct s_main *s);
 int	print_dubble_str(char **str, char *name);
 int	print_linked_list(t_node **list);
 
+//Parsing_redir
+int				heredoc_redir_check(struct s_cmd_info *cmd_struct);
+int				redir_check(struct s_cmd_info *cmd_struct);
+
+//parsing_redir_open_fd
+int	open_fd_out_append(struct s_cmd_info *cmd_struct);
+int	open_fd_out(struct s_cmd_info *cmd_struct);
+int	open_fd_in(struct s_cmd_info *cmd_struct);
+void	error_exit_redir(char *str);
+
+//parsing_redir_utils
+int	is_arrow_sign(char *str);
+int	is_special_c_redir(char *str);
+void	set_redir_error(struct s_cmd_info *cmd_struct, char *token);
 
 void    ft_suppress_output(void);
 

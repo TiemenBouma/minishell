@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/07 11:21:49 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/08 10:38:26 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ OBJFILES := \
 			obj/src/main.o \
 			obj/src/make_cmd_struct.o \
 			obj/src/parsing_cmd_lines.o \
+			obj/src/parsing_redir_open_fd.o \
+			obj/src/parsing_redir_utils.o \
+			obj/src/parsing_redir.o \
 			obj/src/parsing_tokens.o \
 			obj/src/path_command.o \
 			obj/src/signals.o \

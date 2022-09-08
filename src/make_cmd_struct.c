@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:16:29 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:40:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,6 @@
 
 extern int	**g_pipe_heredoc;
 
-int	is_arrow_sign(char *str)
-{
-	if (ft_strncmp(str, "<", 2) == 0)
-		return (SMALLER);
-	if (ft_strncmp(str, ">", 2) == 0)
-		return (GREATER);
-	if (ft_strncmp(str, ">>", 3) == 0)
-		return (APPEND);
-	if (ft_strncmp(str, "<<", 3) == 0)
-		return (HEREDOC);
-	return (0);
-}
-
-static int	is_special_c_redir(char *str)
-{
-	if (ft_strncmp(str, "<", 2) == 0)
-		return (1);
-	else if (ft_strncmp(str, "<<", 3) == 0)
-		return (1);
-	else if (ft_strncmp(str, ">", 2) == 0)
-		return (1);
-	else if (ft_strncmp(str, ">>", 3) == 0)
-		return (1);
-	else if (ft_strncmp(str, "|", 2) == 0)
-		return (1);
-	else
-		return (0);
-}
-
-static void	set_redir_error(struct s_cmd_info *cmd_struct, char *token)
-{
-	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
-	if (token)
-		ft_putstr_fd(token, 2);
-	else
-		ft_putstr_fd("newline", 2);
-	write(2, "'\n", 2);
-	cmd_struct->err_syntax = 1;
-}
 
 static int	find_exec_tokens(struct s_cmd_info *cmd_struct)
 {
@@ -107,7 +68,7 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 
 	exec_len = 0;
 	exec_len = calc_exec_line_len(cmd_struct);
-	printf("LEN = %d\n", exec_len);
+	//printf("LEN = %d\n", exec_len);
 	cmd_struct->exec.exec_line = malloc(sizeof(char *) * (exec_len + 1));
 	//malloc protection
 	cmd_struct->exec.exec_line[exec_len] = NULL;
@@ -116,202 +77,6 @@ static int	make_exec_line(struct s_cmd_info *cmd_struct)
 	return (0);
 }
 
-static int	open_fd_in(struct s_cmd_info *cmd_struct)
-{
-	if (cmd_struct->exec.fd_in != 0)
-	{
-		//printf("close(cmd_struct->exec.fd_in); %d\n", cmd_struct->exec.fd_in);
-		close(cmd_struct->exec.fd_in);
-		//cmd_struct->exec.fd_in = 0;
-	}
-	cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
-	//printf("%d\n", cmd_struct->exec.fd_in);
-	if (cmd_struct->exec.fd_in < 0)
-	{
-		cmd_struct->set_file_err = 1;
-		ft_putstr_fd("Bash: ", 2);
-		ft_putstr_fd(cmd_struct->infile, 2);
-		ft_putstr_fd(": ", 2);
-		perror("");
-		//close(0);
-		//cmd_struct->exec.fd_in = 0;
-		return(-1);
-	}
-	return (1);
-}
-
-static int	open_fd_out(struct s_cmd_info *cmd_struct)
-{
-	if (cmd_struct->has_outfile >= 1)
-		cmd_struct->exec.fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (cmd_struct->exec.fd_out < 0)
-	{
-		ft_putstr_fd("Bash: ", 2);
-		ft_putstr_fd(cmd_struct->outfile, 2);
-		ft_putstr_fd(": ", 2);
-		perror("");
-		exit(-1);
-	}
-	return (1);
-}
-
-static int	open_fd_out_append(struct s_cmd_info *cmd_struct)
-{
-	if (cmd_struct->has_appendfile >= 1)
-		cmd_struct->exec.fd_out = open(cmd_struct->appendfile, O_RDONLY | O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (cmd_struct->exec.fd_out < 0)
-	{
-		ft_putstr_fd("Bash: ", 2);
-		ft_putstr_fd(cmd_struct->appendfile, 2);
-		ft_putstr_fd(": ", 2);
-		perror("");
-		exit(-1);
-	}
-	return (1);
-}
-
-static int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
-{
-	int	i;
-	int	total_heredoc;
-	int	curr_heredoc;
-	int	id;
-	int	status;
-
-	i = 0;
-	curr_heredoc = 0;
-	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
-	while (i < cmd_struct->token_count)
-	{
-		
-		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
-		{
-			if (cmd_struct->curr_line_tokens[i + 1] == NULL || is_special_c_redir(cmd_struct->curr_line_tokens[i + 1]))
-			{
-				//set_redir_error(cmd_struct, cmd_struct->curr_line_tokens[i + 1]);
-				return (1);
-			}
-			curr_heredoc++;
-			signal(SIGINT, SIG_IGN);
-			if (total_heredoc == curr_heredoc)
-				err_chk(pipe(g_pipe_heredoc[cmd_struct->cmd_index + 1]), 1, "");
-			id = fork();
-			if (id == 0)
-			{
-				if (total_heredoc > curr_heredoc)
-				{
-					dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
-					exit(0);
-				}
-				if (total_heredoc == curr_heredoc)
-				{
-					close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
-					heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->cmd_index);
-					exit(0);
-				}
-			}
-			if (total_heredoc == curr_heredoc)
-				close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_IN]);
-			waitpid(id, &status, 0);
-			if (WEXITSTATUS(status) == 10)
-			{
-				cmd_struct->set_file_err = 1;
-				write(1, "\n", 1);
-				rl_on_new_line();
-				rl_replace_line("", 0);
-				signal(SIGINT, sigint_handler);
-				break ;
-			}
-			signal(SIGINT, sigint_handler);
-		}
-		i++;
-	}
-	return (0);
-}
-
-static int	redir_check(struct s_cmd_info *cmd_struct)
-{
-	int		i;
-	int		curr_heredoc;
-	char	*token;
-	char	*n_token;
-
-	i = 0;
-	curr_heredoc = 0;
-	while (i < cmd_struct->token_count)
-	{
-		token = cmd_struct->curr_line_tokens[i];
-		n_token = cmd_struct->curr_line_tokens[i + 1];
-		if (is_arrow_sign(token) == HEREDOC)
-		{
-			if (cmd_struct->curr_line_tokens[i + 1] == NULL || is_special_c_redir(cmd_struct->curr_line_tokens[i + 1]))
-			{
-				set_redir_error(cmd_struct, cmd_struct->curr_line_tokens[i + 1]);
-				return (1);
-			}
-			curr_heredoc++;
-			cmd_struct->has_heredoc = 2;
-			if (cmd_struct->has_infile == 2)
-			{
-				if (cmd_struct->exec.fd_in >= 0)
-				{
-					close(cmd_struct->exec.fd_in);
-				}
-				cmd_struct->has_infile = 1;
-			}
-		}
-		if (is_arrow_sign(token) == SMALLER)
-		{
-			if (cmd_struct->infile)
-				free(cmd_struct->infile);
-			if (cmd_struct->has_heredoc == 2)
-				cmd_struct->has_heredoc = 1;
-			cmd_struct->has_infile = 2;
-			if (n_token == NULL || is_special_c_redir(n_token))
-			{
-				set_redir_error(cmd_struct, n_token);
-				return (1);
-			}
-			cmd_struct->infile = ft_strdup(n_token);
-			if (open_fd_in(cmd_struct) == -1)
-				return (-1);
-		}
-		if (is_arrow_sign(token) == GREATER)
-		{
-			if (cmd_struct->has_outfile >= 1)
-				free(cmd_struct->outfile);
-			cmd_struct->has_outfile++;
-			if (n_token == NULL || is_special_c_redir(n_token))
-			{
-				set_redir_error(cmd_struct, n_token);
-				return (1);
-			}
-			cmd_struct->outfile = ft_strdup(n_token);
-			if (open_fd_out(cmd_struct) == -1)
-				return (-1);
-		}
-		if (is_arrow_sign(token) == APPEND)
-		{
-			if (cmd_struct->has_appendfile >= 1)
-				free(cmd_struct->appendfile);
-			cmd_struct->has_appendfile++;
-			if (n_token == NULL || is_special_c_redir(n_token))
-			{
-				set_redir_error(cmd_struct, n_token);
-				return (1);
-			}
-			cmd_struct->appendfile = ft_strdup(n_token);
-			if (open_fd_out_append(cmd_struct) == -1)
-				return (-1);
-		}
-		i++;
-	}
-	if (cmd_struct->has_heredoc == 2 && cmd_struct->exec.fd_in != 0)
-		close(cmd_struct->exec.fd_in);
-	if (cmd_struct->has_infile == 2 && cmd_struct->has_heredoc > 0)
-		close(cmd_struct->heredoc_pipe[0]);
-	return (1);
-}
 
 static int	copy_token(char **src_str, char **dest_str, int count)//main_struct->cmd_lines[line], main_struct->cmd_struct_arr[line].tokens);
 {
@@ -395,7 +160,6 @@ int	make_cmd_structs(struct s_main *main_struct)
 	{
 		redir_check(&main_struct->cmd_struct_arr[line]);
 		make_exec_line(&main_struct->cmd_struct_arr[line]);
-		printf("exec_line = %s\n", main_struct->cmd_struct_arr[line].exec.exec_line[0]);
 		add_path(main_struct->cmd_struct_arr[line].exec.exec_line, main_struct->root_paths);
 		line++;
 	}

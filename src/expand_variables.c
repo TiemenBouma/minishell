@@ -6,11 +6,16 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/07 15:18:30 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 15:19:07 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	is_special_char_var_expand(char c)
+{
+	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '/' || c == '=');
+}
 
 int	calc_len_new_str(char **input, char *content, char *v_name)
 {
@@ -33,7 +38,7 @@ int	replace_input(char **in, char *content, int *i, char *v_name)
 	l = 0;
 	s = *i;
 	len_new_str = calc_len_new_str(in, content, v_name);
-	while ((*in)[s + l] && !is_special_char((*in)[s + l]))
+	while ((*in)[s + l] && !is_special_char_var_expand((*in)[s + l]))
 		l++;
 	temp1 = ft_substr(*in, 0, s - 1);
 	if ((*in)[s + l] == ' ')
@@ -127,7 +132,7 @@ char	*find_next_var_in_str(char *input, int *index)
 			if (input[*index] == '\0' || input[*index] == ' ')// || input[*index] == '/')
 				return (temp);
 			s = *index;
-			while (input[s + l] && !is_special_char(input[s + l]))// && input[s + l] !=  '/')
+			while (input[s + l] && !is_special_char_var_expand(input[s + l]))// && input[s + l] !=  '/')
 				l++;
 			temp = ft_substr(input, s, l);
 			return (temp);

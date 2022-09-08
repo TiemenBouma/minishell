@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 11:51:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 12:23:04 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	free_double_str(char **str)
 	i = 0;
 	if (str == NULL)
 		return ;
+	if (str[0] == NULL)
+	{
+		free(str[0]);
+		return ;
+	}
 	while (str[i])
 	{
 		free(str[i]);
@@ -48,17 +53,18 @@ void	free_triple_str(char ***str)
 	str = NULL;
 }
 
-void	free_cmd_info(struct s_cmd_info *c_s_arr)
+void	free_cmd_info(struct s_cmd_info *c_s)
 {
-	free_double_str(c_s_arr->curr_line_tokens);
-	if (c_s_arr->arr_env_list)
-		free_double_str(c_s_arr->arr_env_list);
+	free_double_str(c_s->curr_line_tokens);
+	if (c_s->arr_env_list)
+		free_double_str(c_s->arr_env_list);
 	// c_s_arr->token_count = 0;
 	// c_s_arr->has_infile = 0;
 	// c_s_arr->has_outfile = 0;
-	free(c_s_arr->infile);
-	free(c_s_arr->outfile);
-	free_double_str(c_s_arr->exec.exec_line);
+	free(c_s->infile);
+	free(c_s->outfile);
+	if (c_s->exec.exec_line != NULL)
+		free_double_str(c_s->exec.exec_line);
 }
 
 void free_global(struct s_main *m_s)

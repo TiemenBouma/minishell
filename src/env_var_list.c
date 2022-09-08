@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/07 11:24:13 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 12:35:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_print_var_content(t_node **list, char *var_name)
 	match_node = ft_find_node_in_list(list, var_name);
 	if (match_node == NULL)
 		return (0);
-	ft_putstr_fd(match_node->str + ft_strlen(var_name), 1);
+	ft_putstr_fd(match_node->str + ft_strlen(var_name), 2);
 	write(1, "\n", 2);
 	return (0);
 }

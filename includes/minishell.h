@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 11:51:53 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:40:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int					exec_builtin(struct s_main *m_s, struct	s_cmd_info	*cmd_struct, int buil
 int					check_buildin_fork(struct s_cmd_info *cmd_struct);
 char				*make_var_name(char *var_line);
 int 				ft_exit(char **s, int is_in_child, struct s_main *m_s);//int ft_exit(char **s, int is_in_child);
-int 				ft_cd(t_node **list, char **exec_line);
+int 				ft_cd(t_node **list, char ***exec_line);
 void				ft_echo(char **s);
 void				ft_env(t_node **list);
 void				ft_export(t_node **list, char **exec_line);
@@ -259,6 +259,9 @@ void	set_redir_error(struct s_cmd_info *cmd_struct, char *token);
 
 //parsing_make_exec_line
 int	make_exec_line(struct s_cmd_info *cmd_struct);
+
+//FREE
+void	free_double_str(char **str);
 
 void    ft_suppress_output(void);
 

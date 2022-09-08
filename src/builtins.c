@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:29:51 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	exec_builtin(struct s_main *m_s, struct	s_cmd_info	*cmd_struct, int build_n)
 	//printf ("test%s\n", cmd);
 	//(void) exec_line;
 	if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
-		return (ft_cd(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
+		return (ft_cd(&cmd_struct->env_llist, &cmd_struct->exec.exec_line));
 	else if (build_n == EXPORT_BUILD)
 		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
 	else if (build_n == UNSET_BUILD)

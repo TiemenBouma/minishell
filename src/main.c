@@ -14,6 +14,18 @@
 
 int	**g_pipe_heredoc;
 
+int	basic_error_handeling(struct s_main *m_s)
+{
+	if (m_s->all_tokens[0] == NULL)
+		return (1);
+	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
 int	init_m_s(struct	s_main *m_s)
 {
 	m_s->old_exit_status = 0;
@@ -53,8 +65,12 @@ int	main(int argc, char **argv)
 		}
 		expand_variables(&m_s.input_str, &m_s.env_llist, m_s.old_exit_status);
 		m_s.all_tokens = ft_split_tokens(m_s.input_str);
-		if (m_s.all_tokens[0] == NULL)
+		
+		if (basic_error_handeling(&m_s))
+		{
+			free_struct(&m_s);
 			continue ;
+		}
 		m_s.cmd_lines = make_cmd_lines(m_s.all_tokens);
 		if (make_cmd_structs(&m_s) == -1)
 		{

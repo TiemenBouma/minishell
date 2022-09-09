@@ -14,12 +14,29 @@
 
 int	is_special_char_var_expand(char c)
 {
-	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '/' || c == '=');
+	return (c == '<' || c == '>' || c == '|' || c == ' ' || c == '/' || c == '=' || c == '\'' || c == '\"');
 }
 
 int	calc_len_new_str(char **input, char *content, char *v_name)
 {
 	return (ft_strlen(*input) + (ft_strlen(content) - ft_strlen(v_name)));
+}
+
+int find_len_var_name(char **in, int s)
+{
+	int l;
+
+	l = 0;
+	while ((*in)[s + l] && !is_special_char_var_expand((*in)[s + l]))
+	{
+		if (l == 0 && (*in)[s + l] == '?')
+		{
+			l++;
+			break;
+		}
+		l++;
+	}
+	return (l);
 }
 
 /*
@@ -35,11 +52,13 @@ int	replace_input(char **in, char *content, int *i, char *v_name)
 	char	*temp1;
 	char	*temp2;
 
-	l = 0;
+	//l = 0;
 	s = *i;
+	//printf("Replace input:\n varname = %s\n content = %s\n", v_name, content);
 	len_new_str = calc_len_new_str(in, content, v_name);
-	while ((*in)[s + l] && !is_special_char_var_expand((*in)[s + l]))
-		l++;
+	
+	l = find_len_var_name(in, s);
+
 	temp1 = ft_substr(*in, 0, s - 1);
 	if ((*in)[s + l] == ' ')
 		temp2 = ft_substr(*in, s + l, ft_strlen(*in + s + l));
@@ -49,9 +68,12 @@ int	replace_input(char **in, char *content, int *i, char *v_name)
 	*in = ft_calloc(sizeof(char), (len_new_str + 1));
 	if (*in == NULL)
 		exit (1); //malloc protection, do we want to exit? (Tiemen)
+	(*in)[len_new_str] = '\0';
 	ft_memcpy(*in, temp1, ft_strlen(temp1));
 	ft_strlcat(*in, content, len_new_str);
 	ft_strlcat(*in, temp2, len_new_str);
+	free(temp1);
+	free(temp2);
 	return (0);
 }
 
@@ -115,7 +137,7 @@ char	*find_next_var_in_str(char *input, int *index)
 
 	temp = NULL;
 	in_quotes = 0;
-	l = 0;
+	//l = 0;
 	while (input[*index])
 	{
 		c = is_open_quote(input[*index], &in_quotes, index, &c);
@@ -132,9 +154,11 @@ char	*find_next_var_in_str(char *input, int *index)
 			if (input[*index] == '\0' || input[*index] == ' ')// || input[*index] == '/')
 				return (temp);
 			s = *index;
-			while (input[s + l] && !is_special_char_var_expand(input[s + l]))// && input[s + l] !=  '/')
-				l++;
+
+			l = find_len_var_name(&input, s);
+
 			temp = ft_substr(input, s, l);
+			//printf("varname in findvar\n %s\n len = %d", temp, l);
 			return (temp);
 		}
 		if (input[*index])
@@ -162,7 +186,7 @@ int	expand_variables(char **input, t_node **list, int old_exit_status)
 			continue ;
 		}	//return (0);
 		content = find_var_in_list(list, v_name);
-		if (v_name[0] == '?')
+		if (ft_strncmp(v_name, "?", 2) == 0)
 		{
 			str_exit_status = ft_itoa(old_exit_status);
 			replace_input(input, str_exit_status, &index, v_name);
@@ -175,6 +199,7 @@ int	expand_variables(char **input, t_node **list, int old_exit_status)
 			replace_input(input, content, &index, v_name);
 			index++;
 		}
+		free(v_name);
 	}
 	return (0);
 }

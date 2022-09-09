@@ -76,6 +76,7 @@ int	ft_cd(t_node **list, char ***exec_line)
 		(*exec_line)[1] = ft_strdup(temp_node->str + 7);
 	}
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
+	free(new_str);
 	if (chdir((*exec_line)[1]))
 		return (perror_msg("bash: cd", (*exec_line)[1], EXIT_CD));
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
@@ -84,6 +85,7 @@ int	ft_cd(t_node **list, char ***exec_line)
 		return (perror_msg("pwd", NULL, EXIT_PWD));
 	new_str = ft_strjoin("PWD=", cwd);
 	ft_find_and_edit_node(list, "PWD", new_str);
+	free(new_str);
 	free(cwd);
 	return (0);
 }

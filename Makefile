@@ -57,11 +57,13 @@ $(LIBFT):
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
 	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L ~/.brew/opt/readline/lib
+#  -L /usr/lib/x86_64-linux-gnu/
 
 obj/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -o $@ $< -I ~/.brew/opt/readline/include
 #-I /usr/include/readline/
+
 
 
 clean:

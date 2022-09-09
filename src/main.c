@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 14:33:34 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/09/09 15:51:03 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ int	main(int argc, char **argv)
 		init_m_s(&m_s);
 		m_s.root_paths = find_path(&m_s.env_llist);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+		{
+			if (ft_strncmp(argv[2], "|", 1) == 0)
+				exit (ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2));
 			m_s.input_str = ft_strdup(argv[2]);
+		}
 		else
 			m_s.input_str = readline("SuperShell: ");
 		add_history(m_s.input_str);

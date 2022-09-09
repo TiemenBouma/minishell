@@ -15,15 +15,17 @@
 static int	atoi_h(long long num_l, int minplus)
 {
 	num_l *= minplus;
-	if (num_l < INT_MIN || num_l > INT_MAX)
+	if (num_l <= LLONG_MIN || num_l >= LLONG_MAX)
+	{
 		return (0);
+	}
 	return (num_l);
 }
 
 int	ft_atoi(const char *str)
 {
 	int			i;
-	int			num;
+	long long	num;
 	long long	num_l;
 	int			minplus;
 

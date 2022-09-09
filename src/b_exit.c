@@ -34,36 +34,47 @@ int exit_num_check(char *str)
 	return (1);
 }
 
+int count_arg(char **s)
+{
+	int i;
+
+	i = 0;
+	while (s[i] != NULL)
+		i++;
+	return (i);
+}
+
 int ft_exit(char **s, int is_in_child, struct s_main *m_s)
 {
-	int exit_code;
+	long long exit_code;
 
 	exit_code = 0;
 	//printf("DEBUG");
+	//printf("s[1] = %s\n", s[1]);
+
 	if (is_in_child == 0)
-		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("exit\n", 2);
 	if (s[1])
 	{
 		if (exit_num_check(s[1]))
-		{
 			exit_code = ft_atoi(s[1]);
-			free_struct(m_s);
-		}
 		else
 		{
-			free_struct(m_s);
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd(s[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			exit(255);
+			free_struct(m_s);
+			exit(2);
 		}
-		if (s[2])
+		if (count_arg(s) > 2)
 		{
-			ft_putstr_fd("bash: exit: too many arguments\n", 2);
+			ft_putstr_fd("bash: line 1: exit: too many arguments\n", 2);
+			m_s->old_exit_status = 1;
 			return (1);
 		}
 	}
-	if (is_in_child == 0)
-		free_struct(m_s);
+	// printf("%lld\n", exit_code);
+	// printf("mod %lld\n", exit_code % 256);
+	free_struct(m_s);
 	exit(exit_code % 256);
 }

@@ -21,6 +21,7 @@ int	basic_error_handeling(struct s_main *m_s)
 	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		m_s->old_exit_status = 2;
 		return (1);
 	}
 	return (0);

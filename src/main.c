@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/09 16:00:46 by dkocob        ########   odam.nl         */
+/*   Updated: 2022/09/09 16:08:22 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 		m_s.root_paths = find_path(&m_s.env_llist);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 		{
-			if (ft_strncmp(argv[2], "|", 1) == 0 || ft_strncmp(argv[2], " ", 1) == 0)
+			if (ft_strncmp(argv[2], "|", 1) == 0 || argv[2][0] == ' ')
 				exit (ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2));
 			m_s.input_str = ft_strdup(argv[2]);
 		}

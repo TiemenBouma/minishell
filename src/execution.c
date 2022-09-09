@@ -102,7 +102,7 @@ int	exec(struct	s_main *m_s)
 		err_chk(pipe(p[CUR]), 1, "");
 		if (&m_s->c_s_arr[i - 1].exec.exec_line[0] && is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0]) == EXIT_BUILD && m_s->cmd_count == 1)
 		{
-			ft_exit(m_s->c_s_arr[i - 1].exec.exec_line, 0, m_s);
+			build_return = ft_exit(m_s->c_s_arr[i - 1].exec.exec_line, 0, m_s);
 			continue ;
 		}
 		if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 0 && m_s->c_s_arr[i - 1].set_file_err == 0 && m_s->cmd_count == 1)

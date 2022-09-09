@@ -40,10 +40,7 @@ static void	execve_error(char *path, int error, char *envpath)
 static void	ft_execution_in_child(struct s_main *m_s, struct s_cmd_info *curr_cmd)
 {
 	if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
-	{
-		exec_builtin(m_s, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0]));
-		exit(0);
-	}
+		exit(exec_builtin(m_s, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0])));
 	else if (curr_cmd->set_file_err == 0)
 	{
 		curr_cmd->arr_env_list = make_arr_from_list(&m_s->env_llist);
@@ -106,7 +103,10 @@ int	exec(struct	s_main *m_s)
 			continue ;
 		}
 		if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 0 && m_s->c_s_arr[i - 1].set_file_err == 0 && m_s->cmd_count == 1)
+		{
 			build_return = exec_builtin(m_s, &m_s->c_s_arr[i - 1], is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0]));
+			continue ;
+		}
 		signal(SIGINT, sigint_handler_in_process);
 		signal(SIGQUIT, sigquit_handler_in_process);
 		if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 1 || m_s->cmd_count > 1)
@@ -121,6 +121,8 @@ int	exec(struct	s_main *m_s)
 		;
 	signals_handeler();
 	if (build_return >= 0)
+	{
 		return (build_return);
+	}
 	return (WEXITSTATUS(i));
 }

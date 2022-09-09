@@ -24,7 +24,7 @@ void	print_export(t_node **list)
 	current = *list;
 	while (1)
 	{
-		write(1, "declare -x ", 12);
+		write(1, "declare -x ", 11);
 		if (ft_strchr(current->str, '=') == NULL)
 		{
 			write(1, current->str, ft_strlen(current->str));
@@ -45,15 +45,16 @@ void	print_export(t_node **list)
 	}
 }
 
-void	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
+int	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 {
 	t_node	*new_node;
 	t_node	*match_node;
 	char	*var_name;
 	int	i;
+	int old_exit_status;
 
 	i = 1;
-
+	old_exit_status = 0;
 	if (!exec_line[1])
 		print_export(list);
 	else 
@@ -66,6 +67,7 @@ void	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 				ft_putstr_fd(exec_line[i], 2);
 				ft_putstr_fd("': not a valid identifier\n", 2);
 				i++;
+				old_exit_status = 1;
 				continue;
 			}
 			var_name = make_var_name(exec_line[i]);
@@ -84,4 +86,6 @@ void	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 			i++;
 		}
 	}
+	return (old_exit_status);
+
 }

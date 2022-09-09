@@ -165,8 +165,8 @@ int 				ft_exit(char **s, int is_in_child, struct s_main *m_s);//int ft_exit(cha
 int 				ft_cd(t_node **list, char ***exec_line);
 void				ft_echo(char **s);
 void				ft_env(t_node **list);
-void				ft_export(t_node **list, char **exec_line);
-void				ft_pwd(t_node **list);
+int					ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line);
+void					ft_pwd(t_node **list);
 void				ft_unset(t_node **list, char **exec_line);
 
 //UTILS

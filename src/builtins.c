@@ -59,7 +59,7 @@ int	exec_builtin(struct s_main *m_s, struct	s_cmd_info	*cmd_struct, int build_n)
 	if (build_n == CD_BUILD) //change abs path? exec all fucns with abs path?
 		return (ft_cd(&cmd_struct->env_llist, &cmd_struct->exec.exec_line));
 	else if (build_n == EXPORT_BUILD)
-		ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
+		return (ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
 	else if (build_n == UNSET_BUILD)
 		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
 	else if (build_n == ECHO_BUILD)

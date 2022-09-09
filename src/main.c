@@ -29,7 +29,6 @@ int	basic_error_handeling(struct s_main *m_s)
 
 int	init_m_s(struct	s_main *m_s)
 {
-	m_s->old_exit_status = 0;
 	m_s->all_tokens = NULL;
 	m_s->cmd_count = 0;
 	m_s->cmd_lines = NULL;
@@ -48,6 +47,7 @@ int	main(int argc, char **argv)
 
 	g_pipe_heredoc = NULL;
 	signals_handeler();
+	m_s.old_exit_status = 0;
 	m_s.env_llist = add_env_to_list(environ);
 	while (1)
 	{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/08 14:33:06 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/09/12 14:40:28 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	execve_error(char *path, int error, char *envpath)
 	exit (127);
 }
 
-static void	ft_execution_in_child(struct s_main *m_s, struct s_cmd_info *curr_cmd)
+static void	ft_exec_in_child(struct s_main *m_s, struct s_cmd_info *curr_cmd)
 {
 	if (is_builtin(curr_cmd->exec.exec_line[0]) < 7 && curr_cmd->set_file_err == 0)
 		exit(exec_builtin(m_s, curr_cmd, is_builtin(curr_cmd->exec.exec_line[0])));
@@ -74,7 +74,7 @@ static void	ft_redirections(struct s_main *m_s, int (*p)[2][2], int i, int id, s
 			err_chk(dup2(curr_cmd->exec.fd_out, S_OUT), 2, "");
 		close ((*p)[CUR][P_OUT]);
 		close ((*p)[PREV][P_IN]);
-		ft_execution_in_child(m_s, curr_cmd);
+		ft_exec_in_child(m_s, curr_cmd);
 	}
 	close ((*p)[PREV][P_OUT]);
 	close ((*p)[CUR][P_IN]);
@@ -84,35 +84,37 @@ static void	ft_redirections(struct s_main *m_s, int (*p)[2][2], int i, int id, s
 		close (g_pipe_heredoc[curr_cmd->cmd_index + 1][P_OUT]);
 }
 
+static int	ft_iterations(struct s_main *m_s, int (*p)[2][2], int i, int *id, struct s_cmd_info *curr_cmd)
+{
+	err_chk(pipe((*p)[CUR]), 1, "");
+	if (&m_s->c_s_arr[i - 1].exec.exec_line[0] && is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0]) == EXIT_BUILD && m_s->cmd_count == 1)
+		return (ft_exit(m_s->c_s_arr[i - 1].exec.exec_line, 0, m_s));
+	if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 0 && m_s->c_s_arr[i - 1].set_file_err == 0 && m_s->cmd_count == 1)
+		return (exec_builtin(m_s, &m_s->c_s_arr[i - 1], is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0])));
+	signal(SIGINT, sigint_handler_in_process);
+	signal(SIGQUIT, sigquit_handler_in_process);
+	if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 1 || m_s->cmd_count > 1)
+		*id = fork();
+	err_chk(*id, 1, "");
+	ft_redirections(m_s, p, i, *id, curr_cmd);
+	return (-1);
+}
+
 int	exec(struct	s_main *m_s)
 {
-	int					i = 0;
+	int					i;
 	int					build_return;
-	int					id = 1;
+	int					id;
 	int					p[2][2];
 
+	i = 0;
+	id = 1;
 	build_return = -1;
 	err_chk(pipe(p[CUR]), 1, "");
 	while (i < m_s->cmd_count)
 	{
 		i++;
-		err_chk(pipe(p[CUR]), 1, "");
-		if (&m_s->c_s_arr[i - 1].exec.exec_line[0] && is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0]) == EXIT_BUILD && m_s->cmd_count == 1)
-		{
-			build_return = ft_exit(m_s->c_s_arr[i - 1].exec.exec_line, 0, m_s);
-			continue ;
-		}
-		if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 0 && m_s->c_s_arr[i - 1].set_file_err == 0 && m_s->cmd_count == 1)
-		{
-			build_return = exec_builtin(m_s, &m_s->c_s_arr[i - 1], is_builtin(m_s->c_s_arr[i - 1].exec.exec_line[0]));
-			continue ;
-		}
-		signal(SIGINT, sigint_handler_in_process);
-		signal(SIGQUIT, sigquit_handler_in_process);
-		if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 1 || m_s->cmd_count > 1)
-			id = fork();
-		err_chk(id, 1, "");
-		ft_redirections(m_s, &p, i, id, &m_s->c_s_arr[i - 1]);
+		build_return = ft_iterations(m_s, &p, i, &id, &m_s->c_s_arr[i - 1]);
 	}
 	close (p[CUR][P_OUT]);
 	close (p[PREV][P_IN]);
@@ -121,8 +123,6 @@ int	exec(struct	s_main *m_s)
 		;
 	signals_handeler();
 	if (build_return >= 0)
-	{
 		return (build_return);
-	}
 	return (WEXITSTATUS(i));
 }

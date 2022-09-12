@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 15:18:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:57:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@
 # define EXIT_BUILD 6
 
 
-struct	s_redir {
-	int	in;
-	int	out;
-};
+// struct	s_redir {
+// 	int	in;
+// 	int	out;
+// };
 // struct	s_redir {
 // 	int	in;
 // 	int	out;
@@ -111,19 +111,16 @@ struct	s_cmd_info {
 	int					has_outfile;
 	int					has_appendfile;
 	int					has_heredoc;
-	int					curr_heredoc;
+	//int					curr_heredoc;
 	int					heredoc_pipe[2];
 	char				*infile; //**infile
 	char				*outfile;//**outfile;
 	char				*appendfile;
 	char				*heredoc;
-	char				*heredoc_filename;
+	//char				*heredoc_filename;
 	int					heredoc_fd_opened;
 	int					set_file_err;
 	int					err_syntax;
-
-	//struct s_to_exec	exec;
-	pid_t				pid_child;
 	struct s_node		*env_llist;
 	char				**e_list;
 };
@@ -212,9 +209,9 @@ char	*find_var_in_list(t_node **list, char *var_name);
 void	inc_shlvl(t_node **list);
 
 //expand var
-int	expand_variables(char **input_str, t_node **list, int oxs);
+int	expand_variables(char **input, t_node **list, int oxs);
 int	find_len_var_name(char **in, int s);
-int	replace_input(char **in, char *content, int *i, char *v_name);
+void	replace_input(char **in, char *content, int *i, char *v_name);
 
 
 

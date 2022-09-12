@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:06:03 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 14:20:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:57:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ s = s
 l = len
 in = input_str/input
 */
-int	replace_input(char **in, char *content, int *i, char *v_name)
+void	replace_input(char **in, char *content, int *i, char *v_name)
 {
 	int		s;
 	int		l;
@@ -69,9 +69,9 @@ int	replace_input(char **in, char *content, int *i, char *v_name)
 	ft_memcpy(*in, temp1, ft_strlen(temp1));
 	ft_strlcat(*in, content, len_new_str);
 	ft_strlcat(*in, temp2, len_new_str);
+	//free(content);
 	free(temp1);
 	free(temp2);
-	return (0);
 }
 
 char	*find_var_in_list(t_node **list, char *v_name)

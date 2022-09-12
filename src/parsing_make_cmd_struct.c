@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 15:00:12 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:23:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line
 	cmd_struct->fd_in = 0;
 	cmd_struct->has_heredoc = 0;
 	cmd_struct->heredoc_fd_opened = 0;
-	cmd_struct->heredoc_filename = NULL;
+	//cmd_struct->heredoc_filename = NULL;
 	cmd_struct->infile = NULL;
 	cmd_struct->outfile = NULL;
 	cmd_struct->env_llist = m_s->env_llist;
-	cmd_struct->pid_child = 1;
 	cmd_struct->heredoc = NULL;
 	cmd_struct->e_list = NULL;
 	cmd_struct->err_syntax = 0;

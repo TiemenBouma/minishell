@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 14:33:51 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:57:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,3 +118,32 @@ int	expand_variables(char **input, t_node **list, int oxs)
 	}
 	return (0);
 }
+
+// void	expand_variables(char **input, struct s_main *m_s, int index)
+// {
+// 	char	*v_name;
+// 	char	*content;
+
+// 	while ((*input)[index])
+// 	{
+// 		v_name = find_next_var_in_str(*input, &index);
+// 		if (v_name == NULL)
+// 		{
+// 			if (!(*input)[index])
+// 				break ;
+// 			index++;
+// 			continue ;
+// 		}
+// 		content = find_var_in_list(&m_s->env_llist, v_name);
+// 		if (ft_strncmp(v_name, "?", 2) == 0)
+// 			replace_input(input, ft_itoa(m_s->oxs), &index, v_name);
+// 		else if (content == NULL)
+// 			replace_input(input, "", &index, v_name);
+// 		else
+// 		{	
+// 			replace_input(input, content, &index, v_name);
+// 			index++;
+// 		}
+// 		free(v_name);
+// 	}
+// }

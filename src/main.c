@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 11:24:36 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:58:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			break ;
 		}
-		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs);
+		expand_variables(&m_s->input_str, &m_s->env_llist, 0);
 		m_s->all_tokens = ft_split_tokens(m_s->input_str);
 		if (basic_error_handeling(m_s))
 		{

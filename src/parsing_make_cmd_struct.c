@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 11:51:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:00:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ void	set_err(struct s_cmd_info *cmd_struct)
 	cmd_struct->has_outfile = 0;
 	cmd_struct->has_appendfile = 0;
 	cmd_struct->has_heredoc = 0;
-	//close(S_IN);//cmd_struct->exec.fd_in = S_IN;
-	cmd_struct->exec.fd_out = S_OUT;
-	//cmd_struct->exec.exec_line[0] = NULL;
+	//close(S_IN);//cmd_struct->fd_in = S_IN;
+	cmd_struct->fd_out = S_OUT;
+	//cmd_struct->exec_line[0] = NULL;
 }
 
 void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line)
 {
 	cmd_struct->cmd_index = line;
-	cmd_struct->exec.cmd_count = m_s->cmd_count;
+	cmd_struct->cmd_count = m_s->cmd_count;
 	cmd_struct->has_infile = 0;
 	cmd_struct->has_outfile = 0;
 	cmd_struct->has_appendfile = 0;
-	cmd_struct->exec.fd_out = 1;
-	cmd_struct->exec.fd_in = 0;
+	cmd_struct->fd_out = 1;
+	cmd_struct->fd_in = 0;
 	cmd_struct->has_heredoc = 0;
 	cmd_struct->heredoc_fd_opened = 0;
 	cmd_struct->heredoc_filename = NULL;
@@ -56,8 +56,8 @@ void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line
 	cmd_struct->outfile = NULL;
 	cmd_struct->env_llist = m_s->env_llist;
 	cmd_struct->pid_child = 1;
-	cmd_struct->exec.heredoc = NULL;
-	cmd_struct->arr_env_list = NULL;
+	cmd_struct->heredoc = NULL;
+	cmd_struct->e_list = NULL;
 	cmd_struct->err_syntax = 0;
 	cmd_struct->set_file_err = 0;
 }
@@ -71,7 +71,7 @@ void	redir_execline_path(struct s_main *m_s)
 	{
 		redir_check(&m_s->c_s_arr[line]);
 		make_exec_line(&m_s->c_s_arr[line]);
-		add_path(m_s->c_s_arr[line].exec.exec_line, m_s->root_paths);
+		add_path(m_s->c_s_arr[line].exec_line, m_s->root_paths);
 		line++;
 	}
 }

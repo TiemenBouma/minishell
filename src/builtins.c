@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/12 14:01:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int	exec_builtin(struct s_main *m_s,
 struct	s_cmd_info *cmd_struct, int build_n)
 {
 	if (build_n == CD_BUILD)
-		return (ft_cd(&cmd_struct->env_llist, &cmd_struct->exec.exec_line));
+		return (ft_cd(&cmd_struct->env_llist, &cmd_struct->exec_line));
 	else if (build_n == EXPORT_BUILD)
-		return (ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
+		return (ft_export(&cmd_struct->env_llist, cmd_struct->exec_line));
 	else if (build_n == UNSET_BUILD)
-		return (ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
+		return (ft_unset(&cmd_struct->env_llist, cmd_struct->exec_line));
 	else if (build_n == ECHO_BUILD)
-		ft_echo(cmd_struct->exec.exec_line);
+		ft_echo(cmd_struct->exec_line);
 	else if (build_n == PWD_BUILD)
 		ft_pwd(&cmd_struct->env_llist);
 	else if (build_n == ENV_BUILD)
 		ft_env(&cmd_struct->env_llist);
 	else if (build_n == EXIT_BUILD)
-		ft_exit(cmd_struct->exec.exec_line, 1, m_s);
+		ft_exit(cmd_struct->exec_line, 1, m_s);
 	return (0);
 }
 
@@ -57,7 +57,7 @@ int	check_buildin_fork(struct s_cmd_info *cmd_struct)
 {
 	int	checker;
 
-	checker = is_builtin(cmd_struct->exec.exec_line[0]);
+	checker = is_builtin(cmd_struct->exec_line[0]);
 	if (checker == CD_BUILD || checker == EXPORT_BUILD
 		|| checker == UNSET_BUILD)
 		return (0);

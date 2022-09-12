@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	error_exit_redir(char *str)
 
 int	open_fd_in(struct s_cmd_info *cmd_struct)
 {
-	if (cmd_struct->exec.fd_in != 0)
-		close(cmd_struct->exec.fd_in);
-	cmd_struct->exec.fd_in = open(cmd_struct->infile, O_RDONLY);
-	if (cmd_struct->exec.fd_in < 0)
+	if (cmd_struct->fd_in != 0)
+		close(cmd_struct->fd_in);
+	cmd_struct->fd_in = open(cmd_struct->infile, O_RDONLY);
+	if (cmd_struct->fd_in < 0)
 		error_exit_redir(cmd_struct->infile);
 	return (1);
 }
@@ -34,8 +34,8 @@ int	open_fd_in(struct s_cmd_info *cmd_struct)
 int	open_fd_out(struct s_cmd_info *cmd_struct)
 {
 	if (cmd_struct->has_outfile >= 1)
-		cmd_struct->exec.fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (cmd_struct->exec.fd_out < 0)
+		cmd_struct->fd_out = open(cmd_struct->outfile, O_RDONLY | O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (cmd_struct->fd_out < 0)
 		error_exit_redir(cmd_struct->outfile);
 	return (1);
 }
@@ -43,8 +43,8 @@ int	open_fd_out(struct s_cmd_info *cmd_struct)
 int	open_fd_out_append(struct s_cmd_info *cmd_struct)
 {
 	if (cmd_struct->has_appendfile >= 1)
-		cmd_struct->exec.fd_out = open(cmd_struct->appendfile, O_RDONLY | O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (cmd_struct->exec.fd_out < 0)
+		cmd_struct->fd_out = open(cmd_struct->appendfile, O_RDONLY | O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (cmd_struct->fd_out < 0)
 		error_exit_redir(cmd_struct->appendfile);
 	return (1);
 }

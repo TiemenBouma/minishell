@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 14:42:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:00:11 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ void	free_triple_str(char ***str)
 void	free_cmd_info(struct s_cmd_info *c_s)
 {
 	free_double_str(c_s->curr_line_tokens);
-	if (c_s->arr_env_list)
-		free_double_str(c_s->arr_env_list);
+	if (c_s->e_list)
+		free_double_str(c_s->e_list);
 	free(c_s->infile);
 	free(c_s->outfile);
-	if (c_s->exec.exec_line != NULL)
-		free_double_str(c_s->exec.exec_line);
+	if (c_s->exec_line != NULL)
+		free_double_str(c_s->exec_line);
 }
 
 void	free_global(struct s_main *m_s)

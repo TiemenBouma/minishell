@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 14:20:56 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:18:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@
 # define STD_IN 0
 # define S_OUT 1
 # define S_IN 0
-# define CUR (i + 1) % 2
-# define PREV i % 2
+
 
 # define GREATER 20
 # define SMALLER 21
@@ -97,15 +96,14 @@ typedef struct s_node
 	struct s_node	*p;
 }	t_node;
 
-struct	s_to_exec {
-	int		fd_in;
-	int		fd_out;
-	char	**exec_line;
-	int		cmd_count;
-	char	*heredoc;
-};
+// struct	s_to_exec {
+// };
 
 struct	s_cmd_info {
+	int					fd_in;
+	int					fd_out;
+	char				**exec_line;
+	int					cmd_count;
 	int					cmd_index;
 	char				**curr_line_tokens;
 	int					token_count;
@@ -124,10 +122,10 @@ struct	s_cmd_info {
 	int					set_file_err;
 	int					err_syntax;
 
-	struct s_to_exec	exec;
+	//struct s_to_exec	exec;
 	pid_t				pid_child;
 	struct s_node		*env_llist;
-	char				**arr_env_list;
+	char				**e_list;
 };
 
 /*

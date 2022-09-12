@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/24 12:42:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 11:51:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	print_cmd_info(struct s_main *m_s)
 		printf("---------------------------------------\n");
 		printf("CMDline_n %d\n", i);
 		printf("has_in: %d has_out: %d has_appendfile: %d has_heredoc: %d\n", m_s->c_s_arr[i].has_infile, m_s->c_s_arr[i].has_outfile, m_s->c_s_arr[i].has_appendfile, m_s->c_s_arr[i].has_heredoc);
-		printf("fd_in = %d fd_out = %d\n", m_s->c_s_arr[i].exec.fd_in, m_s->c_s_arr[i].exec.fd_out);
+		printf("fd_in = %d fd_out = %d\n", m_s->c_s_arr[i].fd_in, m_s->c_s_arr[i].fd_out);
 		if ( m_s->c_s_arr[i].has_infile == 1)
 			printf("infile:\t\t\t%s\n", m_s->c_s_arr[i].infile);
 		if ( m_s->c_s_arr[i].has_outfile == 1)
@@ -65,9 +65,9 @@ int	print_cmd_info(struct s_main *m_s)
 		if ( m_s->c_s_arr[i].has_appendfile == 1)
 			printf("appendfile:\t\t%s\n", m_s->c_s_arr[i].appendfile);
 		if ( m_s->c_s_arr[i].has_heredoc == 1)
-			printf("heredoc:\t\t%s\n", m_s->c_s_arr[i].exec.heredoc);
+			printf("heredoc:\t\t%s\n", m_s->c_s_arr[i].heredoc);
 		print_dubble_str(m_s->c_s_arr[i].curr_line_tokens, "CMDline_input:");
-		print_dubble_str(m_s->c_s_arr[i].exec.exec_line, "Exec_line:");
+		print_dubble_str(m_s->c_s_arr[i].exec_line, "Exec_line:");
 		printf("\n");
 		i++;
 	}

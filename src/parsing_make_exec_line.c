@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:43:44 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 13:43:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	find_exec_tokens(struct s_cmd_info *cmd_struct)
 		//value = is_arrow_sign(cmd_struct->curr_line_tokens[token_n]);
 		if (!is_arrow_sign(cmd_struct->curr_line_tokens[token_n]))//(value != SMALLER && value != GREATER)//(cmd_struct->curr_line_tokens[token_n][0] != '<' && cmd_struct->curr_line_tokens[token_n][0] != '>')
 		{
-			cmd_struct->exec.exec_line[exec_token] = ft_strdup(cmd_struct->curr_line_tokens[token_n]);
+			cmd_struct->exec_line[exec_token] = ft_strdup(cmd_struct->curr_line_tokens[token_n]);
 			exec_token++;
 		}
 		else if (is_arrow_sign(cmd_struct->curr_line_tokens[token_n]))//(value == GREATER || value == SMALLER)//(cmd_struct->curr_line_tokens[token_n][0] == '<' || cmd_struct->curr_line_tokens[token_n][0] == '>')
@@ -66,9 +66,9 @@ int	make_exec_line(struct s_cmd_info *cmd_struct)
 	exec_len = 0;
 	exec_len = calc_exec_line_len(cmd_struct);
 	//printf("LEN = %d\n", exec_len);
-	cmd_struct->exec.exec_line = malloc(sizeof(char *) * (exec_len + 1));
+	cmd_struct->exec_line = malloc(sizeof(char *) * (exec_len + 1));
 	//malloc protection
-	cmd_struct->exec.exec_line[exec_len] = NULL;
+	cmd_struct->exec_line[exec_len] = NULL;
 	find_exec_tokens(cmd_struct);
 	
 	return (0);

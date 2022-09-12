@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:30:01 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:39:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	redir_check(struct s_cmd_info *cmd_struct)
 			cmd_struct->has_heredoc = 2;
 			if (cmd_struct->has_infile == 2)
 			{
-				if (cmd_struct->exec.fd_in >= 0)
+				if (cmd_struct->fd_in >= 0)
 				{
-					close(cmd_struct->exec.fd_in);
+					close(cmd_struct->fd_in);
 				}
 				cmd_struct->has_infile = 1;
 			}
@@ -91,8 +91,8 @@ int	redir_check(struct s_cmd_info *cmd_struct)
 		}
 		i++;
 	}
-	if (cmd_struct->has_heredoc == 2 && cmd_struct->exec.fd_in != 0)
-		close(cmd_struct->exec.fd_in);
+	if (cmd_struct->has_heredoc == 2 && cmd_struct->fd_in != 0)
+		close(cmd_struct->fd_in);
 	if (cmd_struct->has_infile == 2 && cmd_struct->has_heredoc > 0)
 		close(cmd_struct->heredoc_pipe[0]);
 	return (1);

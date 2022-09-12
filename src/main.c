@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 10:55:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:16:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,49 @@ int	init_m_s(struct	s_main *m_s)
 
 //rl_catch_signals = 0;
 
+void	minishell_loop(struct s_main *m_s, int argc, char **argv)
+{
+
+	while (1)
+	{
+		init_m_s(m_s);
+		m_s->root_paths = find_path(&m_s->env_llist);
+		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+		{
+			if (ft_strncmp(argv[2], "|", 1) == 0)
+				exit (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2));
+			m_s->input_str = ft_strdup(argv[2]);
+		}
+		else
+			m_s->input_str = readline("minishell-1.0$ ");
+		add_history(m_s->input_str);
+		if (m_s->input_str == NULL)
+		{
+			write(2, "exit\n", 5);
+			free_struct(m_s);
+			break ;
+		}
+		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->old_exit_status);
+		m_s->all_tokens = ft_split_tokens(m_s->input_str);
+		if (basic_error_handeling(m_s))
+		{
+			free_struct(m_s);
+			continue ;
+		}
+		m_s->cmd_lines = make_cmd_lines(m_s->all_tokens);
+		if (make_cmd_structs(m_s) == -1)
+		{
+			free_struct(m_s);
+			continue ;
+		}
+		//print_structs(&m_s);
+		m_s->old_exit_status = exec(m_s);
+		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+			exit(m_s->old_exit_status);
+		free_struct(m_s);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	extern char		**environ;
@@ -49,45 +92,9 @@ int	main(int argc, char **argv)
 	signals_handeler();
 	m_s.old_exit_status = 0;
 	m_s.env_llist = add_env_to_list(environ);
-	while (1)
-	{
-		init_m_s(&m_s);
-		m_s.root_paths = find_path(&m_s.env_llist);
-		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-		{
-			if (ft_strncmp(argv[2], "|", 1) == 0)
-				exit (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2));
-			m_s.input_str = ft_strdup(argv[2]);
-		}
-		else
-			m_s.input_str = readline("minishell-1.0$ ");
-		add_history(m_s.input_str);
-		if (m_s.input_str == NULL)
-		{
-			write(2, "exit\n", 5);
-			free_struct(&m_s);
-			break ;
-		}
-		expand_variables(&m_s.input_str, &m_s.env_llist, m_s.old_exit_status);
-		m_s.all_tokens = ft_split_tokens(m_s.input_str);
-		
-		if (basic_error_handeling(&m_s))
-		{
-			free_struct(&m_s);
-			continue ;
-		}
-		m_s.cmd_lines = make_cmd_lines(m_s.all_tokens);
-		if (make_cmd_structs(&m_s) == -1)
-		{
-			free_struct(&m_s);
-			continue ;
-		}
-		//print_structs(&m_s);
-		m_s.old_exit_status = exec(&m_s);
-		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-			exit(m_s.old_exit_status);
-		free_struct(&m_s);
-	}
+
+	minishell_loop(&m_s, argc, argv);
+
 	free_linked_list(&m_s.env_llist);
 	return (m_s.old_exit_status);
 }

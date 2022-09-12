@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/08 10:47:02 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/12 14:13:37 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ OBJFILES := \
 			obj/src/executils.o \
 			obj/src/execution.o \
 			obj/src/expand_variables.o \
+			obj/src/expand_variables2.o \
 			obj/src/free.o \
 			obj/src/get_next_line_utils.o \
 			obj/src/get_next_line.o \

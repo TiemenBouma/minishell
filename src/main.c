@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 11:16:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:24:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	**g_pipe_heredoc;
 
+/*
+oxs = OLD_EXIT_STATUS
+*/
 int	basic_error_handeling(struct s_main *m_s)
 {
 	if (m_s->all_tokens[0] == NULL)
@@ -21,7 +24,7 @@ int	basic_error_handeling(struct s_main *m_s)
 	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		m_s->old_exit_status = 2;
+		m_s->oxs = 2;
 		return (1);
 	}
 	return (0);
@@ -42,7 +45,6 @@ int	init_m_s(struct	s_main *m_s)
 
 void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 {
-
 	while (1)
 	{
 		init_m_s(m_s);
@@ -62,7 +64,7 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			break ;
 		}
-		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->old_exit_status);
+		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs);
 		m_s->all_tokens = ft_split_tokens(m_s->input_str);
 		if (basic_error_handeling(m_s))
 		{
@@ -75,10 +77,10 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			continue ;
 		}
-		//print_structs(&m_s);
-		m_s->old_exit_status = exec(m_s);
+		//print_structs(m_s);
+		m_s->oxs = exec(m_s);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-			exit(m_s->old_exit_status);
+			exit(m_s->oxs);
 		free_struct(m_s);
 	}
 }
@@ -90,13 +92,11 @@ int	main(int argc, char **argv)
 
 	g_pipe_heredoc = NULL;
 	signals_handeler();
-	m_s.old_exit_status = 0;
+	m_s.oxs = 0;
 	m_s.env_llist = add_env_to_list(environ);
-
 	minishell_loop(&m_s, argc, argv);
-
 	free_linked_list(&m_s.env_llist);
-	return (m_s.old_exit_status);
+	return (m_s.oxs);
 }
 
 	//print_linked_list(&m_s.env_llist);

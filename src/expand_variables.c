@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 15:19:07 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:23:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ char	*find_next_var_in_str(char *input, int *index)
 	return (temp);
 }
 
-int	expand_variables(char **input, t_node **list, int old_exit_status)
+int	expand_variables(char **input, t_node **list, int oxs)
 {
 	int		index;
 	char	*v_name;
@@ -188,7 +188,7 @@ int	expand_variables(char **input, t_node **list, int old_exit_status)
 		content = find_var_in_list(list, v_name);
 		if (ft_strncmp(v_name, "?", 2) == 0)
 		{
-			str_exit_status = ft_itoa(old_exit_status);
+			str_exit_status = ft_itoa(oxs);
 			replace_input(input, str_exit_status, &index, v_name);
 			free(str_exit_status);
 		}

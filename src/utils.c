@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/07 15:20:52 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:53:49 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ int	perror_msg(char *cmd, char *att, int exit_status)
 	return (exit_status);
 }
 
-int free_stuff(char *str)
+int	free_stuff(char *str)
 {
 	free(str);
 	return (0);
 }
-
 
 int	ft_strcmp_var(const char *s1, const char *s2)
 {

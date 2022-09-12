@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 10:16:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:24:48 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,9 @@ struct	s_cmd_info {
 	char				**arr_env_list;
 };
 
+/*
+oxs = old exit status
+*/
 struct	s_main {
 	char				*input_str;
 	char				**root_paths;// read it from our linked list eatch loop
@@ -138,17 +141,7 @@ struct	s_main {
 	int					cmd_count;
 	struct s_cmd_info	*c_s_arr;
 	struct s_node		*env_llist;
-
-	//int					has_heredoc;
-	
-	int					old_exit_status;
-	//pipex
-	//pid_t				pid_child;
-	//int					tube[2];
-	//struct sigaction	sa;
-	//int					curr_exec_cmd_n;
-	//char				**env_var;
-	// t_node				*env_llist;
+	int					oxs;
 };
 
 //DAN
@@ -216,7 +209,7 @@ int	free_linked_list(t_node **list);
 //env_var_list
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
-int	expand_variables(char **input_str, t_node **list, int old_exit_status);
+int	expand_variables(char **input_str, t_node **list, int oxs);
 int	ft_print_var_content(t_node **list, char *var_name);
 char	*find_var_in_list(t_node **list, char *var_name);
 void	inc_shlvl(t_node **list);

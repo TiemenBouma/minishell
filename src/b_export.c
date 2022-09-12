@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:23:32 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 	t_node	*match_node;
 	char	*var_name;
 	int	i;
-	int old_exit_status;
+	int oxs;
 
 	i = 1;
-	old_exit_status = 0;
+	oxs = 0;
 	if (!exec_line[1])
 		print_export(list);
 	else 
@@ -67,7 +67,7 @@ int	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 				ft_putstr_fd(exec_line[i], 2);
 				ft_putstr_fd("': not a valid identifier\n", 2);
 				i++;
-				old_exit_status = 1;
+				oxs = 1;
 				continue;
 			}
 			var_name = make_var_name(exec_line[i]);
@@ -86,6 +86,6 @@ int	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 			i++;
 		}
 	}
-	return (old_exit_status);
+	return (oxs);
 
 }

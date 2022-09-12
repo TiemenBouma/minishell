@@ -6,17 +6,16 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 12:35:44 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:02:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
 t_node	*add_env_to_list(char **environ)
 {
-	int i;
-	t_node *env_llist;
+	int		i;
+	t_node	*env_llist;
 	t_node	*temp_node;
 
 	i = 1;
@@ -34,7 +33,7 @@ t_node	*add_env_to_list(char **environ)
 int	ft_print_var_content(t_node **list, char *var_name)
 {
 	t_node	*match_node;
-	
+
 	match_node = ft_find_node_in_list(list, var_name);
 	if (match_node == NULL)
 		return (0);
@@ -49,12 +48,12 @@ void	inc_shlvl(t_node **list)
 	char	*var_line;
 
 	match_node = ft_find_node_in_list(list, "SHLVL=");
-	
 	if (!match_node)
 		ft_list_node_add_back(list, ft_new_node("SHLVL=1"));
 	else
 	{
-		var_line = ft_sjf("SHLVL=", ft_itoa(ft_atoi(&match_node->str[6]) + 1), 2);
+		var_line = ft_sjf("SHLVL=",
+				ft_itoa(ft_atoi(&match_node->str[6]) + 1), 2);
 		if (!var_line)
 			return ;
 		free (match_node->str);

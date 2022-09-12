@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 11:24:48 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:20:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,10 +209,15 @@ int	free_linked_list(t_node **list);
 //env_var_list
 t_node	*add_env_to_list(char **environ);
 char	*find_var(t_node **list, char *var_name);
-int	expand_variables(char **input_str, t_node **list, int oxs);
 int	ft_print_var_content(t_node **list, char *var_name);
 char	*find_var_in_list(t_node **list, char *var_name);
 void	inc_shlvl(t_node **list);
+
+//expand var
+int	expand_variables(char **input_str, t_node **list, int oxs);
+int	find_len_var_name(char **in, int s);
+int	replace_input(char **in, char *content, int *i, char *v_name);
+
 
 
 //SIGNALS

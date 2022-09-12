@@ -6,11 +6,26 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 13:28:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 13:56:57 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*make_var_name(char *var_line)
+{
+	char	*var_name;
+	int		i;
+
+	i = 0;
+	while (var_line[i] && var_line[i] != '=')
+	{
+		i++;
+	}
+	var_name = ft_substr(var_line, 0, i);
+	//malloc proctection
+	return(var_name);
+}
 
 int	export_num_check_equal(char *str)
 {
@@ -60,9 +75,21 @@ int	input_check(char *exec_line, int *oxs, int *i)
 	return (1);
 }
 
-int	ft_export(t_node **list, char **exec_line)
+void	change_list(t_node **list, t_node *match_node, char *exec_line)
 {
 	t_node	*new_node;
+
+	if (!match_node)
+	{
+		new_node = ft_new_node(exec_line);
+		ft_list_node_add_back(list, new_node);
+	}
+	else
+		replace_node_content(match_node, exec_line);
+}
+
+int	ft_export(t_node **list, char **exec_line)
+{
 	t_node	*match_node;
 	char	*var_name;
 	int		i;
@@ -81,13 +108,7 @@ int	ft_export(t_node **list, char **exec_line)
 			var_name = make_var_name(exec_line[i]);
 			match_node = ft_find_node_in_list(list, var_name);
 			free(var_name);
-			if (!match_node)
-			{
-				new_node = ft_new_node(exec_line[i]);
-				ft_list_node_add_back(list, new_node);
-			}
-			else
-				replace_node_content(match_node, exec_line[i]);
+			change_list(list, match_node, exec_line[i]);
 			i++;
 		}
 	}

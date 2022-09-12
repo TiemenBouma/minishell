@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/08 13:40:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:16:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,8 @@ int 				ft_cd(t_node **list, char ***exec_line);
 void				ft_echo(char **s);
 void				ft_env(t_node **list);
 int					ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line);
-void					ft_pwd(t_node **list);
-void				ft_unset(t_node **list, char **exec_line);
+void				ft_pwd(t_node **list);
+int					ft_unset(t_node **list, char **exec_line);
 
 //UTILS
 int					error_msg(char *msg, int err);

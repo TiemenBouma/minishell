@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:54:09 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_export(t_node **list, /*struct	s_main	*m_s,*/ char **exec_line)
 		{
 			if (export_num_check_equal(exec_line[i]))
 			{
-				ft_putstr_fd("bash: export: `", 2);
+				ft_putstr_fd("minishell: export: `", 2);
 				ft_putstr_fd(exec_line[i], 2);
 				ft_putstr_fd("': not a valid identifier\n", 2);
 				i++;

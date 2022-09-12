@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:36:55 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:37:23 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_special_c_redir(char *str)
 
 void	set_redir_error(struct s_cmd_info *cmd_struct, char *token)
 {
-	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	if (token)
 		ft_putstr_fd(token, 2);
 	else

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:51:36 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 11:46:50 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ int ft_exit(char **s, int is_in_child, struct s_main *m_s)
 			exit_code = ft_atoi(s[1]);
 		else
 		{
-			ft_putstr_fd("bash: exit: ", 2);
+			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(s[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
 			free_struct(m_s);
-			exit(2);
+			exit(255);
 		}
 		if (count_arg(s) > 2)
 		{
-			ft_putstr_fd("bash: line 1: exit: too many arguments\n", 2);
+			ft_putstr_fd("minishell: line 1: exit: too many arguments\n", 2);
 			m_s->old_exit_status = 1;
 			return (1);
 		}

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 10:34:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_exit_redir(char *str)
 {
-	ft_putstr_fd("Bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	perror("");

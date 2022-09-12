@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/08 13:41:38 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:53:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*set_home(t_node **list, char ***exec_line)
 	curr_node = ft_find_node_in_list(list, "HOME=");
 	if (curr_node == NULL)
 	{
-		ft_putstr_fd("bash: cd: HOME not set\n", 2);
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		return (NULL);
 	}
 	free_double_str(*exec_line);
@@ -37,7 +37,7 @@ int	switch_old_pwd(t_node **list, char **exec_line, t_node	**temp_node)
 		*temp_node = ft_find_node_in_list(list, "OLDPWD=");
 		if (*temp_node == NULL)
 		{
-			write(2, "bash: cd: OLDPWD not set\n", 25);
+			write(2, "minishell: cd: OLDPWD not set\n", 25);
 			return (1);
 		}
 		else
@@ -78,7 +78,7 @@ int	ft_cd(t_node **list, char ***exec_line)
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	free(new_str);
 	if (chdir((*exec_line)[1]))
-		return (perror_msg("bash: cd", (*exec_line)[1], EXIT_CD));
+		return (perror_msg("minishell: cd", (*exec_line)[1], EXIT_CD));
 	cwd = malloc(sizeof(char) * (MAXPATHLEN + 1));
 	cwd[PATH_MAX] = '\0';
 	if (getcwd(cwd, MAXPATHLEN) == NULL)

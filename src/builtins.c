@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 14:09:35 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/08 14:33:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/12 10:14:25 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	exec_builtin(struct s_main *m_s, struct	s_cmd_info	*cmd_struct, int build_n)
 	else if (build_n == EXPORT_BUILD)
 		return (ft_export(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
 	else if (build_n == UNSET_BUILD)
-		ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line);
+		return (ft_unset(&cmd_struct->env_llist, cmd_struct->exec.exec_line));
 	else if (build_n == ECHO_BUILD)
 		ft_echo(cmd_struct->exec.exec_line);
 	else if (build_n == PWD_BUILD)

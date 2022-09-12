@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/09 16:18:58 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/12 10:55:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	basic_error_handeling(struct s_main *m_s)
 		return (1);
 	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		m_s->old_exit_status = 2;
 		return (1);
 	}
@@ -56,11 +56,11 @@ int	main(int argc, char **argv)
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 		{
 			if (ft_strncmp(argv[2], "|", 1) == 0)
-				exit (ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2));
+				exit (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2));
 			m_s.input_str = ft_strdup(argv[2]);
 		}
 		else
-			m_s.input_str = readline("SuperShell: ");
+			m_s.input_str = readline("minishell-1.0$ ");
 		add_history(m_s.input_str);
 		if (m_s.input_str == NULL)
 		{

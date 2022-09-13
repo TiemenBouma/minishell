@@ -6,52 +6,73 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 12:49:14 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:54:27 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:31:03 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	check_double_arrow(char const *input_str, int *index, int *len)
+{
+	char	c;
+
+	if (input_str[*index] && (input_str[*index]
+			== '<' || input_str[*index] == '>'))
+	{
+		if (*len > 0)
+			return (1);
+		c = input_str[*index];
+		while (input_str[*index] && input_str[*index] == c && *len < 2)
+		{
+			(*len)++;
+			(*index)++;
+		}
+		return (1);
+	}
+	return (0);
+}
+
+int	find_end_quote(char const *input_str, int *index, int *len)
+{
+	char	c;
+
+	if (input_str[*index] == '\'' || input_str[*index] == '\"')
+	{
+		c = input_str[*index];
+		(*index)++;
+		while (input_str[*index] && input_str[*index] != c)
+		{
+			(*len)++;
+			(*index)++;
+		}
+		if (input_str[*index] == c)
+		{
+			(*index)++;
+			if ((*len) == 0)
+			{
+				*len = -1;
+				return (1);
+			}
+		}
+		if (!input_str[*index])
+			return (1);
+	}
+	return (0);
+}
+
 int	find_end_token(char const *input_str, int *index)
 {
-	int 	len;
-	char	c;
+	int		len;
 
 	len = 0;
 	while (input_str[*index])
 	{
-		if (input_str[*index] == '\'' || input_str[*index] == '\"')
-		{
-			c = input_str[*index];
-			(*index)++;
-			while (input_str[*index] && input_str[*index] != c)
-			{
-				len++;
-				(*index)++;
-			}
-			if (input_str[*index] == c)
-			{
-				(*index)++;
-				if (len == 0)
-					return (-1);
-			}
-			if (!input_str[*index])
-				return (len);
-		}
+		if (find_end_quote(input_str, index, &len))
+			return (len);
 		if (input_str[*index] && input_str[*index] == ' ') ///twice in this func 41 and 71
 				return (len);
-		if (input_str[*index] && (input_str[*index] == '<' || input_str[*index] == '>'))
-		{
-			if (len > 0)
-				return (len);
-			c = input_str[*index];
-			while (input_str[*index] && input_str[*index] == c && len < 2)
-			{
-				len++;
-				(*index)++;
-			}
+		if (check_double_arrow(input_str, index, &len))
 			return (len);
-		}
 		if (input_str[*index] == '|')
 		{
 			if (len > 0)

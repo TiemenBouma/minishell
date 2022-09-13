@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
-#    Updated: 2022/09/13 10:17:11 by tiemen        ########   odam.nl          #
+#    Updated: 2022/09/13 13:37:03 by tiemen        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ OBJFILES := \
 			obj/src/parsing_redir_utils.o \
 			obj/src/parsing_redir.o \
 			obj/src/parsing_tokens.o \
+			obj/src/parsing_tokens2.o \
 			obj/src/path_command.o \
 			obj/src/signals.o \
 			obj/src/testing.o \

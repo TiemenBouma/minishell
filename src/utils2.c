@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/13 15:30:28 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/13 15:31:57 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 15:37:55 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**make_arr_from_list(t_node **list)
 
 int	check_n_flag(char *flag)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!flag || flag[0] != '-')

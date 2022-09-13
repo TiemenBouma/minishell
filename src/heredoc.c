@@ -15,12 +15,9 @@
 
 extern int	**g_pipe_heredoc;
 
-// int g_sig;
-//int g_pipe_heredoc[2];
-
 void	sigint_handler_heredoc(int sig)
 {
-	//g_sig = 1;
+
 	ft_suppress_output();
 	(void) sig;
 	close(g_pipe_heredoc[g_pipe_heredoc[0][0]][P_IN]);
@@ -47,15 +44,12 @@ int	heredoc(char *stop_word, int index)
 {
 	char	*input;
 
-	//g_sig = 0;
-	//close(g_pipe_heredoc[P_OUT]);
-	signal(SIGINT, sigint_handler_heredoc);// we need to close pipe in if signal;
-	while (1)//(g_sig == 0)
+	signal(SIGINT, sigint_handler_heredoc);
+	while (1)
 	{
-		// if (g_sig)
-		// 	break;
 		input = readline("> ");
-		if (!(input) || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
+		if (!(input) || !ft_strncmp(input,
+				stop_word, ft_strlen (stop_word) + 1))
 		{
 			free(input);
 			break ;
@@ -63,21 +57,17 @@ int	heredoc(char *stop_word, int index)
 		write(g_pipe_heredoc[index + 1][P_IN], input, ft_strlen(input));
 		free(input);
 		write(g_pipe_heredoc[index + 1][P_IN], "\n", 1);
-		// if (g_sig ==1)
-		// {
-		// 	close(heredoc_pipe[P_OUT]);
-		// }
 	}
-	//g_sig = 0;
+
 
 	signal(SIGINT, sigint_handler);
-	close(g_pipe_heredoc[index + 1][P_IN]); 
+	close(g_pipe_heredoc[index + 1][P_IN]);
 	return (0);
 }
 
 int	dummy_heredoc(char *stop_word)
 {
-		char	*input;
+	char	*input;
 
 
 	signal(SIGINT, sigint_handler_heredoc);
@@ -85,7 +75,8 @@ int	dummy_heredoc(char *stop_word)
 	{
 
 		input = readline("> ");
-		if (!(input) || !ft_strncmp(input, stop_word, ft_strlen (stop_word) + 1))
+		if (!(input) || !ft_strncmp(input,
+				stop_word, ft_strlen (stop_word) + 1))
 		{
 			free(input);
 			break ;
@@ -94,33 +85,3 @@ int	dummy_heredoc(char *stop_word)
 	signal(SIGINT, sigint_handler);
 	return (0);
 }
-
-// int	heredoc(struct s_cmd_info *cmd_struct, char *stop_word, char *heredoc_filename)
-// {
-// 	//int		fd;
-// 	char	**gnl;
-	
-// 	//fd = open(heredoc_filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
-// 	if (fd < 0)
-// 		exit (0);
-// 	// err_chk(dup2(fd, S_OUT), 1, "");
-// 	gnl = malloc (sizeof(char **) * 2);
-// 	if (!gnl)
-// 		exit(0);
-// 	while (1)
-// 	{
-// 		if (get_next_line(0, gnl) == 0 || ft_strncmp (gnl[0], stop_word, ft_strlen (stop_word) + 1) == 0)
-// 		{
-// 			free(gnl[0]);
-// 			free(gnl);
-// 			break ;
-// 		}
-// 		printf("wccxz");//????
-// 		write(fd, gnl[0], ft_strlen(gnl[0]));
-// 		free(gnl[0]);
-// 		write(fd, "\n", 1);
-// 	}
-// 	close(fd);
-// 	return (1);
-// 	return (0);
-// }

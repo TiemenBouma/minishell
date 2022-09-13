@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/12 14:13:37 by tbouma           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tbouma <tbouma@student.42.fr>                +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
+#    Updated: 2022/09/13 10:17:11 by tiemen        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ OBJFILES := \
 			obj/src/get_next_line_utils.o \
 			obj/src/get_next_line.o \
 			obj/src/heredoc.o \
-			obj/src/history.o \
 			obj/src/linked_list.o \
+			obj/src/linked_list2.o \
 			obj/src/main.o \
 			obj/src/parsing_make_cmd_struct.o \
 			obj/src/parsing_cmd_lines.o \

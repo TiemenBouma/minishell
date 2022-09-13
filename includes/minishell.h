@@ -198,6 +198,7 @@ void	ft_find_and_remove_node(t_node **list, char *var_line);
 int	replace_node_content(t_node *first_node, char *var_line);
 void	ft_find_and_edit_node(t_node **list, char *var_name, char *content);
 int	free_linked_list(t_node **list);
+void	ft_add_or_change_list(t_node **list, t_node *match_node, char *exec_line);
 
 
 

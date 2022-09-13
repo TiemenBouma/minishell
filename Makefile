@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>                +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
-#    Updated: 2022/09/13 13:37:03 by tiemen        ########   odam.nl          #
+#    Updated: 2022/09/13 15:32:33 by tiemen        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ OBJFILES := \
 			obj/src/path_command.o \
 			obj/src/signals.o \
 			obj/src/testing.o \
-			obj/src/utils.o
+			obj/src/utils.o \
+			obj/src/utils2.o
 			
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/

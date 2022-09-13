@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/13 12:16:30 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:36:27 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ char					*find_cmd_path(char **path_and_cmd_lines,
 							char **root_paths, char *cmd);
 
 //PARSING_tokens
-char					**ft_split_tokens(char const *s);
+char					**split_tokens(char const *s);
+int						find_end_token(char const *input_str, int *index);
 
 //PARSING CMD LINES
 char					***make_cmd_lines(char **curr_line_tokens);

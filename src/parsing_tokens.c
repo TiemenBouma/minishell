@@ -6,86 +6,11 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 12:49:14 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 13:31:03 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:36:01 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_double_arrow(char const *input_str, int *index, int *len)
-{
-	char	c;
-
-	if (input_str[*index] && (input_str[*index]
-			== '<' || input_str[*index] == '>'))
-	{
-		if (*len > 0)
-			return (1);
-		c = input_str[*index];
-		while (input_str[*index] && input_str[*index] == c && *len < 2)
-		{
-			(*len)++;
-			(*index)++;
-		}
-		return (1);
-	}
-	return (0);
-}
-
-int	find_end_quote(char const *input_str, int *index, int *len)
-{
-	char	c;
-
-	if (input_str[*index] == '\'' || input_str[*index] == '\"')
-	{
-		c = input_str[*index];
-		(*index)++;
-		while (input_str[*index] && input_str[*index] != c)
-		{
-			(*len)++;
-			(*index)++;
-		}
-		if (input_str[*index] == c)
-		{
-			(*index)++;
-			if ((*len) == 0)
-			{
-				*len = -1;
-				return (1);
-			}
-		}
-		if (!input_str[*index])
-			return (1);
-	}
-	return (0);
-}
-
-int	find_end_token(char const *input_str, int *index)
-{
-	int		len;
-
-	len = 0;
-	while (input_str[*index])
-	{
-		if (find_end_quote(input_str, index, &len))
-			return (len);
-		if (input_str[*index] && input_str[*index] == ' ') ///twice in this func 41 and 71
-				return (len);
-		if (check_double_arrow(input_str, index, &len))
-			return (len);
-		if (input_str[*index] == '|')
-		{
-			if (len > 0)
-				return (len);
-			len++;
-			(*index)++;
-			return (len);
-		}
-		len++;
-		(*index)++;
-	}
-	return (len);
-}
 
 int	find_next_token_sign(char const *input_str, int *index)
 {
@@ -139,7 +64,7 @@ static int	str_counter(char const *input_str)
 	return (count);
 }
 
-char	**ft_split_tokens(char const *input_str)
+char	**split_tokens(char const *input_str)
 {
 	char	**str_arr;
 	int		amount_of_tokens;

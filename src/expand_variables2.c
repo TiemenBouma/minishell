@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expand_variables2.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/12 14:06:03 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 15:57:49 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   expand_variables2.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/09/12 14:06:03 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/13 15:37:07 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	replace_input(char **in, char *content, int *i, char *v_name)
 	ft_memcpy(*in, temp1, ft_strlen(temp1));
 	ft_strlcat(*in, content, len_new_str);
 	ft_strlcat(*in, temp2, len_new_str);
-	//free(content);
 	free(temp1);
 	free(temp2);
 }
+	//free(content);
 
 char	*find_var_in_list(t_node **list, char *v_name)
 {

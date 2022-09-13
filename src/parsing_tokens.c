@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 12:49:14 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 13:36:01 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:52:53 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	str_maker(char const *input_str,
 			continue ;
 		str_arr[token_n] = NULL;
 		str_arr[token_n] = ft_substr_edit(input_str, temp_index, str_len);
+		if (str_arr[token_n] == NULL)
+			exit(1);
 		token_n++;
 	}
 	return (0);
@@ -76,7 +78,6 @@ char	**split_tokens(char const *input_str)
 	if (str_arr == NULL)
 		return (NULL);
 	str_arr[amount_of_tokens] = NULL;
-
 	if (amount_of_tokens > 0)
 		str_maker(input_str, str_arr, amount_of_tokens);
 	return (str_arr);

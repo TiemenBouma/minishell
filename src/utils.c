@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 09:41:42 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/12 11:53:49 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   utils.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/14 09:41:42 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/09/13 15:03:51 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	error_msg(char *msg, int err)// WE maybe need not to exit
+int	error_msg(char *msg, int err)
 {
 	ft_putendl_fd(msg, 2);
 	return (err);
@@ -60,62 +60,61 @@ int	ft_strcmp_var(const char *s1, const char *s2)
 
 int	is_special_char(char c)
 {
-	return (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == ' ' || c == '/');//Maybe this only needed for CD
+	return (c == '\'' || c == '\"' || c == '<' || c == '>'
+		|| c == '|' || c == ' ' || c == '/');
 }
 
-// Not needed anymore
-int	is_special_char_min_quotes(char c)
-{
-	return (c == '<' || c == '>' || c == '|' || c == ' ');
-}
 
-// ft_substr_edit checkes if there are quotest that do not need to be stored in the tokens. 
-// If a quote is found it will stored it in the var 'mem' and skips that char and look for the next one,
+// ft_substr_edit checkes if there are quotest that do not need
+//to be stored in the tokens. 
+// If a quote is found it will stored it in the var 'mem' and skips
+//that char and look for the next one,
 // if it is found that char will also be skipped.
+
+int	check_skip_quote(char c, int *mem, int *skip_quote)
+{
+	if (*mem != 0)
+	{
+		if (c == *mem)
+		{
+			(*skip_quote)++;
+			*mem = 0;
+			return (1);
+		}
+	}
+	else if ((c == '\'' || c == '\"'))
+	{
+		*mem = c;
+		(*skip_quote)++;
+		return (1);
+	}
+	return (0);
+}
+
 char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
 	size_t	src_size;
-	int		skiped_one;
-	char	mem;
-	size_t		index;
+	int		skip_quote;
+	int		mem;
+	size_t	index;
 
 	mem = 0;
-	skiped_one = 0;
+	skip_quote = 0;
 	if (s == NULL)
 		return (NULL);
 	src_size = ft_strlen(s);
 	if (start > src_size)
-	{
-		ptr = ft_calloc(1, sizeof(char));
-		if (ptr == NULL)
-			return (NULL);
-		return (ptr);
-	}
-	if (src_size - start < len)
-		len = src_size - start;
+		return (ft_calloc(1, sizeof(char)));
 	ptr = malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)
 		return (NULL);
 	index = 0;
-	while (s[start + index + skiped_one] && len > index)
+	while (s[start + index + skip_quote] && len > index)
 	{
-		if (mem != 0)
-		{
-			if (s[start + index + skiped_one] == mem)
-			{
-				skiped_one++;
-				mem = 0;
-				continue ;
-			}
-		}
-		else if ((s[start + index + skiped_one] == '\'' || s[start + index + skiped_one] == '\"'))// && skiped_one == 0)
-		{
-			mem = s[start + index + skiped_one];
-			skiped_one++;
+		if (check_skip_quote(s[start + index + skip_quote], &mem, &skip_quote))
 			continue ;
-		}
-		ptr[index] = s[start + index + skiped_one];
+		ptr[index] = s[start + index + skip_quote];
 		index++;
 	}
 	ptr[index] = '\0';

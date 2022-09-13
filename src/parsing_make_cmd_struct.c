@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_make_cmd_struct.c                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 15:23:41 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parsing_make_cmd_struct.c                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/22 11:48:30 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/13 12:24:14 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line
 	//cmd_struct->heredoc_filename = NULL;
 	cmd_struct->infile = NULL;
 	cmd_struct->outfile = NULL;
-	cmd_struct->env_llist = m_s->env_llist;
+	cmd_struct->appendfile = NULL;
 	cmd_struct->heredoc = NULL;
+	cmd_struct->env_llist = m_s->env_llist;
 	cmd_struct->e_list = NULL;
 	cmd_struct->err_syntax = 0;
 	cmd_struct->set_file_err = 0;
+	cmd_struct->exec_line = NULL;
 }
 
 void	redir_execline_path(struct s_main *m_s)

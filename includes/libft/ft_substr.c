@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 11:29:04 by tbouma            #+#    #+#             */
-/*   Updated: 2022/07/26 15:59:24 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_substr.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/15 11:29:04 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/13 11:14:04 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start > src_size)
 	{
 		ptr = ft_calloc(1, sizeof(char));
-		if (ptr == NULL)
-			return (NULL);
 		return (ptr);
 	}
 	if (src_size - start < len)

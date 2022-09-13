@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_redir.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/08 10:30:01 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 14:54:06 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parsing_redir.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/09/08 10:30:01 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/13 12:06:39 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int	redir_check(struct s_cmd_info *cmd_struct)
 		{
 			if (cmd_struct->has_appendfile >= 1)
 				free(cmd_struct->appendfile);
-			cmd_struct->has_appendfile++;
 			if (n_token == NULL || is_special_c_redir(n_token))
 			{
 				set_redir_error(cmd_struct, n_token);
 				return (1);
 			}
+			cmd_struct->has_appendfile++;
 			cmd_struct->appendfile = ft_strdup(n_token);
 			if (open_fd_out_append(cmd_struct) == -1)
 				return (-1);

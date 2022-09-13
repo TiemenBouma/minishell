@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 15:00:11 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   free.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/27 13:10:25 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/13 12:23:00 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,14 @@ void	free_cmd_info(struct s_cmd_info *c_s)
 	free_double_str(c_s->curr_line_tokens);
 	if (c_s->e_list)
 		free_double_str(c_s->e_list);
-	free(c_s->infile);
-	free(c_s->outfile);
+	if (c_s->infile)
+		free(c_s->infile);
+	if (c_s->outfile)
+		free(c_s->outfile);
+	if (c_s->appendfile)
+		free(c_s->appendfile);
+	if (c_s->heredoc)
+		free(c_s->heredoc);
 	if (c_s->exec_line != NULL)
 		free_double_str(c_s->exec_line);
 }

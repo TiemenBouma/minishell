@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:08:10 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 10:16:03 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/13 10:48:11 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,6 @@ int	ft_list_size(t_node *lst)
 	return (i);
 }
 
-t_node	*ft_list_find_last_node(t_node **list)
-{
-	t_node	*current;
-
-	current = *list;
-	while (current->n != NULL)
-		current = current->n;
-	return (current);
-}
-
 t_node	*ft_find_node_in_list(t_node **list, char *var_name)
 {
 	t_node	*current;
@@ -93,8 +83,6 @@ t_node	*ft_find_node_in_list(t_node **list, char *var_name)
 	return (NULL);
 }
 
-
-
 void	ft_add_or_change_list(t_node **list,
 	t_node *match_node, char *exec_line)
 {
@@ -106,5 +94,5 @@ void	ft_add_or_change_list(t_node **list,
 		ft_list_node_add_back(list, new_node);
 	}
 	else
-		replace_node_content(match_node, exec_line);
+		ft_replace_node_content(match_node, exec_line);
 }

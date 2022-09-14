@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expand_variables.c                                 :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/07 11:14:11 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/14 13:59:11 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expand_variables.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/14 15:13:57 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	is_close_single_quote(int *in_q, int *index, char *old_c, char *input)
 {
 	if (*old_c == '\'' && *in_q == 1)
 	{
+		printf("DEBUG1 index = %d\n", *index);
 		while (input[*index] && input[*index] != '\'')
 			(*index)++;
 		*old_c = 0;
@@ -88,6 +89,7 @@ void	expand_variables(char **input, t_node **list, int oxs, int index)
 
 	while ((*input)[index])
 	{
+		printf("input s = %c inddex = %d\n", (*input)[index], index);
 		v_name = find_next_var_in_str(*input, &index);
 		if (v_name == NULL)
 		{

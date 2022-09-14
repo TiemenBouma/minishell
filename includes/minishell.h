@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/14 10:14:10 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:52:54 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ int						expand_variables(char **input, t_node **list, int oxs);
 int						find_len_var_name(char **in, int s);
 void					replace_input(char **in, char *content, int *i,
 							char *v_name);
+//expand var HEREDOC
+int						expand_variables_heredoc(char **input, t_node **list, int oxs);
 
 //SIGNALS
 void					sigint_handler(int sig);
@@ -197,7 +199,7 @@ void					sigint_handler_nonl(int sig);
 void					ft_suppress_output(void);
 
 //HEREDOC
-int						heredoc(char *stop_word, int index);
+int						heredoc(struct s_main *m_s, char *stop_word, int index);
 char					*make_heredoc_filename(int index);
 int						heredoc_counter(char **curr_line_tokens);
 int						dummy_heredoc(char *stop_word);
@@ -208,7 +210,7 @@ int						print_dubble_str(char **str, char *name);
 int						print_linked_list(t_node **list);
 
 //Parsing_redir
-int						heredoc_redir_check(struct s_cmd_info *cmd_struct);
+int						heredoc_redir_check(struct s_main *m_s, struct s_cmd_info *cmd_struct);
 int						redir_check(struct s_cmd_info *cmd_struct);
 
 //parsing_redir_open_fd

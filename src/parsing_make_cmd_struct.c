@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:17:22 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:48:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	make_cmd_structs(struct s_main *m_s)
 		copy_token(m_s->cmd_lines[line], m_s->c_s_arr[line].curr_line_tokens, m_s->c_s_arr[line].token_count);
 		init_cmd_struct(m_s, &m_s->c_s_arr[line], line);
 		g_pipe_heredoc[0][0] = line;
-		heredoc_redir_check(&m_s->c_s_arr[line]);
+		heredoc_redir_check(m_s, &m_s->c_s_arr[line]);
 		line++;
 	}
 	redir_execline_path(m_s);

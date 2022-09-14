@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 08:12:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:13:01 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 11:04:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 extern int	**g_pipe_heredoc;
 
-void	exec_heredoc(struct s_cmd_info *cmd_struct,
-	int total_heredoc, int curr_heredoc, int i)
+void	exec_heredoc(struct s_main *m_s, struct s_cmd_info *cmd_struct,
+	int curr_heredoc, int i)
 {
+	int	total_heredoc;
+
+	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	if (total_heredoc > curr_heredoc)
 	{
 		dummy_heredoc(cmd_struct->curr_line_tokens[i + 1]);
@@ -25,7 +28,7 @@ void	exec_heredoc(struct s_cmd_info *cmd_struct,
 	if (total_heredoc == curr_heredoc)
 	{
 		close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
-		heredoc(cmd_struct->curr_line_tokens[i + 1], cmd_struct->cmd_index);
+		heredoc(m_s, cmd_struct->curr_line_tokens[i + 1], cmd_struct->cmd_index);
 		exit(0);
 	}
 }
@@ -47,30 +50,30 @@ int	check_sig_exit(struct s_cmd_info *cmd_struct, int id)
 	return (0);
 }
 
-int	fork_heredoc(struct s_cmd_info *cmd_struct, int total_heredoc,
+int	fork_heredoc(struct s_main *m_s, struct s_cmd_info *cmd_struct,
 	int curr_heredoc, int i)
 {
 	int	id;
 
 	id = fork();
 	if (id == 0)
-		exec_heredoc(cmd_struct, total_heredoc, curr_heredoc, i);
-	if (total_heredoc == curr_heredoc)
+		exec_heredoc(m_s, cmd_struct, curr_heredoc, i);
+	if (heredoc_counter(cmd_struct->curr_line_tokens) == curr_heredoc)
 		close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_IN]);
 	if (check_sig_exit(cmd_struct, id))
 		return (1);
 	return (0);
 }
 
-int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
+int	heredoc_redir_check(struct s_main *m_s, struct s_cmd_info *cmd_struct)
 {
 	int	i;
-	int	total_heredoc;
+	//int	total_heredoc;
 	int	curr_heredoc;
 
 	i = 0;
 	curr_heredoc = 0;
-	total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
+	//total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	while (i < cmd_struct->token_count)
 	{
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)
@@ -80,9 +83,9 @@ int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 				return (1);
 			curr_heredoc++;
 			signal(SIGINT, SIG_IGN);
-			if (total_heredoc == curr_heredoc)
+			if (heredoc_counter(cmd_struct->curr_line_tokens) == curr_heredoc)
 				err_chk(pipe(g_pipe_heredoc[cmd_struct->cmd_index + 1]), 1, "");
-			if (fork_heredoc(cmd_struct, total_heredoc, curr_heredoc, i))
+			if (fork_heredoc(m_s, cmd_struct, curr_heredoc, i))
 				break ;
 			signals_handeler();
 		}

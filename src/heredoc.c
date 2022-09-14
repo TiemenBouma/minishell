@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/08/18 13:20:23 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 13:44:56 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/14 10:51:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	heredoc_counter(char **curr_line_tokens)
 	return (heredoc_counter);
 }
 
-int	heredoc(char *stop_word, int index)
+int	heredoc(struct s_main *m_s, char *stop_word, int index)
 {
 	char	*input;
 
@@ -53,6 +53,7 @@ int	heredoc(char *stop_word, int index)
 			free(input);
 			break ;
 		}
+		expand_variables_heredoc(&input, &m_s->env_llist, m_s->oxs);
 		write(g_pipe_heredoc[index + 1][P_IN], input, ft_strlen(input));
 		free(input);
 		write(g_pipe_heredoc[index + 1][P_IN], "\n", 1);

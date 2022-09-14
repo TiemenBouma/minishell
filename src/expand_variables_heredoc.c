@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:36:52 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 11:04:49 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:33:50 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,11 @@ static char	*find_next_var_in_str(char *input, int *index)
 {
 	char	*temp;
 	int		in_quotes;
-	//char	c;
 
 	temp = NULL;
 	in_quotes = 0;
 	while (input[*index])
 	{
-		// c = is_open_quote(input[*index], &in_quotes, index, &c);
-		// if (!is_close_single_quote(&in_quotes, index, &c, input))
-		// 	return (temp);
-		// if (input[*index] && c == input[*index] && in_quotes == 1)
-		// {
-		// 	c = 0;
-		// 	in_quotes = 0;
-		// }
 		if (input[*index] && input[*index] == '$')
 			return (func1(input, index, temp));
 		if (input[*index])

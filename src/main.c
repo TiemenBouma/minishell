@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/14 13:39:00 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/14 14:05:39 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 		{
 			if (ft_strncmp(argv[2], "|", 1) == 0)
-				exit (ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2));
+				exit (ft_putstr_fd("minishell: syntax error near \
+					unexpected token `|'\n", 2));
 			m_s->input_str = ft_strdup(argv[2]);
 		}
 		else
@@ -87,7 +88,6 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs, 0);
 		//printf("&m_s->input_str = %s\n", m_s->input_str);
 		m_s->all_tokens = split_tokens(m_s->input_str);
-		//print_dubble_str(m_s->all_tokens, "all tokens: ");
 		if (basic_error_handeling(m_s))
 		{
 			free_struct(m_s);

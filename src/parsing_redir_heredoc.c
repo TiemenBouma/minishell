@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 08:12:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 11:04:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:42:55 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	exec_heredoc(struct s_main *m_s, struct s_cmd_info *cmd_struct,
 	if (total_heredoc == curr_heredoc)
 	{
 		close(g_pipe_heredoc[cmd_struct->cmd_index + 1][P_OUT]);
-		heredoc(m_s, cmd_struct->curr_line_tokens[i + 1], cmd_struct->cmd_index);
+		heredoc(m_s, cmd_struct->curr_line_tokens[i + 1],
+			cmd_struct->cmd_index);
 		exit(0);
 	}
 }
@@ -68,12 +69,10 @@ int	fork_heredoc(struct s_main *m_s, struct s_cmd_info *cmd_struct,
 int	heredoc_redir_check(struct s_main *m_s, struct s_cmd_info *cmd_struct)
 {
 	int	i;
-	//int	total_heredoc;
 	int	curr_heredoc;
 
 	i = 0;
 	curr_heredoc = 0;
-	//total_heredoc = heredoc_counter(cmd_struct->curr_line_tokens);
 	while (i < cmd_struct->token_count)
 	{
 		if (is_arrow_sign(cmd_struct->curr_line_tokens[i]) == HEREDOC)

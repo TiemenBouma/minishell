@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/14 10:52:54 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:30:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,8 @@ int						find_len_var_name(char **in, int s);
 void					replace_input(char **in, char *content, int *i,
 							char *v_name);
 //expand var HEREDOC
-int						expand_variables_heredoc(char **input, t_node **list, int oxs);
+int						expand_variables_heredoc(char **input,
+							t_node **list, int oxs);
 
 //SIGNALS
 void					sigint_handler(int sig);
@@ -210,7 +211,8 @@ int						print_dubble_str(char **str, char *name);
 int						print_linked_list(t_node **list);
 
 //Parsing_redir
-int						heredoc_redir_check(struct s_main *m_s, struct s_cmd_info *cmd_struct);
+int						heredoc_redir_check(struct s_main *m_s,
+							struct s_cmd_info *cmd_struct);
 int						redir_check(struct s_cmd_info *cmd_struct);
 
 //parsing_redir_open_fd

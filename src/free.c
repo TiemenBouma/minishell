@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 11:11:16 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:34:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern int **g_pipe_heredoc;
+extern int	**g_pipe_heredoc;
 
 void	free_double_str(char **str)
 {
@@ -67,10 +67,7 @@ void	free_cmd_info(struct s_cmd_info *c_s)
 	if (c_s->heredoc)
 		free(c_s->heredoc);
 	if (c_s->exec_line != NULL)
-	{
-		//print_dubble_str(c_s->exec_line, "exec_line: ");
 		free_double_str(c_s->exec_line);
-	}
 }
 
 void	free_global(struct s_main *m_s)

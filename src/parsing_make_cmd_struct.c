@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:48:18 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:03:25 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,35 @@
 
 extern int	**g_pipe_heredoc;
 
-static int	copy_token(char **src_str, char **dest_str, int count)//m_s->cmd_lines[line], m_s->c_s_arr[line].tokens);
+static int	copy_token(char **src_str, char **dest_str, int count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < count)
 	{
 		dest_str[i] = ft_strdup(src_str[i]);
-		//malloc protect
+		if (dest_str[i] == NULL)
+			exit(1);
 		i++;
 	}
 	return (0);
 }
 
-void	set_err(struct s_cmd_info *cmd_struct)
-{
-	//cmd_struct->set_file_err = 1;
-	cmd_struct->has_infile = 0;
-	cmd_struct->has_outfile = 0;
-	cmd_struct->has_appendfile = 0;
-	cmd_struct->has_heredoc = 0;
-	//close(S_IN);//cmd_struct->fd_in = S_IN;
-	cmd_struct->fd_out = S_OUT;
-	//cmd_struct->exec_line[0] = NULL;
-}
+// void	set_err(struct s_cmd_info *cmd_struct)
+// {
+// 	//cmd_struct->set_file_err = 1;
+// 	cmd_struct->has_infile = 0;
+// 	cmd_struct->has_outfile = 0;
+// 	cmd_struct->has_appendfile = 0;
+// 	cmd_struct->has_heredoc = 0;
+// 	//close(S_IN);//cmd_struct->fd_in = S_IN;
+// 	cmd_struct->fd_out = S_OUT;
+// 	//cmd_struct->exec_line[0] = NULL;
+// }
 
-void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line)
+void	init_cmd_struct(struct s_main *m_s,
+	struct s_cmd_info *cmd_struct, int line)
 {
 	cmd_struct->cmd_index = line;
 	cmd_struct->cmd_count = m_s->cmd_count;
@@ -51,7 +53,6 @@ void	init_cmd_struct(struct s_main *m_s, struct s_cmd_info *cmd_struct, int line
 	cmd_struct->fd_in = 0;
 	cmd_struct->has_heredoc = 0;
 	cmd_struct->heredoc_fd_opened = 0;
-	//cmd_struct->heredoc_filename = NULL;
 	cmd_struct->infile = NULL;
 	cmd_struct->outfile = NULL;
 	cmd_struct->appendfile = NULL;
@@ -77,6 +78,33 @@ void	redir_execline_path(struct s_main *m_s)
 	}
 }
 
+void	loop_make_cmd_struct(struct s_main *m_s)
+{
+	int	cmd_line_count;
+	int	line;
+
+	line = 0;
+	cmd_line_count = 0;
+	while (line < m_s->cmd_count)
+	{
+		cmd_line_count = 0;
+		while (m_s->cmd_lines[line][cmd_line_count])
+			cmd_line_count++;
+		m_s->c_s_arr[line].token_count = cmd_line_count;
+		m_s->c_s_arr[line].curr_line_tokens
+			= malloc(sizeof(char *) * (cmd_line_count + 1));
+		if (m_s->c_s_arr[line].curr_line_tokens == NULL)
+			exit (1);
+		m_s->c_s_arr[line].curr_line_tokens[cmd_line_count] = NULL;
+		copy_token(m_s->cmd_lines[line], m_s->c_s_arr[line].curr_line_tokens,
+			m_s->c_s_arr[line].token_count);
+		init_cmd_struct(m_s, &m_s->c_s_arr[line], line);
+		g_pipe_heredoc[0][0] = line;
+		heredoc_redir_check(m_s, &m_s->c_s_arr[line]);
+		line++;
+	}
+}
+
 int	make_cmd_structs(struct s_main *m_s)
 {
 	int	line;
@@ -87,22 +115,11 @@ int	make_cmd_structs(struct s_main *m_s)
 	while (m_s->cmd_lines[m_s->cmd_count])
 		m_s->cmd_count++;
 	m_s->c_s_arr = malloc(sizeof(struct s_cmd_info) * m_s->cmd_count);
-	while (line < m_s->cmd_count)
-	{
-		cmd_line_count = 0;
-		while (m_s->cmd_lines[line][cmd_line_count])
-			cmd_line_count++;
-		m_s->c_s_arr[line].token_count = cmd_line_count;
-		m_s->c_s_arr[line].curr_line_tokens = malloc(sizeof(char *) * (cmd_line_count + 1));
-		if (m_s->c_s_arr[line].curr_line_tokens == NULL)
-			exit (1);//(ERR_MALLOC);
-		m_s->c_s_arr[line].curr_line_tokens[cmd_line_count] = NULL;
-		copy_token(m_s->cmd_lines[line], m_s->c_s_arr[line].curr_line_tokens, m_s->c_s_arr[line].token_count);
-		init_cmd_struct(m_s, &m_s->c_s_arr[line], line);
-		g_pipe_heredoc[0][0] = line;
-		heredoc_redir_check(m_s, &m_s->c_s_arr[line]);
-		line++;
-	}
+	if (m_s->c_s_arr == NULL)
+		exit(1);
+	
+	loop_make_cmd_struct(m_s);
+	
 	redir_execline_path(m_s);
 	return (1);
 }

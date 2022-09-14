@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expand_variables.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:38:20 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   expand_variables.c                                 :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/09/07 11:14:11 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/14 13:59:11 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,10 @@ static char	*find_next_var_in_str(char *input, int *index)
 	return (temp);
 }
 
-int	expand_variables(char **input, t_node **list, int oxs)
+void	expand_variables(char **input, t_node **list, int oxs, int index)
 {
-	int		index;
 	char	*v_name;
-	char	*content;
-	char	*str_exit_status;
 
-	index = 0;
 	while ((*input)[index])
 	{
 		v_name = find_next_var_in_str(*input, &index);
@@ -100,23 +96,18 @@ int	expand_variables(char **input, t_node **list, int oxs)
 			index++;
 			continue ;
 		}
-		content = find_var_in_list(list, v_name);
-		if (ft_strncmp(v_name, "?", 2) == 0)
-		{
-			str_exit_status = ft_itoa(oxs);
-			replace_input(input, str_exit_status, &index, v_name);
-			free(str_exit_status);
-		}
-		else if (content == NULL)
-			replace_input(input, "", &index, v_name);
+		if (find_var_in_list(list, v_name) == NULL)
+			replace_input(input, ft_calloc(sizeof(1), 1), &index, v_name);
+		else if (ft_strncmp(v_name, "?", 2) == 0)
+			replace_input(input, ft_itoa(oxs), &index, v_name);
 		else
 		{	
-			replace_input(input, content, &index, v_name);
+			replace_input(input, ft_strdup(find_var_in_list(list, v_name)),
+				&index, v_name);
 			index++;
 		}
 		free(v_name);
 	}
-	return (0);
 }
 
 // void	expand_variables(char **input, struct s_main *m_s, int index)

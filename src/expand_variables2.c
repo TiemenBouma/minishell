@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/12 14:06:03 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 15:37:07 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/14 13:47:24 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	replace_input(char **in, char *content, int *i, char *v_name)
 	ft_strlcat(*in, temp2, len_new_str);
 	free(temp1);
 	free(temp2);
+	free(content);
 }
-	//free(content);
 
 char	*find_var_in_list(t_node **list, char *v_name)
 {

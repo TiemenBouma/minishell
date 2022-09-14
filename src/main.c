@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/14 11:29:02 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
+/*   Updated: 2022/09/14 13:39:00 by dkocob        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			break ;
 		}
-		expand_variables(&m_s->input_str, &m_s->env_llist, 0);
+		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs, 0);
 		//printf("&m_s->input_str = %s\n", m_s->input_str);
 		m_s->all_tokens = split_tokens(m_s->input_str);
 		//print_dubble_str(m_s->all_tokens, "all tokens: ");

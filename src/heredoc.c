@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:51:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:14:58 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	heredoc(struct s_main *m_s, char *stop_word, int index)
 			free(input);
 			break ;
 		}
-		expand_variables_heredoc(&input, &m_s->env_llist, m_s->oxs);
+		expand_variables_heredoc(&input, &m_s->env_llist, m_s->oxs, 0);
 		write(g_pipe_heredoc[index + 1][P_IN], input, ft_strlen(input));
 		free(input);
 		write(g_pipe_heredoc[index + 1][P_IN], "\n", 1);

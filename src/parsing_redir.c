@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 10:30:01 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 08:49:37 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:11:09 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,3 @@ int	redir_check(struct s_cmd_info *cmd_struct)
 		close(cmd_struct->heredoc_pipe[0]);
 	return (1);
 }
-

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 14:03:25 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:11:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,7 @@ int	make_cmd_structs(struct s_main *m_s)
 	m_s->c_s_arr = malloc(sizeof(struct s_cmd_info) * m_s->cmd_count);
 	if (m_s->c_s_arr == NULL)
 		exit(1);
-	
 	loop_make_cmd_struct(m_s);
-	
 	redir_execline_path(m_s);
 	return (1);
 }

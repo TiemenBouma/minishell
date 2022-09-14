@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parsing_make_exec_line.c                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/08 10:43:44 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:19:22 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parsing_make_exec_line.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/08 10:43:44 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/14 11:23:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	make_exec_line(struct s_cmd_info *cmd_struct)
 	cmd_struct->exec_line = malloc(sizeof(char *) * (exec_len + 1));
 	if (cmd_struct->exec_line == NULL)
 		exit(1);
-	cmd_struct->exec_line[exec_len] = NULL;
 	find_exec_tokens(cmd_struct);
+	cmd_struct->exec_line[exec_len] = NULL;
 	return (0);
 }

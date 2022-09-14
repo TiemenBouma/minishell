@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 08:12:10 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 08:13:19 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:13:01 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	heredoc_redir_check(struct s_cmd_info *cmd_struct)
 				err_chk(pipe(g_pipe_heredoc[cmd_struct->cmd_index + 1]), 1, "");
 			if (fork_heredoc(cmd_struct, total_heredoc, curr_heredoc, i))
 				break ;
-			signal(SIGINT, sigint_handler);
+			signals_handeler();
 		}
 		i++;
 	}

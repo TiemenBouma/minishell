@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 15:52:01 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/13 13:34:18 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/14 10:13:29 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	basic_error_handeling(struct s_main *m_s)
 	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		m_s->oxs = 2;
+		m_s->oxs = 258;
 		return (1);
 	}
 	return (0);
@@ -38,6 +38,26 @@ int	init_m_s(struct	s_main *m_s)
 	m_s->c_s_arr = NULL;
 	m_s->input_str = NULL;
 	m_s->root_paths = NULL;
+	m_s->err = 0;
+	return (0);
+}
+
+int	check_error(struct s_main *m_s)
+{
+	int	i;
+
+	i = 0;
+	while (i < m_s->cmd_count)
+	{
+		if (m_s->c_s_arr[i].err_syntax > 0 || m_s->c_s_arr[i].set_file_err > 0)
+		{
+			m_s->err = 1;
+			m_s->oxs = 258;
+			free_struct(m_s);
+			return (1);
+		}
+		i++;
+	}
 	return (0);
 }
 
@@ -77,7 +97,9 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			continue ;
 		}
-		//print_structs(m_s);
+		// print_structs(m_s);
+		if (check_error(m_s))
+			continue ;
 		m_s->oxs = exec(m_s);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 			exit(m_s->oxs);
@@ -91,9 +113,10 @@ int	main(int argc, char **argv)
 	struct s_main	m_s;
 
 	g_pipe_heredoc = NULL;
-	signals_handeler();
 	m_s.oxs = 0;
-	m_s.env_llist = add_env_to_list(environ);
+	m_s.minishell_nr = 0;
+	m_s.env_llist = add_env_to_list(&m_s, environ);
+	signals_handeler();
 	minishell_loop(&m_s, argc, argv);
 	ft_free_linked_list(&m_s.env_llist);
 	return (m_s.oxs);

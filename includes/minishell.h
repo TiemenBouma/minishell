@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/13 16:02:44 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/13 13:36:27 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/14 10:14:10 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ struct	s_main {
 	struct s_cmd_info	*c_s_arr;
 	struct s_node		*env_llist;
 	int					oxs;
+	int					err;
+	int					minishell_nr;
 };
 
 //DAN
@@ -174,11 +176,11 @@ void					ft_add_or_change_list(t_node **list, t_node *match_node,
 							char *exec_line);
 
 //env_var_list
-t_node					*add_env_to_list(char **environ);
+t_node					*add_env_to_list(struct s_main *m_s, char **environ);
 char					*find_var(t_node **list, char *var_name);
 int						ft_print_var_content(t_node **list, char *var_name);
 char					*find_var_in_list(t_node **list, char *var_name);
-void					inc_shlvl(t_node **list);
+void					inc_shlvl(struct s_main *m_s, t_node **list);
 
 //expand var
 int						expand_variables(char **input, t_node **list, int oxs);

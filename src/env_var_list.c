@@ -6,13 +6,13 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 14:02:21 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:00:19 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_node	*add_env_to_list(char **environ)
+t_node	*add_env_to_list(struct s_main *m_s, char **environ)
 {
 	int		i;
 	t_node	*env_llist;
@@ -26,7 +26,7 @@ t_node	*add_env_to_list(char **environ)
 		ft_list_node_add_back(&env_llist, temp_node);
 		i++;
 	}
-	inc_shlvl(&env_llist);
+	inc_shlvl(m_s, &env_llist);
 	return (env_llist);
 }
 
@@ -42,7 +42,7 @@ int	ft_print_var_content(t_node **list, char *var_name)
 	return (0);
 }
 
-void	inc_shlvl(t_node **list)
+void	inc_shlvl(struct s_main *m_s, t_node **list)
 {
 	t_node	*match_node;
 	char	*var_line;
@@ -58,5 +58,6 @@ void	inc_shlvl(t_node **list)
 			return ;
 		free (match_node->str);
 		match_node->str = var_line;
+		m_s->minishell_nr = ft_atoi(&match_node->str[6]);
 	}
 }

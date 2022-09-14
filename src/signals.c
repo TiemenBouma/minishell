@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/07 10:06:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/14 10:12:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sigint_handler_in_process(int sig)
 {
 	(void) sig;
-	write(1, "\n", 1);
+	//write(1, "\n", 1);
 }
 
 void	sigquit_handler_in_process(int sig)
@@ -47,6 +47,15 @@ void	sigint_handler(int sig)
 
 void	signals_handeler(void)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// if (m_s->minishell_nr == 2)
+	// {
+		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
+	// }
+	// else
+	// {
+	// 	signal(SIGINT, SIG_IGN);
+	// 	signal(SIGQUIT, SIG_IGN);
+	// }
 }
+

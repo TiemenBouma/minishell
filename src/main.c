@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 11:10:51 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:46:41 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,20 @@ int	minishell_loop2(struct s_main *m_s)
 	return (0);
 }
 
-void	minishell_loop(struct s_main *m_s, int argc, char **argv)
+void	minishell_loop(struct s_main *m_s)//, int argc, char **argv)
 {
 	while (1)
 	{
 		init_m_s(m_s);
 		m_s->root_paths = find_path(&m_s->env_llist);
-		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-		{
-			if (ft_strncmp(argv[2], "|", 1) == 0)
-				exit (ft_putstr_fd("minishell: syntax error near \
-					unexpected token `|'\n", 2));
-			m_s->input_str = ft_strdup(argv[2]);
-		}
-		else
+		// if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+		// {
+		// 	if (ft_strncmp(argv[2], "|", 1) == 0)
+		// 		exit (ft_putstr_fd("minishell: syntax error near \
+		// 			unexpected token `|'\n", 2));
+		// 	m_s->input_str = ft_strdup(argv[2]);
+		// }
+		// else
 			m_s->input_str = readline("minishell-1.0$ ");
 		add_history(m_s->input_str);
 		if (m_s->input_str == NULL)
@@ -77,13 +77,13 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 		if (minishell_loop2(m_s))
 			continue ;
 		m_s->oxs = exec(m_s);
-		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
-			exit(m_s->oxs);
+		// if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
+		// 	exit(m_s->oxs);
 		free_struct(m_s);
 	}
 }
 
-int	main(int argc, char **argv)
+int	main(void)//int argc, char **argv)
 {
 	extern char		**environ;
 	struct s_main	m_s;
@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 	m_s.minishell_nr = 0;
 	m_s.env_llist = add_env_to_list(&m_s, environ);
 	signals_handeler();
-	minishell_loop(&m_s, argc, argv);
+	minishell_loop(&m_s);//, argc, argv);
 	ft_free_linked_list(&m_s.env_llist);
 	return (m_s.oxs);
 }

@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 11:31:27 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:43:28 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void					replace_input(char **in, char *content, int *i,
 							char *v_name);
 void					replace_input1(struct s_main *m_s, char *v_name,
 							int *index);
-							
+
 //expand var HEREDOC
 void					expand_variables_heredoc(char **input,
 							t_node **list, int oxs, int index);

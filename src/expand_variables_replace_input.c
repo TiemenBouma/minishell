@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:29:50 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/15 11:38:39 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:44:10 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	calc_len_new_str(char **input, char *content, char *v_name);
 int	is_special_char_var_expand(char c);
+
 /*
 s = s
 l = len
@@ -30,7 +31,6 @@ void	replace_input(char **in, char *content, int *i, char *v_name)
 	s = *i;
 	len_new_str = calc_len_new_str(in, content, v_name);
 	l = find_len_var_name(in, s);
-	//*i = *i + ft_strlen(content) - 1;
 	temp1 = ft_substr(*in, 0, s - 1);
 	if ((*in)[s + l] == ' ')
 		temp2 = ft_substr(*in, s + l, ft_strlen(*in + s + l));

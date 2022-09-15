@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   executils.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/07/18 20:43:50 by dkocob        #+#    #+#                 */
-/*   Updated: 2022/09/12 14:23:25 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   executils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/18 20:43:50 by dkocob            #+#    #+#             */
+/*   Updated: 2022/09/15 14:16:43 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,27 @@ char	*ft_sjf(char *s1, char *s2, int f)
 	if (f == 2 || f == 3)
 		free (s2);
 	return (t);
+}
+
+void	execve_error(char *path, int error, char *envpath)
+{
+	if (ft_strncmp(path, "./", 2) == 0 || envpath == NULL)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (error == ENOENT)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(path, 2);
+		perror(" ");
+	}
+	exit (127);
 }

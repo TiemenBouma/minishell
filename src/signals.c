@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 10:32:41 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/15 14:00:53 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:16:22 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void	sigint_handler_in_process(int sig)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	// rl_redisplay();
 	(void) sig;
 }
 
-void	sigquit_handler_in_process_minishell(int sig)
-{
-	(void) sig;
-}
+// void	sigquit_handler_in_process_minishell(int sig)
+// {
+// 	(void) sig;
+// }
 
 void	sigquit_handler_in_process(int sig)
 {

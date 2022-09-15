@@ -6,38 +6,14 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/15 14:09:40 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:14:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 extern int	**g_pipe_heredoc;
-
-static void	execve_error(char *path, int error, char *envpath)
-{
-	if (ft_strncmp(path, "./", 2) == 0 || envpath == NULL)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
-	else if (error == ENOENT)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": command not found\n", 2);
-	}
-	else
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(path, 2);
-		//write(2, "\n", 1);
-		perror(" ");
-		//ft_putstr_fd(": execve error\n", 2);
-	}
-	exit (127);
-}
+void	execve_error(char *path, int error, char *envpath);
 
 static void	ft_exec_in_child(struct s_main *m_s, struct s_cmd_info *curr_cmd)
 {

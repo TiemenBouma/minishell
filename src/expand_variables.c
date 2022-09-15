@@ -6,40 +6,50 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/15 09:04:00 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 10:19:06 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_close_single_quote(int *in_q, int *index, char *old_c, char *input)
+int	is_close_quote(int *c, int *in_q, int *index, char *input)
 {
-	if (*old_c == '\'' && *in_q == 1)
+	if (*c == '\'' && *in_q == 1)
 	{
 		//printf("DEBUG1 index = %d\n", *index);
 		while (input[*index] && input[*index] != '\'')
 			(*index)++;
-		*old_c = 0;
+		*in_q = 0;
+		*c = 0;
+		if (!input[*index])
+			return (0);
+	}
+	if (*c == '\"' && *c == input[*index] && *in_q == 1)
+	{
+		(*index)++;
+		*in_q = 0;
+		*c = 0;
 		if (!input[*index])
 			return (0);
 	}
 	return (1);
 }
 
-char	is_open_quote(char curr_c, int *in_quotes, int *index, char *old_c)
+int	is_open_quote(int *c, int *in_quotes, int *index, char input_char)
 {
-	if (*in_quotes == 1)
-		return (*old_c);
-	if ((curr_c == '\"' || curr_c == '\'') && *in_quotes == 0)
+	// if (*c != 0)
+	// 	return (1);
+	if ((input_char == '\"' || input_char == '\'') && *in_quotes == 0)
 	{
+		*c = input_char;
 		(*index)++;
 		*in_quotes = 1;
-		return (curr_c);
+		return (1);
 	}
 	return (0);
 }
 
-static char	*func1(char *input, int *index, char *temp)
+static char	*make_var_name_ex(char *input, int *index, char *temp)
 {
 	int	s;
 	int	l;
@@ -57,26 +67,23 @@ static char	*func1(char *input, int *index, char *temp)
 s = s
 l = len
 */
-static char	*find_next_var_in_str(char *input, int *index)
+static char	*find_next_var_in_str(char *input, int *index, int *c, int *in_quotes)
 {
 	char	*temp;
-	int		in_quotes;
-	char	c;
 
 	temp = NULL;
-	in_quotes = 0;
 	while (input[*index])
 	{
-		c = is_open_quote(input[*index], &in_quotes, index, &c);
-		if (!is_close_single_quote(&in_quotes, index, &c, input))
+		is_open_quote(c, in_quotes, index, input[*index]);
+		if (!is_close_quote(c, in_quotes, index,  input))
 			return (temp);
-		if (input[*index] && c == input[*index] && in_quotes == 1)
-		{
-			c = 0;
-			in_quotes = 0;
-		}
+		// if (input[*index] && c == input[*index] && in_quotes == 1)
+		// {
+		// 	c = 0;
+		// 	in_quotes = 0;
+		// }
 		if (input[*index] && input[*index] == '$')
-			return (func1(input, index, temp));
+			return (make_var_name_ex(input, index, temp));
 		if (input[*index])
 			(*index)++;
 	}
@@ -86,11 +93,15 @@ static char	*find_next_var_in_str(char *input, int *index)
 void	expand_variables(char **input, t_node **list, int oxs, int index)
 {
 	char	*v_name;
+	int		c;
+	int		in_quotes;
 
+	c = 0;
+	in_quotes = 0;
 	while ((*input)[index])
 	{
 		//printf("input s = %c inddex = %d\n", (*input)[index], index);
-		v_name = find_next_var_in_str(*input, &index);
+		v_name = find_next_var_in_str(*input, &index, &c, &in_quotes);
 		if (v_name == NULL)
 		{
 			if (!(*input)[index])

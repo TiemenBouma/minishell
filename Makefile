@@ -50,16 +50,16 @@ OBJFILES := \
 			obj/src/testing.o \
 			obj/src/utils.o \
 			obj/src/utils2.o
-			
+
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
-CFLAGS := -Wall -Wextra  -Werror
+CFLAGS := #-Wall -Wextra  -Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc
 
 all: $(LIBFT) $(NAME)
 
-$(LIBFT): 
+$(LIBFT):
 	make -C ./includes/libft
 
 $(NAME): $(OBJFILES)

@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/14 10:42:52 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/15 11:37:12 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,14 +24,16 @@ OBJFILES := \
 			obj/src/executils.o \
 			obj/src/execution.o \
 			obj/src/expand_variables_heredoc.o \
+			obj/src/expand_variables_utils.o \
+			obj/src/expand_variables_replace_input.o \
 			obj/src/expand_variables.o \
-			obj/src/expand_variables2.o \
 			obj/src/free.o \
 			obj/src/get_next_line_utils.o \
 			obj/src/get_next_line.o \
 			obj/src/heredoc.o \
 			obj/src/linked_list.o \
 			obj/src/linked_list2.o \
+			obj/src/main_error.o \
 			obj/src/main.o \
 			obj/src/parsing_make_cmd_struct.o \
 			obj/src/parsing_cmd_lines.o \
@@ -40,6 +42,7 @@ OBJFILES := \
 			obj/src/parsing_redir_open_fd.o \
 			obj/src/parsing_redir_utils.o \
 			obj/src/parsing_redir.o \
+			obj/src/parsing_redir2.o \
 			obj/src/parsing_tokens.o \
 			obj/src/parsing_tokens2.o \
 			obj/src/path_command.o \

@@ -1,44 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expand_variables.c                                 :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/07 11:14:11 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/14 13:59:11 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expand_variables.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/15 11:30:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_close_single_quote(int *in_q, int *index, char *old_c, char *input)
+int	is_close_quote(int *c, int *in_q, int *index, char *input)
 {
-	if (*old_c == '\'' && *in_q == 1)
+	if (*c == '\'' && *in_q == 1)
 	{
 		while (input[*index] && input[*index] != '\'')
 			(*index)++;
-		*old_c = 0;
+		*in_q = 0;
+		*c = 0;
+		if (!input[*index])
+			return (0);
+	}
+	if (*c == '\"' && *c == input[*index] && *in_q == 1)
+	{
+		(*index)++;
+		*in_q = 0;
+		*c = 0;
 		if (!input[*index])
 			return (0);
 	}
 	return (1);
 }
 
-char	is_open_quote(char curr_c, int *in_quotes, int *index, char *old_c)
+int	is_open_quote(int *c, int *in_quotes, int *index, char input_char)
 {
-	if (*in_quotes == 1)
-		return (*old_c);
-	if ((curr_c == '\"' || curr_c == '\'') && *in_quotes == 0)
+	if ((input_char == '\"' || input_char == '\'') && *in_quotes == 0)
 	{
+		*c = input_char;
 		(*index)++;
 		*in_quotes = 1;
-		return (curr_c);
+		return (1);
 	}
 	return (0);
 }
 
-static char	*func1(char *input, int *index, char *temp)
+static char	*make_var_name_ex(char *input, int *index, char *temp)
 {
 	int	s;
 	int	l;
@@ -56,56 +64,46 @@ static char	*func1(char *input, int *index, char *temp)
 s = s
 l = len
 */
-static char	*find_next_var_in_str(char *input, int *index)
+static char	*find_next_var_in_str(char *input,
+	int *index, int *c, int *in_quotes)
 {
 	char	*temp;
-	int		in_quotes;
-	char	c;
 
 	temp = NULL;
-	in_quotes = 0;
 	while (input[*index])
 	{
-		c = is_open_quote(input[*index], &in_quotes, index, &c);
-		if (!is_close_single_quote(&in_quotes, index, &c, input))
+		is_open_quote(c, in_quotes, index, input[*index]);
+		if (!is_close_quote(c, in_quotes, index, input))
 			return (temp);
-		if (input[*index] && c == input[*index] && in_quotes == 1)
-		{
-			c = 0;
-			in_quotes = 0;
-		}
 		if (input[*index] && input[*index] == '$')
-			return (func1(input, index, temp));
+			return (make_var_name_ex(input, index, temp));
 		if (input[*index])
 			(*index)++;
 	}
 	return (temp);
 }
 
-void	expand_variables(char **input, t_node **list, int oxs, int index)
+void	expand_variables(struct s_main *m_s)
 {
 	char	*v_name;
+	int		c;
+	int		in_quotes;
+	int		index;
 
-	while ((*input)[index])
+	c = 0;
+	index = 0;
+	in_quotes = 0;
+	while ((m_s->input_str)[index])
 	{
-		v_name = find_next_var_in_str(*input, &index);
+		v_name = find_next_var_in_str(m_s->input_str, &index, &c, &in_quotes);
 		if (v_name == NULL)
 		{
-			if (!(*input)[index])
+			if (!(m_s->input_str)[index])
 				break ;
 			index++;
 			continue ;
 		}
-		if (find_var_in_list(list, v_name) == NULL)
-			replace_input(input, ft_calloc(sizeof(1), 1), &index, v_name);
-		else if (ft_strncmp(v_name, "?", 2) == 0)
-			replace_input(input, ft_itoa(oxs), &index, v_name);
-		else
-		{	
-			replace_input(input, ft_strdup(find_var_in_list(list, v_name)),
-				&index, v_name);
-			index++;
-		}
+		replace_input1(m_s, v_name, &index);
 		free(v_name);
 	}
 }

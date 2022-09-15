@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/14 14:14:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:05:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ struct	s_main {
 	int					minishell_nr;
 };
 
+//MAIN_ERROR
+int						basic_error_handeling(struct s_main *m_s);
+int						check_error(struct s_main *m_s);
+
 //DAN
 int						err_chk(int i, int t, char *s);
 int						exec(struct	s_main *m_s);
@@ -183,12 +187,15 @@ char					*find_var_in_list(t_node **list, char *var_name);
 void					inc_shlvl(struct s_main *m_s, t_node **list);
 
 //expand var
-void					expand_variables(char **input, t_node **list, int oxs, int index);
+void					expand_variables(struct s_main *m_s);
 int						find_len_var_name(char **in, int s);
 void					replace_input(char **in, char *content, int *i,
 							char *v_name);
+void					replace_input1(struct s_main *m_s, char *v_name,
+							int *index);
+
 //expand var HEREDOC
-void						expand_variables_heredoc(char **input,
+void					expand_variables_heredoc(char **input,
 							t_node **list, int oxs, int index);
 
 //SIGNALS
@@ -198,6 +205,7 @@ void					sigint_handler_in_process(int sig);
 void					sigquit_handler_in_process(int sig);
 void					sigint_handler_nonl(int sig);
 void					ft_suppress_output(void);
+void					sigquit_handler_in_process_minishell(int sig);
 
 //HEREDOC
 int						heredoc(struct s_main *m_s, char *stop_word, int index);

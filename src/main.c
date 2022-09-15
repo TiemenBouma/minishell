@@ -68,7 +68,7 @@ void	minishell_loop(struct s_main *m_s)
 			continue ;
 		m_s->oxs = exec(m_s);
 		free_struct(m_s);
-		system("leaks minishell");
+		// system("leaks minishell");
 		//system("leaks minishell");
 	}
 }
@@ -91,7 +91,7 @@ int	main(void)
 		// if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 		// {
 // if (ft_strncmp(argv[2], "|", 1) == 0)
-// 	exit (ft_putstr_fd("minishell: syntax error near 
+// 	exit (ft_putstr_fd("minishell: syntax error near
 		// 			unexpected token `|'\n", 2));
 		// 	m_s->input_str = ft_strdup(argv[2]);
 		// }

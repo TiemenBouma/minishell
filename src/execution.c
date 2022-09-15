@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/14 13:34:47 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 13:52:47 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static void	execve_error(char *path, int error, char *envpath)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": execve error\n", 2);
+		//write(2, "\n", 1);
+		perror(" ");
+		//ft_putstr_fd(": execve error\n", 2);
 	}
 	exit (127);
 }
@@ -94,8 +96,14 @@ static int	ft_iterations(struct s_main *m_s,
 		== 0 && m_s->cmd_count == 1)
 		return (exec_builtin(m_s, curr_cmd,
 				is_builtin(curr_cmd->exec_line[0])));
-	signal(SIGINT, sigint_handler_in_process);
-	signal(SIGQUIT, sigquit_handler_in_process);
+	//signal(SIGINT, sigint_handler_in_process);
+	if (ft_strcmp("./minishell", curr_cmd->exec_line[0]) == 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else
+		signal(SIGQUIT, sigquit_handler_in_process);
 	if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 1 || m_s->cmd_count > 1)
 		*id = fork();
 	err_chk(*id, 1, "");
@@ -127,6 +135,7 @@ int	exec(struct	s_main *m_s)
 	}
 	close (p[(i + 1) % 2][P_OUT]);
 	close (p[i % 2][P_IN]);
+	//signal(SIGINT, SIG_IGN);
 	waitpid(id, &i, 0);
 	while (wait(NULL) != -1)
 		;

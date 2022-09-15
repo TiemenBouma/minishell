@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 11:43:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:05:33 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void					sigint_handler_in_process(int sig);
 void					sigquit_handler_in_process(int sig);
 void					sigint_handler_nonl(int sig);
 void					ft_suppress_output(void);
+void					sigquit_handler_in_process_minishell(int sig);
 
 //HEREDOC
 int						heredoc(struct s_main *m_s, char *stop_word, int index);

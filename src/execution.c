@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/15 13:52:47 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:05:37 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,20 @@ static void	ft_redirections(struct s_main *m_s,
 	}
 }
 
+void	sig_exec(struct s_cmd_info *curr_cmd)
+{
+	if (ft_strcmp("./minishell", curr_cmd->exec_line[0]) == 0)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else
+	{
+		signal(SIGINT, sigint_handler_in_process);
+		signal(SIGQUIT, sigquit_handler_in_process);
+	}
+}
+
 static int	ft_iterations(struct s_main *m_s,
 	int (*p)[2][2], int i, int *id, struct s_cmd_info *curr_cmd)
 {
@@ -96,14 +110,7 @@ static int	ft_iterations(struct s_main *m_s,
 		== 0 && m_s->cmd_count == 1)
 		return (exec_builtin(m_s, curr_cmd,
 				is_builtin(curr_cmd->exec_line[0])));
-	//signal(SIGINT, sigint_handler_in_process);
-	if (ft_strcmp("./minishell", curr_cmd->exec_line[0]) == 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else
-		signal(SIGQUIT, sigquit_handler_in_process);
+	sig_exec(curr_cmd);
 	if (check_buildin_fork(&m_s->c_s_arr[i - 1]) == 1 || m_s->cmd_count > 1)
 		*id = fork();
 	err_chk(*id, 1, "");
@@ -135,7 +142,6 @@ int	exec(struct	s_main *m_s)
 	}
 	close (p[(i + 1) % 2][P_OUT]);
 	close (p[i % 2][P_IN]);
-	//signal(SIGINT, SIG_IGN);
 	waitpid(id, &i, 0);
 	while (wait(NULL) != -1)
 		;

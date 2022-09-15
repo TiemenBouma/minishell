@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 15:13:57 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 09:04:00 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_close_single_quote(int *in_q, int *index, char *old_c, char *input)
 {
 	if (*old_c == '\'' && *in_q == 1)
 	{
-		printf("DEBUG1 index = %d\n", *index);
+		//printf("DEBUG1 index = %d\n", *index);
 		while (input[*index] && input[*index] != '\'')
 			(*index)++;
 		*old_c = 0;
@@ -89,7 +89,7 @@ void	expand_variables(char **input, t_node **list, int oxs, int index)
 
 	while ((*input)[index])
 	{
-		printf("input s = %c inddex = %d\n", (*input)[index], index);
+		//printf("input s = %c inddex = %d\n", (*input)[index], index);
 		v_name = find_next_var_in_str(*input, &index);
 		if (v_name == NULL)
 		{
@@ -98,10 +98,10 @@ void	expand_variables(char **input, t_node **list, int oxs, int index)
 			index++;
 			continue ;
 		}
-		if (find_var_in_list(list, v_name) == NULL)
-			replace_input(input, ft_calloc(sizeof(1), 1), &index, v_name);
-		else if (ft_strncmp(v_name, "?", 2) == 0)
+		if (ft_strncmp(v_name, "?", 2) == 0)
 			replace_input(input, ft_itoa(oxs), &index, v_name);
+		else if (find_var_in_list(list, v_name) == NULL)
+			replace_input(input, ft_calloc(sizeof(1), 1), &index, v_name);
 		else
 		{	
 			replace_input(input, ft_strdup(find_var_in_list(list, v_name)),

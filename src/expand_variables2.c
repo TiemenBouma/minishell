@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expand_variables2.c                                :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/12 14:06:03 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/14 13:47:24 by dkocob        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expand_variables2.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 14:06:03 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/15 09:21:17 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	replace_input(char **in, char *content, int *i, char *v_name)
 	s = *i;
 	len_new_str = calc_len_new_str(in, content, v_name);
 	l = find_len_var_name(in, s);
+	//*i = *i + l + 1;
 	temp1 = ft_substr(*in, 0, s - 1);
 	if ((*in)[s + l] == ' ')
 		temp2 = ft_substr(*in, s + l, ft_strlen(*in + s + l));

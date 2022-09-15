@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 07:56:20 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 08:53:03 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ int	**g_pipe_heredoc;
 /*
 oxs = OLD_EXIT_STATUS
 */
-int	basic_error_handeling(struct s_main *m_s)
-{
-	if (m_s->all_tokens[0] == NULL)
-		return (1);
-	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		m_s->oxs = 258;
-		return (1);
-	}
-	return (0);
-}
 
 int	init_m_s(struct	s_main *m_s)
 {
@@ -42,26 +30,27 @@ int	init_m_s(struct	s_main *m_s)
 	return (0);
 }
 
-int	check_error(struct s_main *m_s)
-{
-	int	i;
+//rl_catch_signals = 0;
 
-	i = 0;
-	while (i < m_s->cmd_count)
+int	minishell_loop2(struct s_main *m_s)
+{
+	expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs, 0);
+	m_s->all_tokens = split_tokens(m_s->input_str);
+	if (basic_error_handeling(m_s))
 	{
-		if (m_s->c_s_arr[i].err_syntax > 0 || m_s->c_s_arr[i].set_file_err > 0)
-		{
-			m_s->err = 1;
-			m_s->oxs = 258;
-			free_struct(m_s);
-			return (1);
-		}
-		i++;
+		free_struct(m_s);
+		return (1);
 	}
+	m_s->cmd_lines = make_cmd_lines(m_s->all_tokens);
+	if (make_cmd_structs(m_s) == -1)
+	{
+		free_struct(m_s);
+		return (1);
+	}
+	if (check_error(m_s))
+		return (1);
 	return (0);
 }
-
-//rl_catch_signals = 0;
 
 void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 {
@@ -85,20 +74,7 @@ void	minishell_loop(struct s_main *m_s, int argc, char **argv)
 			free_struct(m_s);
 			break ;
 		}
-		expand_variables(&m_s->input_str, &m_s->env_llist, m_s->oxs, 0);
-		m_s->all_tokens = split_tokens(m_s->input_str);
-		if (basic_error_handeling(m_s))
-		{
-			free_struct(m_s);
-			continue ;
-		}
-		m_s->cmd_lines = make_cmd_lines(m_s->all_tokens);
-		if (make_cmd_structs(m_s) == -1)
-		{
-			free_struct(m_s);
-			continue ;
-		}
-		if (check_error(m_s))
+		if (minishell_loop2(m_s))
 			continue ;
 		m_s->oxs = exec(m_s);
 		if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))

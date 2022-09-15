@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/14 14:14:28 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 08:54:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ struct	s_main {
 	int					err;
 	int					minishell_nr;
 };
+
+//MAIN_ERROR
+int						basic_error_handeling(struct s_main *m_s);
+int						check_error(struct s_main *m_s);
 
 //DAN
 int						err_chk(int i, int t, char *s);

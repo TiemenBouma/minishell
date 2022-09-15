@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/15 08:54:49 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/15 11:37:12 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ OBJFILES := \
 			obj/src/executils.o \
 			obj/src/execution.o \
 			obj/src/expand_variables_heredoc.o \
+			obj/src/expand_variables_utils.o \
+			obj/src/expand_variables_replace_input.o \
 			obj/src/expand_variables.o \
-			obj/src/expand_variables2.o \
 			obj/src/free.o \
 			obj/src/get_next_line_utils.o \
 			obj/src/get_next_line.o \

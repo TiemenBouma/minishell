@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:14:11 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/15 10:19:06 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:30:18 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	is_close_quote(int *c, int *in_q, int *index, char *input)
 {
 	if (*c == '\'' && *in_q == 1)
 	{
-		//printf("DEBUG1 index = %d\n", *index);
 		while (input[*index] && input[*index] != '\'')
 			(*index)++;
 		*in_q = 0;
@@ -37,8 +36,6 @@ int	is_close_quote(int *c, int *in_q, int *index, char *input)
 
 int	is_open_quote(int *c, int *in_quotes, int *index, char input_char)
 {
-	// if (*c != 0)
-	// 	return (1);
 	if ((input_char == '\"' || input_char == '\'') && *in_quotes == 0)
 	{
 		*c = input_char;
@@ -67,7 +64,8 @@ static char	*make_var_name_ex(char *input, int *index, char *temp)
 s = s
 l = len
 */
-static char	*find_next_var_in_str(char *input, int *index, int *c, int *in_quotes)
+static char	*find_next_var_in_str(char *input,
+	int *index, int *c, int *in_quotes)
 {
 	char	*temp;
 
@@ -75,13 +73,8 @@ static char	*find_next_var_in_str(char *input, int *index, int *c, int *in_quote
 	while (input[*index])
 	{
 		is_open_quote(c, in_quotes, index, input[*index]);
-		if (!is_close_quote(c, in_quotes, index,  input))
+		if (!is_close_quote(c, in_quotes, index, input))
 			return (temp);
-		// if (input[*index] && c == input[*index] && in_quotes == 1)
-		// {
-		// 	c = 0;
-		// 	in_quotes = 0;
-		// }
 		if (input[*index] && input[*index] == '$')
 			return (make_var_name_ex(input, index, temp));
 		if (input[*index])
@@ -90,35 +83,27 @@ static char	*find_next_var_in_str(char *input, int *index, int *c, int *in_quote
 	return (temp);
 }
 
-void	expand_variables(char **input, t_node **list, int oxs, int index)
+void	expand_variables(struct s_main *m_s)
 {
 	char	*v_name;
 	int		c;
 	int		in_quotes;
+	int		index;
 
 	c = 0;
+	index = 0;
 	in_quotes = 0;
-	while ((*input)[index])
+	while ((m_s->input_str)[index])
 	{
-		//printf("input s = %c inddex = %d\n", (*input)[index], index);
-		v_name = find_next_var_in_str(*input, &index, &c, &in_quotes);
+		v_name = find_next_var_in_str(m_s->input_str, &index, &c, &in_quotes);
 		if (v_name == NULL)
 		{
-			if (!(*input)[index])
+			if (!(m_s->input_str)[index])
 				break ;
 			index++;
 			continue ;
 		}
-		if (ft_strncmp(v_name, "?", 2) == 0)
-			replace_input(input, ft_itoa(oxs), &index, v_name);
-		else if (find_var_in_list(list, v_name) == NULL)
-			replace_input(input, ft_calloc(sizeof(1), 1), &index, v_name);
-		else
-		{	
-			replace_input(input, ft_strdup(find_var_in_list(list, v_name)),
-				&index, v_name);
-			index++;
-		}
+		replace_input1(m_s, v_name, &index);
 		free(v_name);
 	}
 }

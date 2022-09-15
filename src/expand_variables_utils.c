@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_variables2.c                                :+:      :+:    :+:   */
+/*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 14:06:03 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/15 10:31:32 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:39:12 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,6 @@ int	find_len_var_name(char **in, int s)
 		l++;
 	}
 	return (l);
-}
-
-/*
-s = s
-l = len
-in = input_str/input
-*/
-void	replace_input(char **in, char *content, int *i, char *v_name)
-{
-	int		s;
-	int		l;
-	int		len_new_str;
-	char	*temp1;
-	char	*temp2;
-
-	s = *i;
-	len_new_str = calc_len_new_str(in, content, v_name);
-	l = find_len_var_name(in, s);
-	//*i = *i + ft_strlen(content) - 1;
-	temp1 = ft_substr(*in, 0, s - 1);
-	if ((*in)[s + l] == ' ')
-		temp2 = ft_substr(*in, s + l, ft_strlen(*in + s + l));
-	else
-		temp2 = ft_substr(*in, s + ft_strlen(v_name), ft_strlen(*in + s + l));
-	free(*in);
-	*in = ft_calloc(sizeof(char), (len_new_str + 1));
-	if (*in == NULL)
-		exit (1);
-	(*in)[len_new_str] = '\0';
-	ft_memcpy(*in, temp1, ft_strlen(temp1));
-	ft_strlcat(*in, content, len_new_str);
-	ft_strlcat(*in, temp2, len_new_str);
-	free(temp1);
-	free(temp2);
-	free(content);
 }
 
 char	*find_var_in_list(t_node **list, char *v_name)

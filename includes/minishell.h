@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 16:02:44 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 10:56:09 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:31:27 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,11 +187,13 @@ char					*find_var_in_list(t_node **list, char *var_name);
 void					inc_shlvl(struct s_main *m_s, t_node **list);
 
 //expand var
-void					expand_variables(char **input,
-							t_node **list, int oxs, int index);
+void					expand_variables(struct s_main *m_s);
 int						find_len_var_name(char **in, int s);
 void					replace_input(char **in, char *content, int *i,
 							char *v_name);
+void					replace_input1(struct s_main *m_s, char *v_name,
+							int *index);
+							
 //expand var HEREDOC
 void					expand_variables_heredoc(char **input,
 							t_node **list, int oxs, int index);

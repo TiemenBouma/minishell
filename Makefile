@@ -6,7 +6,7 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/15 11:37:12 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/15 14:31:10 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ OBJFILES := \
 			
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
-CFLAGS := -Wall -Wextra  -fsanitize=address -g3 #-Werror
+CFLAGS := -Wall -Wextra  -Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc
 

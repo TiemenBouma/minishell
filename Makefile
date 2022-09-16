@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/15 14:31:10 by tbouma           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tbouma <tbouma@student.42.fr>                +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/07/13 16:26:13 by tiemen        #+#    #+#                  #
+#    Updated: 2022/09/16 09:25:30 by tiemen        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ OBJFILES := \
 
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
-CFLAGS := #-Wall -Wextra  -Werror
+CFLAGS := -Wall -Wextra  -Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc
 

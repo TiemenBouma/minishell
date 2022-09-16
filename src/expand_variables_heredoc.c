@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expand_variables_heredoc.c                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 10:36:52 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 14:16:08 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   expand_variables_heredoc.c                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/09/14 10:36:52 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/16 09:26:52 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ l = len
 static char	*find_next_var_in_str(char *input, int *index)
 {
 	char	*temp;
-	int		in_quotes;
 
 	temp = NULL;
-	in_quotes = 0;
 	while (input[*index])
 	{
 		if (input[*index] && input[*index] == '$')

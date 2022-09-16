@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing_make_cmd_struct.c                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 11:48:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 14:11:22 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parsing_make_cmd_struct.c                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/22 11:48:30 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/16 09:27:50 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,6 @@ void	loop_make_cmd_struct(struct s_main *m_s)
 
 int	make_cmd_structs(struct s_main *m_s)
 {
-	int	line;
-	int	cmd_line_count;
-
-	line = 0;
-	cmd_line_count = 0;
 	while (m_s->cmd_lines[m_s->cmd_count])
 		m_s->cmd_count++;
 	m_s->c_s_arr = malloc(sizeof(struct s_cmd_info) * m_s->cmd_count);

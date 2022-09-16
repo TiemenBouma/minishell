@@ -6,7 +6,7 @@
 /*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/13 15:30:28 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/13 15:37:55 by tiemen        ########   odam.nl         */
+/*   Updated: 2022/09/16 08:44:53 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	**make_arr_from_list(t_node **list)
 	i = 0;
 	len = ft_list_size(*list);
 	str_arr = malloc(sizeof(char *) * (1 + len));
+	if (str_arr == NULL)
+		exit(1);
 	current = *list;
 	while (current)
 	{

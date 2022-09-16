@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 11:27:57 by tbouma            #+#    #+#             */
-/*   Updated: 2021/12/15 11:28:12 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_strdup.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/12/15 11:27:57 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/16 09:20:46 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s1)
 	if (ptr == NULL)
 		return (NULL);
 	ptr[len_s1] = '\0';
-	while (len_s1 >= 0)
+	while (len_s1 > 0)
 	{
 		len_s1--;
 		ptr[len_s1] = s1[len_s1];
@@ -30,16 +30,21 @@ char	*ft_strdup(const char *s1)
 	return (ptr);
 }
 
+// #include <string.h>
+// #include <stdio.h>
 // int main(void)
 // {
-// 	char	string1[] = "coucou";
+// 	char	*string1 = "coucou\0";
 // 	char	*cpy;
 // 	char	*cpy2;
-//
+
 // 	cpy = ft_strdup(string1);
 // 	printf("%s$\n", cpy);
 // 	printf("string len: %lu\n", strlen(cpy));
-// 	cpy2 = ft_strdup(string1);
+// 	cpy2 = strdup(string1);
 // 	printf("%s$\n", cpy2);
 // 	printf("string len: %lu\n", strlen(cpy2));
+// 	free(cpy);
+// 	free(cpy2);
+// 	return (0);
 // }

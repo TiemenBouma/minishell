@@ -28,8 +28,6 @@ OBJFILES := \
 			obj/src/expand_variables_replace_input.o \
 			obj/src/expand_variables.o \
 			obj/src/free.o \
-			obj/src/get_next_line_utils.o \
-			obj/src/get_next_line.o \
 			obj/src/heredoc.o \
 			obj/src/linked_list.o \
 			obj/src/linked_list2.o \

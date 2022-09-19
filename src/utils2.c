@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   utils2.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tiemen <tiemen@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/13 15:30:28 by tiemen        #+#    #+#                 */
-/*   Updated: 2022/09/16 08:44:53 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/13 15:30:28 by tiemen            #+#    #+#             */
+/*   Updated: 2022/09/19 09:33:52 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char	*ft_substr_edit(char const *s, unsigned int start, size_t len)
 	cpy_str_min_quotes(s, start, len, ptr);
 	return (ptr);
 }
-//-----------------------------------------------------------------
 
 char	**make_arr_from_list(t_node **list)
 {

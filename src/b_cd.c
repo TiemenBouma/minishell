@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/12 11:53:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/19 08:12:08 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	switch_old_pwd(t_node **list, char **exec_line, t_node	**temp_node)
 	return (0);
 }
 
-int	cd2(t_node **list, char ***exec_line, t_node *temp_node, char *new_str)
+int	ch_old_dir(t_node **list, char ***exec_line, t_node *temp_node, char *new_str)
 {
 	if (ft_strncmp((*exec_line)[1], "-", 2) == 0)
 	{
@@ -95,7 +95,7 @@ int	ft_cd(t_node **list, char ***exec_line)
 	new_str = getcwd_make_pwd("OLDPWD=");
 	if (new_str == NULL)
 		return (1);
-	if (cd2(list, exec_line, temp_node, new_str))
+	if (ch_old_dir(list, exec_line, temp_node, new_str))
 		return (1);
 	new_str = getcwd_make_pwd("PWD=");
 	ft_find_and_edit_node(list, "PWD", new_str);

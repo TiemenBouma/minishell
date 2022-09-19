@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   expand_variables_heredoc.c                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/09/14 10:36:52 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/16 09:26:52 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   expand_variables_heredoc.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/14 10:36:52 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/19 09:13:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*func1(char *input, int *index, char *temp)
+static char	*make_var_name_here(char *input, int *index, char *temp)
 {
 	int	s;
 	int	l;
@@ -38,7 +38,7 @@ static char	*find_next_var_in_str(char *input, int *index)
 	while (input[*index])
 	{
 		if (input[*index] && input[*index] == '$')
-			return (func1(input, index, temp));
+			return (make_var_name_here(input, index, temp));
 		if (input[*index])
 			(*index)++;
 	}

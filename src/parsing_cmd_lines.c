@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 12:45:51 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 13:42:17 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:27:36 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ static int	get_cmds(char **all_tokens, char ***cmds, int cmd_lines)
 	return (0);
 }
 
-// +1 is for sending the current pipe as first value,
-// I know it is super dirty. (TIEMEN)
 char	***make_cmd_lines(char **all_tokens)
 {
 	int		cmd_lines;

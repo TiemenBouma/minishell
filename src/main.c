@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/15 14:41:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/19 07:31:59 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	minishell_loop(struct s_main *m_s)
 			continue ;
 		m_s->oxs = exec(m_s);
 		free_struct(m_s);
-		// system("leaks minishell");
-		//system("leaks minishell");
 	}
 }
+		// system("leaks minishell");
+		//system("leaks minishell");
 
 int	main(void)
 {

@@ -20,7 +20,8 @@ $(NAME): $(OBJFILES) $(OBJFILES_EXTRA)
 
 obj/%.o: %.c $(HEADERFILES)
 	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) -o $@ $< -I $(HEADERFILES)
+	$(CC) -c $(CFLAGS) -o $@ $< 
+#-I $(HEADERFILES)
 
 clean:
 	rm -f $(OBJFILES) $(OBJFILES_EXTRA)

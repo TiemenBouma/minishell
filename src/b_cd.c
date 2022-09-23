@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/25 08:59:21 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/19 08:12:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/23 09:46:26 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ char	*set_home(t_node **list, char ***exec_line)
 	*exec_line = malloc(sizeof(char *) * 3);
 	(*exec_line)[2] = NULL;
 	(*exec_line)[0] = ft_strdup("cd");
+	if ((*exec_line)[0] == NULL)
+		exit (1);
 	(*exec_line)[1] = ft_strdup(curr_node->str + 5);
+	if ((*exec_line)[1] == NULL)
+		exit (1);
 	return ((*exec_line)[1]);
 }
 
@@ -46,12 +50,15 @@ int	switch_old_pwd(t_node **list, char **exec_line, t_node	**temp_node)
 	return (0);
 }
 
-int	ch_old_dir(t_node **list, char ***exec_line, t_node *temp_node, char *new_str)
+int	ch_old_dir(t_node **list, char ***exec_line,
+	t_node *temp_node, char *new_str)
 {
 	if (ft_strncmp((*exec_line)[1], "-", 2) == 0)
 	{
 		free((*exec_line)[1]);
 		(*exec_line)[1] = ft_strdup(temp_node->str + 7);
+		if ((*exec_line)[1] == NULL)
+			exit (1);
 	}
 	ft_find_and_edit_node(list, "OLDPWD", new_str);
 	free(new_str);

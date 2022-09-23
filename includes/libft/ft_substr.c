@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_substr.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/15 11:29:04 by tbouma        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:14:04 by tiemen        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/15 11:29:04 by tbouma            #+#    #+#             */
+/*   Updated: 2022/09/23 09:59:24 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = src_size - start;
 	ptr = malloc(sizeof(char) * (len + 1));
 	if (ptr == NULL)
-		return (NULL);
+		exit(1);
 	src_size = 0;
 	while (s[start + src_size] && len > src_size)
 	{

@@ -6,12 +6,11 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 14:14:58 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:10:17 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include "../includes/get_next_line.h"
 
 extern int	**g_pipe_heredoc;
 

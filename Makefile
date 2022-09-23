@@ -6,13 +6,12 @@
 #    By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 16:26:13 by tiemen            #+#    #+#              #
-#    Updated: 2022/09/19 14:16:45 by tbouma           ###   ########.fr        #
+#    Updated: 2022/09/23 10:10:50 by tbouma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := minishell
-OBJFILES := \
-			obj/src/b_cd.o \
+OBJFILES := obj/src/b_cd.o \
 			obj/src/b_echo.o \
 			obj/src/b_env.o  \
 			obj/src/b_exit.o \
@@ -48,10 +47,9 @@ OBJFILES := \
 			obj/src/testing.o \
 			obj/src/utils.o \
 			obj/src/utils2.o
-
 LIBFT := includes/libft/libft.a
 HEADERS := -I libft/
-CFLAGS := -Wall -Wextra  -Werror
+CFLAGS := -Wall -Wextra -Werror
 FLAGS_DEBUG := -fsanitize=address -g3
 CC := gcc
 
@@ -63,14 +61,10 @@ $(LIBFT):
 $(NAME): $(OBJFILES)
 	cp $(LIBFT) $(NAME)
 	$(CC) $(CFLAGS) $(OBJFILES) $(LIBFT) $(HEADERS) -o $(NAME) -lreadline -L ~/.brew/opt/readline/lib
-#  -L /usr/lib/x86_64-linux-gnu/
 
 obj/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) -o $@ $< -I ~/.brew/opt/readline/include
-#-I /usr/include/readline/
-
-
 
 clean:
 	rm -f $(OBJFILES)

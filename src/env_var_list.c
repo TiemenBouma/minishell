@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 15:05:30 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/14 10:29:24 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/23 09:53:44 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	inc_shlvl(struct s_main *m_s, t_node **list)
 		var_line = ft_sjf("SHLVL=",
 				ft_itoa(ft_atoi(&match_node->str[6]) + 1), 2);
 		if (!var_line)
-			return ;
+			exit (1);
 		free (match_node->str);
 		match_node->str = var_line;
 		m_s->minishell_nr = ft_atoi(&match_node->str[6]);

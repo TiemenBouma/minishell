@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 13:10:25 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/23 09:24:08 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/23 13:32:15 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,28 @@ void	free_double_str(char **str)
 	}
 	free(str);
 }
+
+// void	free_double_str(char **str)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (str == NULL)
+// 		return ;
+// 	if (str[0] == NULL)
+// 	{
+// 		free(str[0]);
+// 		return ;
+// 	}
+// 	while (str[i])
+// 	{
+// 		free(str[i]);
+// 		str[i] = NULL;
+// 		i++;
+// 	}
+// 	free(str);
+// 	str = NULL;
+// }
 
 void	free_triple_str(char ***str)
 {

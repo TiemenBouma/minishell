@@ -6,11 +6,14 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/19 07:31:59 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/23 13:25:42 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+//segfault with heredoc ctrl + D
+// cat | cat | gives a segfault
 
 int	**g_pipe_heredoc;
 

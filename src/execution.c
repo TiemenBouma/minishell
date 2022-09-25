@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/17 16:53:02 by dkocob            #+#    #+#             */
-/*   Updated: 2022/09/15 14:14:26 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/07/17 16:53:02 by dkocob        #+#    #+#                 */
+/*   Updated: 2022/09/25 10:23:16 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,17 @@ static void	ft_redirections(struct s_main *m_s,
 
 void	sig_exec(struct s_cmd_info *curr_cmd)
 {
-	if (ft_strcmp("./minishell", curr_cmd->exec_line[0]) == 0)
+	if (curr_cmd->exec_line[0] != NULL)
 	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
+		if (ft_strcmp("./minishell", curr_cmd->exec_line[0]) == 0)
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			return ;
+		}
 	}
-	else
-	{
-		signal(SIGINT, sigint_handler_in_process);
-		signal(SIGQUIT, sigquit_handler_in_process);
-	}
+	signal(SIGINT, sigint_handler_in_process);
+	signal(SIGQUIT, sigquit_handler_in_process);
 }
 
 static int	ft_iterations(struct s_main *m_s,

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/18 13:20:23 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/23 10:10:17 by tbouma           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tbouma <tbouma@student.42.fr>                +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/08/18 13:20:23 by tbouma        #+#    #+#                 */
+/*   Updated: 2022/09/25 10:24:01 by tiemen        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	heredoc(struct s_main *m_s, char *stop_word, int index)
 	while (1)
 	{
 		input = readline("> ");
-		if (!(input) || !ft_strncmp(input,
+		if (!input || !ft_strncmp(input,
 				stop_word, ft_strlen (stop_word) + 1))
 		{
 			free(input);

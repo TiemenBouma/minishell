@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:52:24 by tbouma            #+#    #+#             */
-/*   Updated: 2022/09/26 10:47:04 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/26 11:22:56 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,12 @@ int	basic_error_handeling(struct s_main *m_s)
 	i = 0;
 	if (m_s->all_tokens[0] == NULL)
 		return (1);
-	if (ft_strncmp(m_s->all_tokens[0], "|", 2) == 0)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		m_s->oxs = 258;
-		return (1);
-	}
 	while (m_s->all_tokens[i] != NULL)
 		i++;
 	if (ft_strcmp(m_s->all_tokens[i - 1], "|") == 0)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		m_s->oxs = 258;
 		return (1);
 	}
 	return (0);

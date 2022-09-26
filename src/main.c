@@ -6,7 +6,7 @@
 /*   By: tbouma <tbouma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 15:52:01 by tiemen            #+#    #+#             */
-/*   Updated: 2022/09/23 13:25:42 by tbouma           ###   ########.fr       */
+/*   Updated: 2022/09/26 10:24:21 by tbouma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	minishell_loop(struct s_main *m_s)
 	}
 }
 		// system("leaks minishell");
-		//system("leaks minishell");
+		// system("leaks minishell");
 
 int	main(void)
 {
@@ -90,6 +90,7 @@ int	main(void)
 	ft_free_linked_list(&m_s.env_llist);
 	return (m_s.oxs);
 }
+
 //, int argc, char **argv)
 		// if (argc >= 3 && !ft_strncmp(argv[1], "-c", 3))
 		// {
